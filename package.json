@@ -1,0 +1,17 @@
+{
+  "name": "cooking-for-life",
+  "version": "1.0.0",
+  "description": "Uma Aplicação para facilitar o seu dia a dia",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "compose:up": "(cd app && docker-compose up -d --build)",
+    "compose:down": "(cd app && docker-compose down --remove-orphans)"
+  },
+  "keywords": [],
+  "author": "Fernando Bissi",
+  "license": "ISC",
+  "dependencies": {
+    "jest": "^29.3.1"
+  }
+}
