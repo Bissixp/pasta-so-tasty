@@ -1,8 +1,8 @@
 {
-  "name": "back-end",
+  "name": "pasta-so-tasty-back-end",
   "version": "1.0.0",
   "description": "Back-end da aplicação Pasta so tasty",
-  "main": "index.js",
+  "main": "./build/server",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "build": "npx -y tsc",
@@ -19,6 +19,7 @@
     "jsonwebtoken": "^8.5.1"
   },
   "devDependencies": {
+    "@types/express": "^4.17.14",
     "@types/node": "^18.11.9",
     "@typescript-eslint/eslint-plugin": "^5.45.0",
     "dotenv": "^16.0.3",
