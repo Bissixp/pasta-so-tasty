@@ -1,5 +1,6 @@
 import * as express from 'express';
 import 'express-async-errors';
+import errorMiddleware from './middlewares/errorHandlerMiddleware';
 
 class App {
   public app: express.Express;
@@ -22,6 +23,7 @@ class App {
   }
 
   public start(PORT: string | number): void {
+    this.app.use(errorMiddleware);
     this.app.listen(PORT, () => console.log(`Rodando na porta ${PORT}`));
   }
 }
