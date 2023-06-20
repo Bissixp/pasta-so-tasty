@@ -15,6 +15,9 @@ const atributtes = {
   },
   email: {
     type: DataTypes.STRING
+  },
+  role: {
+    type: DataTypes.STRING
   }
 }
 

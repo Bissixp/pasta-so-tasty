@@ -27,6 +27,10 @@ Users.init({
   email: {
     type: INTEGER,
     allowNull: false,
+  },
+  role: {
+    type: INTEGER,
+    allowNull: false,
   }
 }, {
   sequelize: db,
