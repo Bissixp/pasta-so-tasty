@@ -1,18 +1,11 @@
 version: '3.9'
 services:
-  # frontend:
-  #   build: app/front-end
-  #   ports:
-  #     - 3000:3000
-  #   platform: linux/x86_64
-  #   working_dir: /app-front-end
-  #   depends_on:
-  #     backend:
-  #       condition: service_healthy
-  #   healthcheck:
-  #     test: [ "CMD", "lsof", "-t", "-i:3000" ]
-  #     timeout: 10s
-  #     retries: 5
+  frontend:
+    build: app/front-end
+    ports:
+      - 3000:3000
+    platform: linux/x86_64
+    working_dir: /app-front-end
   backend:
     container_name: app-back-end
     build: app/back-end
