@@ -10,4 +10,10 @@ export default class UserController {
     const token = await tokenAuth.makeToken(checkUser);
     res.json({ token })
   }
+
+  static async getRole(req: Request, res: Response): Promise<void> {
+    const auth: any = req.headers.authorization
+    const tokenValidate = await tokenAuth.readToken(auth);
+    res.json({ role: tokenValidate.role })
+  }
 }

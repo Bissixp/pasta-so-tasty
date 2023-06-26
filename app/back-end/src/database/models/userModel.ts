@@ -6,6 +6,7 @@ class Users extends Model {
   username: string;
   password: string;
   email: string;
+  role: string;
 }
 
 
