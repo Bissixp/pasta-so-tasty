@@ -1,0 +1,15 @@
+.error-balloon {
+  position: relative;
+  display: inline-block;
+}
+
+.error-message {
+  position: absolute;
+  top: -30px;
+  left: 30%;
+  width: 200px;
+  padding: 5px;
+  background-color: red;
+  color: white;
+  border-radius: 5px;
+}

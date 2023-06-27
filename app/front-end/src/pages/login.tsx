@@ -36,6 +36,7 @@ const Login = () => {
   }, [email, password]);
 
   if (isLogged && role === 'admin') return <Navigate to="/admin" />;
+  if (isLogged && role === 'member') return <Navigate to="/" />;
 
   return (
     <>
@@ -62,7 +63,7 @@ const Login = () => {
           {
             (failedTryLogin)
               ? (
-                <p data-testid="login__input_invalid_login_alert">
+                <p>
                   {
                     `O endereço de e-mail ou a senha não estão corretos.
                     Por favor, tente novamente.`
