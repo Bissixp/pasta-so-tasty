@@ -1,45 +1,47 @@
-import { useState } from 'react';
+import { useState, ChangeEvent, FormEvent } from 'react';
 import { Navigate } from 'react-router-dom';
 import { requestRegistration } from '../services/requests';
 import '../styles/pages/registration.css';
 
 const Registration = () => {
-  const [username, setUsername] = useState('');
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
-  const [confirmationPassword, setConfirmationPassword] = useState('');
-  const [errorMessage, setErrorMessage] = useState('');
-  const [errorEmail, setErrorEmail] = useState('');
-  const [errorUsername, setErrorUsername] = useState('');
-  const [redirectToHome, setRedirectToHome] = useState(false);
-  const [isEmailAlreadyUsed, setIsEmailAlreadyUsed] = useState(false);
-  const [isUsernameAlreadyUsed, setIsUsernameAlreadyUsed] = useState(false);
+  const [username, setUsername] = useState<string>('');
+  const [email, setEmail] = useState<string>('');
+  const [password, setPassword] = useState<string>('');
+  const [confirmationPassword, setConfirmationPassword] = useState<string>('');
+  const [errorMessage, setErrorMessage] = useState<string>('');
+  const [errorEmail, setErrorEmail] = useState<string>('');
+  const [errorUsername, setErrorUsername] = useState<string>('');
+  const [redirectToHome, setRedirectToHome] = useState<boolean>(false);
+  const [isEmailAlreadyUsed, setIsEmailAlreadyUsed] = useState<boolean>(false);
+  const [isUsernameAlreadyUsed, setIsUsernameAlreadyUsed] = useState<boolean>(false);
 
   const isFormValid = !(errorMessage || isEmailAlreadyUsed || isUsernameAlreadyUsed);
 
-  const handleUsernameChange = (event: any) => {
+  const handleUsernameChange = (event: ChangeEvent<HTMLInputElement>) => {
     setUsername(event.target.value);
     setIsUsernameAlreadyUsed(false);
     setErrorUsername('');
   };
 
-  const handleEmailChange = async (event: any) => {
+  const handleEmailChange = async (event: ChangeEvent<HTMLInputElement>) => {
     setEmail(event.target.value);
     setIsEmailAlreadyUsed(false);
     setErrorEmail('');
   };
 
-  const handlePasswordChange = (event: any) => {
+  const handlePasswordChange = (event: ChangeEvent<HTMLInputElement>) => {
     setPassword(event.target.value);
     setErrorMessage('');
   };
 
-  const handleConfirmationPasswordChange = (event: any) => {
+  const handleConfirmationPasswordChange = (event: ChangeEvent<HTMLInputElement>) => {
     setConfirmationPassword(event.target.value);
     setErrorMessage('');
   };
 
-  const handleSubmit = async () => {
+  const handleSubmit = async (event: FormEvent) => {
+    event.preventDefault();
+
     const regex = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[!@#$%^&*])[0-9a-zA-Z!@#$%^&*]{8,}$/;
     if (password === confirmationPassword) {
       if (regex.test(password)) {
@@ -59,7 +61,6 @@ const Registration = () => {
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     return emailRegex.test(email);
   };
-
 
   const handleBlurUsername = async () => {
     try {
@@ -179,3 +180,4 @@ const Registration = () => {
 };
 
 export default Registration;
+
