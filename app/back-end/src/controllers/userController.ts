@@ -14,7 +14,7 @@ export default class UserController {
   static async getRole(req: Request, res: Response): Promise<void> {
     const auth: any = req.headers.authorization;
     const tokenValidate = await tokenAuth.readToken(auth);
-    res.json({ role: tokenValidate.role });
+    res.json({ data: tokenValidate });
   };
 
   static async userRegistration(req: Request, res: Response): Promise<void> {

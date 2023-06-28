@@ -1,0 +1,23 @@
+.common-header {
+  background: #002c33;
+  padding: 20px 50px;
+  display: flex;
+  justify-content: space-between;
+}
+
+.header-links {
+  display: flex;
+  margin-left: auto;
+}
+
+.header-link {
+  margin-right: 10px;
+}
+
+.align-right {
+  margin-left: auto;
+}
+
+.header-color {
+  color: #ff6a28;
+}

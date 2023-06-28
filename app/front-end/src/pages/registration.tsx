@@ -100,6 +100,8 @@ const Registration = () => {
   };
 
   if (redirectToHome) {
+    localStorage.setItem('LoggedIn', 'true');
+    localStorage.setItem('username', username);
     return <Navigate to="/" />;
   }
 
@@ -175,6 +177,7 @@ const Registration = () => {
           Cadastrar
         </button>
       </label>
+      <h4>Já tenho uma conta, <a href='http://localhost:3000/login' className="login-color">logar</a></h4>
     </div>
   );
 };

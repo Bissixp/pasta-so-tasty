@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
-import { Navigate } from 'react-router-dom';
 import { requestLogin, setToken, requestData } from '../services/requests';
+import { useNavigate } from 'react-router-dom';
 
 const Login = () => {
   const [email, setEmail] = useState('');
@@ -17,10 +17,12 @@ const Login = () => {
 
       setToken(token);
 
-      const { role } = await requestData('/login/validate');
+      const { data } = await requestData('/login/validate');
+      const { role, username } = data;
 
       localStorage.setItem('token', token);
       localStorage.setItem('role', role);
+      localStorage.setItem('username', username);
 
       setIsLogged(true);
       setRole(role);
@@ -30,13 +32,30 @@ const Login = () => {
       setIsLogged(false);
     }
   };
+  const navigate = useNavigate();
 
   useEffect(() => {
     setFailedTryLogin(false);
-  }, [email, password]);
 
-  if (isLogged && role === 'admin') return <Navigate to="/admin" />;
-  if (isLogged && role === 'member') return <Navigate to="/" />;
+    if (isLogged && role === 'admin') {
+      const userAlreadyLoggedIn = localStorage.getItem('username');
+      if (userAlreadyLoggedIn !== null) {
+        localStorage.setItem('username', userAlreadyLoggedIn);
+      }
+      localStorage.setItem('LoggedIn', 'true');
+      navigate('/admin');
+    }
+
+    if (isLogged && role === 'member') {
+      const userAlreadyLoggedIn = localStorage.getItem('username');
+      if (userAlreadyLoggedIn !== null) {
+        localStorage.setItem('username', userAlreadyLoggedIn);
+      }
+      localStorage.setItem('LoggedIn', 'true');
+      navigate('/');
+    }
+  }, [isLogged, role, navigate]);
+
 
   return (
     <>
@@ -60,22 +79,13 @@ const Login = () => {
               placeholder="Senha"
             />
           </label>
-          {
-            (failedTryLogin)
-              ? (
-                <p>
-                  {
-                    `O endereço de e-mail ou a senha não estão corretos.
-                    Por favor, tente novamente.`
-                  }
-                </p>
-              )
-              : null
-          }
-          <button
-            type="submit"
-            onClick={(event) => login(event)}
-          >
+          {failedTryLogin && (
+            <p>
+              O endereço de e-mail ou a senha não estão corretos. Por favor,
+              tente novamente.
+            </p>
+          )}
+          <button type="submit" onClick={(event) => login(event)}>
             Entrar
           </button>
         </form>
