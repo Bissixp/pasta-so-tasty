@@ -13,7 +13,6 @@ const upperCaseFirstLetter = (string: string) => {
   return string.charAt(0).toUpperCase() + string.slice(1);
 };
 
-
 const Header = ({ isUserLoggedIn, username }: HeaderProps) => {
   const upperCaseName = upperCaseFirstLetter(username);
   const navigate = useNavigate();
