@@ -10,20 +10,22 @@ const Registration = () => {
   const [confirmationPassword, setConfirmationPassword] = useState('');
   const [errorMessage, setErrorMessage] = useState('');
   const [errorEmail, setErrorEmail] = useState('');
+  const [errorUsername, setErrorUsername] = useState('');
   const [redirectToHome, setRedirectToHome] = useState(false);
+  const [isEmailAlreadyUsed, setIsEmailAlreadyUsed] = useState(false);
+  const [isUsernameAlreadyUsed, setIsUsernameAlreadyUsed] = useState(false);
 
-  const isFormValid =
-    username !== '' &&
-    email !== '' &&
-    password !== '' &&
-    confirmationPassword !== '';
+  const isFormValid = !(errorMessage || isEmailAlreadyUsed || isUsernameAlreadyUsed);
 
   const handleUsernameChange = (event: any) => {
     setUsername(event.target.value);
+    setIsUsernameAlreadyUsed(false);
+    setErrorUsername('');
   };
 
-  const handleEmailChange = (event: any) => {
+  const handleEmailChange = async (event: any) => {
     setEmail(event.target.value);
+    setIsEmailAlreadyUsed(false);
     setErrorEmail('');
   };
 
@@ -58,13 +60,38 @@ const Registration = () => {
     return emailRegex.test(email);
   };
 
-  const handleBlurEmail = () => {
+
+  const handleBlurUsername = async () => {
+    try {
+      const response = await requestRegistration('/registration/findUsername', { username });
+      if (response.data !== null) {
+        setErrorUsername('Nome de usuário já cadastrado, tente outro');
+        setIsUsernameAlreadyUsed(true);
+      } else {
+        setErrorUsername('');
+      }
+    } catch (error) {
+      console.error('Erro ao verificar usuário:', error);
+    }
+  };
+
+  const handleBlurEmail = async () => {
     if (email !== '') {
       const isValidEmail = validateEmailFormat(email);
       if (!isValidEmail) {
         setErrorEmail('O email não está em um formato válido.');
       } else {
-        setErrorEmail('');
+        try {
+          const response = await requestRegistration('/registration/findEmail', { email });
+          if (response.data !== null) {
+            setErrorEmail('Email já cadastrado, tente outro');
+            setIsEmailAlreadyUsed(true);
+          } else {
+            setErrorEmail('');
+          }
+        } catch (error) {
+          console.error('Erro ao verificar email:', error);
+        }
       }
     } else {
       setErrorEmail('');
@@ -85,7 +112,13 @@ const Registration = () => {
           id="username"
           value={username}
           onChange={handleUsernameChange}
+          onBlur={handleBlurUsername}
         />
+        {errorUsername && (
+          <div className="error-balloon">
+            <p className="error-message">{errorUsername}</p>
+          </div>
+        )}
       </label>
       <label htmlFor="email">
         <h4>Email</h4>

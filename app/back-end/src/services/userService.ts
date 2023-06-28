@@ -20,7 +20,7 @@ export default class UserService {
   static async validateBodyRegistration(body: string): Promise<void> {
     try {
       const schema = Joi.object({
-        username: Joi.string().required().max(8),
+        username: Joi.string().required().max(12),
         password: Joi.string().required().min(8),
         email: Joi.string().required().email(),
       });
@@ -57,4 +57,22 @@ export default class UserService {
     });
     return createrUser;
   }
+
+  static async findUsername(username: string) {
+    const findUsername = await Users.findOne({
+      where: {
+        username,
+      },
+    });
+    return findUsername;
+  };
+
+  static async findEmail(email: string) {
+    const findEmail = await Users.findOne({
+      where: {
+        email,
+      },
+    });
+    return findEmail;
+  };
 }

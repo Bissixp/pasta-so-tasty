@@ -23,4 +23,26 @@ export default class UserController {
     await UserService.userRegistration(username, password, email);
     res.json({ message: 'User created successfully' });
   };
-}
+
+  static async findUsername(req: Request, res: Response): Promise<void> {
+    const { username } = req.body;
+    const usarnameExists = await UserService.findUsername(username);
+
+    if (usarnameExists) {
+      res.status(200).json({ data: usarnameExists });
+    } else {
+      res.status(404).json({ data: null });
+    };
+  };
+
+  static async findEmail(req: Request, res: Response): Promise<void> {
+    const { email } = req.body;
+    const emailExists = await UserService.findEmail(email);
+
+    if (emailExists) {
+      res.status(200).json({ data: emailExists });
+    } else {
+      res.status(404).json({ data: null });
+    };
+  };
+};
