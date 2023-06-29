@@ -1,15 +1,15 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, FormEvent } from 'react';
 import { requestLogin, setToken, requestData } from '../services/requests';
 import { useNavigate } from 'react-router-dom';
 
-const Login = () => {
+const Login: React.FC = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [role, setRole] = useState('');
   const [isLogged, setIsLogged] = useState(false);
   const [failedTryLogin, setFailedTryLogin] = useState(false);
 
-  const login = async (event: any) => {
+  const login = async (event: FormEvent<HTMLButtonElement>) => {
     event.preventDefault();
 
     try {
@@ -32,10 +32,16 @@ const Login = () => {
       setIsLogged(false);
     }
   };
+
   const navigate = useNavigate();
 
   useEffect(() => {
     setFailedTryLogin(false);
+    const isLoggedIn = localStorage.getItem('LoggedIn');
+
+    if (isLoggedIn === 'true') {
+      navigate('/');
+    }
 
     if (isLogged && role === 'admin') {
       const userAlreadyLoggedIn = localStorage.getItem('username');
@@ -54,8 +60,8 @@ const Login = () => {
       localStorage.setItem('LoggedIn', 'true');
       navigate('/');
     }
-  }, [isLogged, role, navigate]);
 
+  }, [isLogged, role, navigate]);
 
   return (
     <>

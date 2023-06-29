@@ -32,7 +32,7 @@ const Header = ({ isUserLoggedIn, username }: HeaderProps) => {
       <header className="common-header">
         {isUserLoggedIn ? (
           <>
-            <span>{upperCaseName}</span>
+            <span>Olá {upperCaseName}</span>
             <Link to="/perfil" className="header-button">Perfil</Link>
             <button type="button" onClick={() => logoff()}>
               Sair
