@@ -17,29 +17,29 @@ const Registration = () => {
 
   const isFormValid = !(errorMessage || isEmailAlreadyUsed || isUsernameAlreadyUsed);
 
-  const handleUsernameChange = (event: ChangeEvent<HTMLInputElement>) => {
+  const handleUsernameChange = (event: ChangeEvent<HTMLInputElement>): void => {
     setUsername(event.target.value);
     setIsUsernameAlreadyUsed(false);
     setErrorUsername('');
   };
 
-  const handleEmailChange = async (event: ChangeEvent<HTMLInputElement>) => {
+  const handleEmailChange = async (event: ChangeEvent<HTMLInputElement>): Promise<void> => {
     setEmail(event.target.value);
     setIsEmailAlreadyUsed(false);
     setErrorEmail('');
   };
 
-  const handlePasswordChange = (event: ChangeEvent<HTMLInputElement>) => {
+  const handlePasswordChange = (event: ChangeEvent<HTMLInputElement>): void => {
     setPassword(event.target.value);
     setErrorMessage('');
   };
 
-  const handleConfirmationPasswordChange = (event: ChangeEvent<HTMLInputElement>) => {
+  const handleConfirmationPasswordChange = (event: ChangeEvent<HTMLInputElement>): void => {
     setConfirmationPassword(event.target.value);
     setErrorMessage('');
   };
 
-  const handleSubmit = async (event: FormEvent) => {
+  const handleSubmit = async (event: FormEvent<HTMLButtonElement>): Promise<void> => {
     event.preventDefault();
 
     const regex = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[!@#$%^&*])[0-9a-zA-Z!@#$%^&*]{8,}$/;
@@ -57,12 +57,12 @@ const Registration = () => {
     }
   };
 
-  const validateEmailFormat = (email: string) => {
+  const validateEmailFormat = (email: string): boolean => {
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     return emailRegex.test(email);
   };
 
-  const handleBlurUsername = async () => {
+  const handleBlurUsername = async (): Promise<void> => {
     try {
       const response = await requestRegistration('/registration/findUsername', { username });
       if (response.data !== null) {
@@ -76,7 +76,7 @@ const Registration = () => {
     }
   };
 
-  const handleBlurEmail = async () => {
+  const handleBlurEmail = async (): Promise<void> => {
     if (email !== '') {
       const isValidEmail = validateEmailFormat(email);
       if (!isValidEmail) {

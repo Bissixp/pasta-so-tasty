@@ -1,8 +1,8 @@
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import Header from "../components/header";
 
 const Home = () => {
-  const [isUserLoggedIn, setIsUserLoggedIn] = useState(false);
+  const [isUserLoggedIn, setIsUserLoggedIn] = useState<boolean>(false);
   const [username, setUsername] = useState<string>('');
 
   useEffect(() => {

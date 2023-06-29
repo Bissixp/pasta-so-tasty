@@ -9,7 +9,7 @@ const Login: React.FC = () => {
   const [isLogged, setIsLogged] = useState(false);
   const [failedTryLogin, setFailedTryLogin] = useState(false);
 
-  const login = async (event: FormEvent<HTMLButtonElement>) => {
+  const login = async (event: FormEvent<HTMLButtonElement>): Promise<void> => {
     event.preventDefault();
 
     try {
