@@ -45,4 +45,10 @@ export default class UserController {
       res.status(404).json({ data: null });
     };
   };
+
+  static async getUsername(req: Request, res: Response): Promise<void> {
+    const usernameParam = req.params.searchParam;
+    const getUser = await UserService.findUsername(usernameParam);
+    res.status(200).json({ data: getUser });
+  };
 };
