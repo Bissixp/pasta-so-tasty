@@ -1,6 +1,6 @@
 import React, { ReactNode } from 'react';
 import { Link } from 'react-router-dom';
-import { useNavigate } from 'react-router-dom';
+import BtnLogoff from './btnLogoff';
 import '../styles/components/header.css';
 
 type HeaderProps = {
@@ -15,18 +15,6 @@ const upperCaseFirstLetter = (string: string) => {
 
 const Header = ({ isUserLoggedIn, username }: HeaderProps) => {
   const upperCaseName = upperCaseFirstLetter(username);
-  const navigate = useNavigate();
-
-  const logoff = () => {
-    localStorage.removeItem('LoggedIn');
-    localStorage.removeItem('username');
-    localStorage.removeItem('token');
-    localStorage.removeItem('role');
-    isUserLoggedIn = false;
-    navigate('/home');
-    window.location.reload();
-  };
-
   return (
     <>
       <header className="common-header">
@@ -34,9 +22,7 @@ const Header = ({ isUserLoggedIn, username }: HeaderProps) => {
           <>
             <span>Olá {upperCaseName}</span>
             <Link to="/perfil" className="header-button">Perfil</Link>
-            <button type="button" onClick={() => logoff()}>
-              Sair
-            </button>
+            <BtnLogoff />
           </>
         ) : (
           <>
