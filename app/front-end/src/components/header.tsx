@@ -1,6 +1,7 @@
 import React, { ReactNode } from 'react';
 import { Link } from 'react-router-dom';
 import BtnLogoff from './btnLogoff';
+import Menu from './menu';
 import '../styles/components/header.css';
 
 type HeaderProps = {
@@ -18,18 +19,20 @@ const Header = ({ isUserLoggedIn, username }: HeaderProps) => {
   return (
     <>
       <header className="common-header">
-        {isUserLoggedIn ? (
-          <>
-            <span>Olá {upperCaseName}</span>
-            <Link to="/perfil" className="header-button">Perfil</Link>
-            <BtnLogoff />
-          </>
-        ) : (
-          <>
-            <Link to="/login" className="header-link">Login</Link>
-            <Link to="/registration" className="header-link">Cadastro</Link>
-          </>
-        )}
+        <Menu>
+          {isUserLoggedIn ? (
+            <>
+              <span>Olá {upperCaseName}</span>
+              <Link to="/perfil" className="header-button">Perfil</Link>
+              <BtnLogoff />
+            </>
+          ) : (
+            <>
+              <Link to="/login" className="header-link">Login</Link>
+              <Link to="/registration" className="header-link">Cadastro</Link>
+            </>
+          )}
+        </Menu>
       </header>
     </>
   );

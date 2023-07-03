@@ -1,0 +1,10 @@
+.user-perfil {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+}
+
+.user-perfil-content {
+  text-align: center;
+}
