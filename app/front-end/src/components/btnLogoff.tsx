@@ -1,4 +1,5 @@
 import { useNavigate } from 'react-router-dom';
+import '../styles/components/btnLogoff.css';
 
 const BtnLogoff = () => {
   const navigate = useNavigate();
@@ -14,7 +15,7 @@ const BtnLogoff = () => {
 
   return (
     <>
-      <button type="button" onClick={logoff}>
+      <button className="button-transparent" type="button" onClick={logoff}>
         Sair
       </button>
     </>

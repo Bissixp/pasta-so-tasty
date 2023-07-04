@@ -13,7 +13,7 @@ function RoutesPastaSoTasty() {
       <Route path="/login" element={<Login />} />
       <Route path="/admin" element={<Admin />} />
       <Route path="/home" element={<Home />} />
-      <Route path="/registration" element={<Registration />} />
+      <Route path="/registro" element={<Registration />} />
       <Route path="/perfil" element={<Perfil />} />
     </Routes>
 

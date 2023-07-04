@@ -2,6 +2,7 @@ import React, { ReactNode } from 'react';
 import { Link } from 'react-router-dom';
 import BtnLogoff from './btnLogoff';
 import Menu from './menu';
+import logo from '../images/PST-logo.png';
 import '../styles/components/header.css';
 
 type HeaderProps = {
@@ -19,18 +20,25 @@ const Header = ({ isUserLoggedIn, username }: HeaderProps) => {
   return (
     <>
       <header className="common-header">
+        <div className="logo-container">
+          <Link to="/home"><img src={logo} alt="Logo" className="logo" /></Link>
+        </div>
         <Menu>
           {isUserLoggedIn ? (
-            <>
-              <span>Olá {upperCaseName}</span>
-              <Link to="/perfil" className="header-button">Perfil</Link>
-              <BtnLogoff />
-            </>
+            <div>
+              <div className="button-container">
+                <span>Olá {upperCaseName}</span>
+                <Link to="/perfil" className="header-button">Perfil</Link>
+                <BtnLogoff />
+              </div>
+            </div>
           ) : (
-            <>
-              <Link to="/login" className="header-link">Login</Link>
-              <Link to="/registration" className="header-link">Cadastro</Link>
-            </>
+            <div>
+              <div className="button-container">
+                <Link to="/login" className="header-link">Login</Link>
+                <Link to="/registro" className="header-link">Cadastro</Link>
+              </div>
+            </div>
           )}
         </Menu>
       </header>
