@@ -12,6 +12,7 @@
   "author": "Fernando Bissi",
   "license": "ISC",
   "dependencies": {
-    "jest": "^29.3.1"
+    "jest": "^29.3.1",
+    "w3c-hr-time": "^1.0.2"
   }
 }
