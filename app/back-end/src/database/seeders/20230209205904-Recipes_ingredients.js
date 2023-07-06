@@ -22,6 +22,7 @@ module.exports = {
   },
 
   down: async (queryInterface) => {
+    await queryInterface.bulkDelete('Recipes', null, {})
     await queryInterface.bulkDelete('RecipeIngredients', null, {})
   }
 }

@@ -3,6 +3,7 @@ import 'express-async-errors';
 import errorMiddleware from './middlewares/errorHandlerMiddleware';
 import loginRoute from './routes/loginRoute';
 import registrationRoute from './routes/registrationRoute';
+import recipeRoute from './routes/recipeRoute'
 import cors from 'cors';
 
 class App {
@@ -24,6 +25,7 @@ class App {
   private routes(): void {
     this.app.use('/login', loginRoute);
     this.app.use('/registration', registrationRoute);
+    this.app.use('/recipe', recipeRoute);
   }
 
   private errorHandler(): void {

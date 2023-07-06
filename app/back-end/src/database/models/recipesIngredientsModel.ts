@@ -1,132 +1,49 @@
-import { Model, INTEGER, STRING } from 'sequelize';
-import db from '.';
+import { Model, DataTypes } from 'sequelize';
 import Recipes from './recipesModel';
+import db from '.';
 
 class RecipeIngredients extends Model {
-  id: number;
-  recipe_author_name: String;
-  recipe_ingredient_1: String;
-  recipe_ingredient_2: String;
-  recipe_ingredient_3: String;
-  recipe_ingredient_4: String;
-  recipe_ingredient_5: String;
-  recipe_ingredient_6: String;
-  recipe_ingredient_7: String;
-  recipe_ingredient_8: String;
-  recipe_ingredient_9: String;
-  recipe_ingredient_10: String;
-  recipe_ingredient_11: String;
-  recipe_ingredient_12: String;
-  recipe_ingredient_13: String;
-  recipe_ingredient_14: String;
-  recipe_ingredient_15: String;
-  recipe_ingredient_16: String;
-  recipe_ingredient_17: String;
-  recipe_ingredient_18: String;
-  recipe_ingredient_19: String;
-  recipe_ingredient_20: String;
+  id!: number;
+  recipe_ingredients_id!: number | null;
 }
 
+interface IngredientFields {
+  [fieldName: string]: typeof DataTypes.STRING;
+}
 
-RecipeIngredients.init({
-  id: {
-    allowNull: false,
-    autoIncrement: true,
-    primaryKey: true,
-    type: INTEGER,
-    references: {
-      model: "Recipes",
-      key: "id"
+const createDynamicIngredientFields = (numIngredients: number): IngredientFields => {
+  const fields: IngredientFields = {};
+  for (let i = 1; i <= numIngredients; i++) {
+    const fieldName = `recipe_ingredient_${i}`;
+    fields[fieldName] = DataTypes.STRING;
+  }
+  return fields;
+}
+
+const fields = createDynamicIngredientFields(15);
+
+RecipeIngredients.init(
+  {
+    id: {
+      allowNull: false,
+      autoIncrement: true,
+      primaryKey: true,
+      type: DataTypes.INTEGER,
+    },
+    ...fields,
+    recipe_ingredients_id: {
+      allowNull: true,
+      type: DataTypes.INTEGER,
     },
   },
-  recipe_ingredient_1: {
-    type: STRING(15),
-    allowNull: false,
-  },
-  recipe_ingredient_2: {
-    type: STRING(15),
-    allowNull: false,
-  },
-  recipe_ingredient_3: {
-    type: STRING(15),
-    allowNull: false,
-  },
-  recipe_ingredient_4: {
-    type: STRING(15),
-    allowNull: true,
-  },
-  recipe_ingredient_5: {
-    type: STRING(15),
-    allowNull: true,
-  },
-  recipe_ingredient_6: {
-    type: STRING(15),
-    allowNull: true,
-  },
-  recipe_ingredient_7: {
-    type: STRING(15),
-    allowNull: true,
-  },
-  recipe_ingredient_8: {
-    type: STRING(15),
-    allowNull: true,
-  },
-  recipe_ingredient_9: {
-    type: STRING(15),
-    allowNull: true,
-  },
-  recipe_ingredient_10: {
-    type: STRING(15),
-    allowNull: true,
-  },
-  recipe_ingredient_11: {
-    type: STRING(15),
-    allowNull: true,
-  },
-  recipe_ingredient_12: {
-    type: STRING(15),
-    allowNull: true,
-  },
-  recipe_ingredient_13: {
-    type: STRING(15),
-    allowNull: true,
-  },
-  recipe_ingredient_14: {
-    type: STRING(15),
-    allowNull: true,
-  },
-  recipe_ingredient_15: {
-    type: STRING(15),
-    allowNull: true,
-  },
-  recipe_ingredient_16: {
-    type: STRING(15),
-    allowNull: true,
-  },
-  recipe_ingredient_17: {
-    type: STRING(15),
-    allowNull: true,
-  },
-  recipe_ingredient_18: {
-    type: STRING(15),
-    allowNull: true,
-  },
-  recipe_ingredient_19: {
-    type: STRING(15),
-    allowNull: true,
-  },
-  recipe_ingredient_20: {
-    type: STRING(15),
-    allowNull: true,
-  },
-}, {
-  sequelize: db,
-  modelName: 'RecipeIngredients',
-  timestamps: false
-})
+  {
+    sequelize: db,
+    modelName: 'RecipeIngredients',
+    timestamps: false,
+  }
+);
 
+RecipeIngredients.belongsTo(Recipes, { foreignKey: 'recipe_ingredients_id' });
 
 export default RecipeIngredients;
 
-Recipes.belongsTo(RecipeIngredients)
-RecipeIngredients.belongsTo(Recipes)
