@@ -15,6 +15,7 @@
     "strictPropertyInitialization": false,
     "skipLibCheck": true,
     "esModuleInterop": true,
+    "jsx": "react-jsx",
     "paths": {
       "*": [
         "node_modules/*"

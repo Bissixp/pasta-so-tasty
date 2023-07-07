@@ -1,22 +1,15 @@
 import RecipeIngredients from '../database/models/recipesIngredientsModel';
 import Recipes from '../database/models/recipesModel';
 import db from '../database/models';
-
-interface IRecipe {
-  cookAuthor: string;
-  cookName: string;
-  cookPhoto: string | Buffer | null;
-  cookInfo: string;
-  cookTime: number;
-  ingredientsRecipe: string[];
-}
+import IRecipe from '../interface/IRecipe';
+import ErrorHttp from '../middlewares/utils';
 
 export default class RecipeService {
   static async createRecipe({ cookAuthor, cookName, cookPhoto, cookInfo, cookTime, ingredientsRecipe }: IRecipe) {
     const transaction = await db.transaction();
     try {
       const dynamicFields: { [key: string]: string } = {};
-      ingredientsRecipe.forEach((ingredient: any, index: number) => {
+      ingredientsRecipe.forEach((ingredient: string, index: number) => {
         const fild = `recipe_ingredient_${index + 1}`;
         dynamicFields[fild] = ingredient;
       });
@@ -40,8 +33,8 @@ export default class RecipeService {
       );
       await transaction.commit();
     } catch (error) {
-      console.error('Erro ao criar receita:', error);
       await transaction.rollback();
+      throw new ErrorHttp('All fields must be filled', 400)
     }
   }
 }
