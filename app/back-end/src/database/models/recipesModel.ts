@@ -5,10 +5,12 @@ class Recipes extends Model {
   id!: number;
   recipe_author_name!: string;
   recipe_name!: string;
-  recipe_photo!: string | Buffer | null;
+  recipe_photo!: string | FormData | Express.Multer.File;
   recipe_ingredients_id!: number | null;
   recipe_description!: string;
   recipe_cooking_time!: number;
+  recipe_type!: string;
+  status_recipe!: string;
 }
 
 Recipes.init(
@@ -41,6 +43,14 @@ Recipes.init(
     },
     recipe_cooking_time: {
       type: INTEGER,
+      allowNull: false,
+    },
+    recipe_type: {
+      type: STRING(10),
+      allowNull: false,
+    },
+    status_recipe: {
+      type: STRING(10),
       allowNull: false,
     },
   },

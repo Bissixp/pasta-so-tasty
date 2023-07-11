@@ -14,7 +14,7 @@ const atributtes = {
     type: DataTypes.STRING
   },
   recipe_photo: {
-    type: DataTypes.STRING
+    type: DataTypes.TEXT
   },
   recipe_ingredients_id: {
     type: DataTypes.INTEGER,
@@ -28,6 +28,12 @@ const atributtes = {
   },
   recipe_cooking_time: {
     type: DataTypes.INTEGER
+  },
+  recipe_type: {
+    type: DataTypes.STRING
+  },
+  status_recipe: {
+    type: DataTypes.STRING
   }
 }
 
