@@ -1,11 +1,13 @@
-import { useEffect, useState } from "react";
-import { useNavigate } from 'react-router-dom';
+import { useEffect, useState, useContext } from "react";
+import { useNavigate, Link } from 'react-router-dom';
 import { requestData } from '../services/requests';
 import Header from "../components/header";
+import pastaSoTastyContext from "../context/context";
+import IContext from '../interface/IContext';
 import '../styles/pages/perfil.css';
 
 const Perfil = () => {
-  const [user, setUser] = useState<string>('');
+  const { username, setUsername, setRole }: IContext = useContext(pastaSoTastyContext);
   const [emailUser, setEmailUser] = useState<string>('');
 
   const navigate = useNavigate();
@@ -20,23 +22,25 @@ const Perfil = () => {
         const loggedUsername = localStorage.getItem('username');
         const { data } = await requestData(`/login/username/${loggedUsername}`);
 
-        const { username, email } = data;
-        setUser(username);
+        const { username, email, role } = data;
+        setUsername(username);
         setEmailUser(email);
+        setRole(role);
       } catch (error) {
         console.error('Erro na requisição:', error);
       };
     };
     getUserProfile();
-  }, [navigate]);
+  }, [navigate, setUsername, setRole]);
 
   return (
     <>
-      <Header isUserLoggedIn={true} username={user}>
+      <Header isUserLoggedIn={true} username={username}>
       </Header>
       <div className="user-perfil">
         <div className="user-perfil-content">
-          <h3>Nome: {user}</h3>
+          <Link to="/criar-receita">Criar Receita</Link>
+          <h3>Nome: {username}</h3>
           <h3>Email: {emailUser}</h3>
         </div>
       </div>

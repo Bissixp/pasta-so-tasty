@@ -2,14 +2,14 @@ import React, { useMemo, useState } from 'react';
 import PastaSoTastyContext from './context';
 
 function PastaSoTastyProvider({ children }: { children: React.ReactNode }) {
-  const [loggedIn, setLoggedIn] = useState(false);
-  const [username, setUsername] = useState([]);
+  const [username, setUsername] = useState('');
+  const [role, setRole] = useState('');
   const contextValue = useMemo(() => ({
-    loggedIn,
-    setLoggedIn,
     username,
     setUsername,
-  }), [loggedIn, username]);
+    role,
+    setRole
+  }), [username, role]);
 
   return (
     <PastaSoTastyContext.Provider value={contextValue}>

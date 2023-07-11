@@ -1,4 +1,5 @@
 import axios from 'axios';
+import ICreateRecipe from '../interface/ICreateRecipe';
 
 const apiPort = '3001';
 const api = axios.create({
@@ -22,6 +23,14 @@ export const requestLogin = async (endpoint: string, body: any) => {
 export const requestRegistration = async (endpoint: string, body: any) => {
   const { data } = await api.post(endpoint, body);
   return data;
+};
+
+export const requestCreateRecipe = async (endpoint: string, body: ICreateRecipe) => {
+  await api.post(endpoint, body);
+}
+
+export const requestCreateRecipeUpload = async (endpoint: string, body: FormData) => {
+  await api.post(endpoint, body);
 };
 
 export default api;
