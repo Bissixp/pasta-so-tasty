@@ -4,8 +4,8 @@ import { requestRegistration, requestData } from '../services/requests';
 import '../styles/pages/registration.css';
 
 const Registration = () => {
-  const [username, setUsername] = useState<string>('');
-  const [email, setEmail] = useState<string>('');
+  const [usernameRegistration, setUsernameRegistration] = useState<string>('');
+  const [emailRegistation, setEmailRegistation] = useState<string>('');
   const [password, setPassword] = useState<string>('');
   const [confirmationPassword, setConfirmationPassword] = useState<string>('');
   const [errorMessage, setErrorMessage] = useState<string>('');
@@ -18,13 +18,13 @@ const Registration = () => {
   const isFormValid = !(errorMessage || isEmailAlreadyUsed || isUsernameAlreadyUsed);
 
   const handleUsernameChange = (event: ChangeEvent<HTMLInputElement>): void => {
-    setUsername(event.target.value);
+    setUsernameRegistration(event.target.value);
     setIsUsernameAlreadyUsed(false);
     setErrorUsername('');
   };
 
   const handleEmailChange = async (event: ChangeEvent<HTMLInputElement>): Promise<void> => {
-    setEmail(event.target.value);
+    setEmailRegistation(event.target.value);
     setIsEmailAlreadyUsed(false);
     setErrorEmail('');
   };
@@ -45,7 +45,7 @@ const Registration = () => {
     const regex = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[!@#$%^&*])[0-9a-zA-Z!@#$%^&*]{8,}$/;
     if (password === confirmationPassword) {
       if (regex.test(password)) {
-        await requestRegistration('/registration', { username, password, email });
+        await requestRegistration('/registration', { usernameRegistration, password, emailRegistation });
         setRedirectToHome(true);
       } else {
         setErrorMessage(
@@ -64,7 +64,7 @@ const Registration = () => {
 
   const handleBlurUsername = async (): Promise<void> => {
     try {
-      const response = await requestData(`/login/username/${username}`);
+      const response = await requestData(`/login/username/${usernameRegistration}`);
       if (response.data !== null) {
         setErrorUsername('Nome de usuário já cadastrado, tente outro');
         setIsUsernameAlreadyUsed(true);
@@ -77,13 +77,13 @@ const Registration = () => {
   };
 
   const handleBlurEmail = async (): Promise<void> => {
-    if (email !== '') {
-      const isValidEmail = validateEmailFormat(email);
+    if (emailRegistation !== '') {
+      const isValidEmail = validateEmailFormat(emailRegistation);
       if (!isValidEmail) {
         setErrorEmail('O email não está em um formato válido.');
       } else {
         try {
-          const response = await requestData(`/login/email/${email}`);
+          const response = await requestData(`/login/email/${emailRegistation}`);
           if (response.data !== null) {
             setErrorEmail('Email já cadastrado, tente outro');
             setIsEmailAlreadyUsed(true);
@@ -101,7 +101,7 @@ const Registration = () => {
 
   if (redirectToHome) {
     localStorage.setItem('LoggedIn', 'true');
-    localStorage.setItem('username', username);
+    localStorage.setItem('username', usernameRegistration);
     return <Navigate to="/" />;
   }
 
@@ -113,7 +113,7 @@ const Registration = () => {
           type="text"
           maxLength={12}
           id="username"
-          value={username}
+          value={usernameRegistration}
           onChange={handleUsernameChange}
           onBlur={handleBlurUsername}
         />
@@ -128,7 +128,7 @@ const Registration = () => {
         <input
           type="email"
           id="email"
-          value={email}
+          value={emailRegistation}
           onChange={handleEmailChange}
           onBlur={handleBlurEmail}
         />

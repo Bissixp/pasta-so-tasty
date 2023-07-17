@@ -7,7 +7,7 @@ import IContext from '../interface/IContext';
 import '../styles/pages/perfil.css';
 
 const Perfil = () => {
-  const { username, setUsername, setRole }: IContext = useContext(pastaSoTastyContext);
+  const { username, setUsername }: IContext = useContext(pastaSoTastyContext);
   const [emailUser, setEmailUser] = useState<string>('');
 
   const navigate = useNavigate();
@@ -23,15 +23,15 @@ const Perfil = () => {
         const { data } = await requestData(`/login/username/${loggedUsername}`);
 
         const { username, email, role } = data;
+        localStorage.setItem('role', role);
         setUsername(username);
         setEmailUser(email);
-        setRole(role);
       } catch (error) {
         console.error('Erro na requisição:', error);
       };
     };
     getUserProfile();
-  }, [navigate, setUsername, setRole]);
+  }, [navigate, setUsername]);
 
   return (
     <>

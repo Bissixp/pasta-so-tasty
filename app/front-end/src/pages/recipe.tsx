@@ -1,13 +1,10 @@
-import { useEffect, useContext, useState, ChangeEvent, FormEvent } from "react";
+import { useEffect, useState, ChangeEvent, FormEvent } from "react";
 import { useNavigate, Link } from 'react-router-dom';
-import pastaSoTastyContext from "../context/context";
-import IContext from '../interface/IContext';
 import ICreateRecipe from "../interface/ICreateRecipe";
 import { requestCreateRecipe, requestCreateRecipeUpload } from "../services/requests";
 import '../styles/pages/recipe.css';
 
 const Recipe = () => {
-  const { username, role }: IContext = useContext(pastaSoTastyContext);
   const [recipeName, setRecipeName] = useState<string>('');
   const [selectedFile, setSelectedFile] = useState<File | null>(null);
   const [photoLink, setPhotoLink] = useState<string>('');
@@ -75,6 +72,10 @@ const Recipe = () => {
 
   const handleSubmit = async (event: FormEvent<HTMLButtonElement>): Promise<void> => {
     event.preventDefault();
+
+    const username = localStorage.getItem('username');
+    const role = localStorage.getItem('role');
+
     let roleCheck: string = 'pending';
     if (role === 'admin') {
       roleCheck = 'approved'
