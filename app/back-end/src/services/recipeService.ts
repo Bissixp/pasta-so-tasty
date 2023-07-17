@@ -55,4 +55,13 @@ export default class RecipeService {
       throw new ErrorHttp('All fields must be filled', 409)
     }
   }
-}
+
+  static async getAllRecipes() {
+    try {
+      const getAll = await Recipes.findAll();
+      return getAll;
+    } catch (error) {
+      throw new ErrorHttp('error', 404)
+    };
+  };
+};

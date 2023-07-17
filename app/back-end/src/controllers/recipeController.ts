@@ -13,4 +13,9 @@ export default class RecipeController {
     await RecipeService.createRecipe(bodyData, file?.filename);
     res.status(201).json({ message: 'Recipe created successfully!' });
   };
+
+  static async getAllRecipes(_req: Request, res: Response): Promise<void> {
+    const data = await RecipeService.getAllRecipes();
+    res.status(201).json({ data });
+  };
 };

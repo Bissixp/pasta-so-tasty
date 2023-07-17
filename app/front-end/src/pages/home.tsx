@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
 import Header from "../components/header";
+import AllRecipes from '../components/allReceipes';
 
 const Home = () => {
   const [isUserLoggedIn, setIsUserLoggedIn] = useState<boolean>(false);
@@ -19,6 +20,7 @@ const Home = () => {
       <Header isUserLoggedIn={isUserLoggedIn} username={username}>
         <h1>Bem vindo ao Pasta so Tasty!</h1>
       </Header >
+      <AllRecipes />
     </>
   );
 };
