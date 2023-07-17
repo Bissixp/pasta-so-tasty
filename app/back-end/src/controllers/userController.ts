@@ -51,4 +51,10 @@ export default class UserController {
     const getUser = await UserService.findUsername(usernameParam);
     res.status(200).json({ data: getUser });
   };
+
+  static async getUserEmail(req: Request, res: Response): Promise<void> {
+    const usernameParam = req.params.searchParam;
+    const getEmail = await UserService.findEmail(usernameParam);
+    res.status(200).json({ data: getEmail });
+  };
 };

@@ -1,6 +1,6 @@
 import { useState, ChangeEvent, FormEvent } from 'react';
 import { Navigate } from 'react-router-dom';
-import { requestRegistration } from '../services/requests';
+import { requestRegistration, requestData } from '../services/requests';
 import '../styles/pages/registration.css';
 
 const Registration = () => {
@@ -64,7 +64,7 @@ const Registration = () => {
 
   const handleBlurUsername = async (): Promise<void> => {
     try {
-      const response = await requestRegistration('/registration/findUsername', { username });
+      const response = await requestData(`/login/username/${username}`);
       if (response.data !== null) {
         setErrorUsername('Nome de usuário já cadastrado, tente outro');
         setIsUsernameAlreadyUsed(true);
@@ -83,7 +83,7 @@ const Registration = () => {
         setErrorEmail('O email não está em um formato válido.');
       } else {
         try {
-          const response = await requestRegistration('/registration/findEmail', { email });
+          const response = await requestData(`/login/email/${email}`);
           if (response.data !== null) {
             setErrorEmail('Email já cadastrado, tente outro');
             setIsEmailAlreadyUsed(true);
