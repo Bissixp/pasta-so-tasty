@@ -5,7 +5,11 @@ import Home from '../pages/home';
 import Registration from '../pages/registration';
 import Perfil from '../pages/perfil';
 import Recipe from '../pages/recipe';
-
+import MeatRecipes from '../pages/meatRecipes';
+import PastaRecipes from '../pages/pastaRecipes';
+import ChickenRecipes from '../pages/chickenRecipes';
+import BreadRecipes from '../pages/breadRecipes';
+import SoupRecipes from '../pages/soupRecites';
 
 function RoutesPastaSoTasty() {
   return (
@@ -17,8 +21,13 @@ function RoutesPastaSoTasty() {
       <Route path="/registro" element={<Registration />} />
       <Route path="/perfil" element={<Perfil />} />
       <Route path="/criar-receita" element={<Recipe />} />
+      <Route path="/criar-receita" element={<Recipe />} />
+      <Route path="/carnes" element={<MeatRecipes />} />
+      <Route path="/massas" element={<PastaRecipes />} />
+      <Route path="/aves" element={<ChickenRecipes />} />
+      <Route path="/pães" element={<BreadRecipes />} />
+      <Route path="/sopas" element={<SoupRecipes />} />
     </Routes>
-
   );
 }
 export default RoutesPastaSoTasty;

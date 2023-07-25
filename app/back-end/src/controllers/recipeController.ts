@@ -18,4 +18,10 @@ export default class RecipeController {
     const data = await RecipeService.getAllRecipes();
     res.status(201).json(data);
   };
+
+  static async getTypeRecipes(req: Request, res: Response): Promise<void> {
+    const typeRecipe = req.params.searchParam;
+    const data = await RecipeService.getTypeRecipes(typeRecipe);
+    res.status(201).json(data);
+  };
 };

@@ -68,4 +68,17 @@ export default class RecipeService {
       throw new ErrorHttp('error', 404)
     };
   };
+
+  static async getTypeRecipes(typeRecipe: string) {
+    try {
+      const getAll = await Recipes.findAll({
+        where: {
+          recipe_type: typeRecipe,
+        }
+      });
+      return getAll;
+    } catch (error) {
+      throw new ErrorHttp('error', 404)
+    };
+  };
 };
