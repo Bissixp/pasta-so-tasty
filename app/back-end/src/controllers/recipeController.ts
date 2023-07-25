@@ -16,6 +16,6 @@ export default class RecipeController {
 
   static async getAllRecipes(_req: Request, res: Response): Promise<void> {
     const data = await RecipeService.getAllRecipes();
-    res.status(201).json({ data });
+    res.status(201).json(data);
   };
 };

@@ -36,7 +36,7 @@ export const requestCreateRecipeUpload = async (endpoint: string, body: FormData
 
 export const requestGetAllRecipes = async (endpoint: string): Promise<IRecipe[]> => {
   const { data } = await api.get(endpoint);
-  return data.data;
+  return data;
 };
 
 export default api;
