@@ -58,7 +58,11 @@ export default class RecipeService {
 
   static async getAllRecipes() {
     try {
-      const getAll = await Recipes.findAll();
+      const getAll = await Recipes.findAll({
+        where: {
+          status_recipe: 'approved',
+        }
+      });
       return getAll;
     } catch (error) {
       throw new ErrorHttp('error', 404)
