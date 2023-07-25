@@ -1,4 +1,5 @@
 import express from 'express';
+import path from 'path';
 import 'express-async-errors';
 import errorMiddleware from './middlewares/errorHandlerMiddleware';
 import loginRoute from './routes/loginRoute';
@@ -17,6 +18,7 @@ class App {
   private setup(): void {
     this.app.use(express.json());
     this.app.use(cors());
+    this.app.use('/uploads', express.static('./uploads'));
 
     this.routes();
     this.errorHandler();

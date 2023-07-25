@@ -39,4 +39,12 @@ export const requestGetAllRecipes = async (endpoint: string): Promise<IRecipe[]>
   return data;
 };
 
+export const requestGetUpload = async (photo: string) => {
+  const url = `/uploads/${photo}`;
+  const response = await api.get(url, { responseType: 'blob' });
+  const imageBlob = response.data;
+  const imageUrl = URL.createObjectURL(imageBlob);
+  return imageUrl;
+};
+
 export default api;
