@@ -65,7 +65,7 @@ export default class RecipeService {
       });
       return getAll;
     } catch (error) {
-      throw new ErrorHttp('error', 404)
+      throw new ErrorHttp('Recipes not found', 404)
     };
   };
 
@@ -78,7 +78,20 @@ export default class RecipeService {
       });
       return getAll;
     } catch (error) {
-      throw new ErrorHttp('error', 404)
+      throw new ErrorHttp('Recipes not found', 404)
+    };
+  };
+
+  static async getRecipe(id: number) {
+    try {
+      const getRecipe = await Recipes.findOne({
+        where: {
+          id,
+        }
+      });
+      return getRecipe;
+    } catch (error) {
+      throw new ErrorHttp('Recipe not found', 404)
     };
   };
 };

@@ -24,4 +24,10 @@ export default class RecipeController {
     const data = await RecipeService.getTypeRecipes(typeRecipe);
     res.status(201).json(data);
   };
+
+  static async getRecipe(req: Request, res: Response): Promise<void> {
+    const id = parseInt(req.params.id, 10);
+    const data = await RecipeService.getRecipe(id);
+    res.status(201).json(data);
+  };
 };
