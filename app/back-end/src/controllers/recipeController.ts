@@ -27,7 +27,8 @@ export default class RecipeController {
 
   static async getRecipe(req: Request, res: Response): Promise<void> {
     const id = parseInt(req.params.id, 10);
-    const data = await RecipeService.getRecipe(id);
+    const name = req.params.name.split('-').join(' ');
+    const data = await RecipeService.getRecipe(id, name);
     res.status(201).json(data);
   };
 };

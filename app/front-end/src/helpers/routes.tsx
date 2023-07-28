@@ -10,6 +10,8 @@ import PastaRecipes from '../pages/pastaRecipes';
 import ChickenRecipes from '../pages/chickenRecipes';
 import BreadRecipes from '../pages/breadRecipes';
 import SoupRecipes from '../pages/soupRecites';
+import RecipeDetails from '../pages/recipeDetails';
+import NotFoundPage from '../pages/notFound';
 
 function RoutesPastaSoTasty() {
   return (
@@ -21,12 +23,13 @@ function RoutesPastaSoTasty() {
       <Route path="/registro" element={<Registration />} />
       <Route path="/perfil" element={<Perfil />} />
       <Route path="/criar-receita" element={<Recipe />} />
-      <Route path="/criar-receita" element={<Recipe />} />
       <Route path="/carnes" element={<MeatRecipes />} />
       <Route path="/massas" element={<PastaRecipes />} />
       <Route path="/aves" element={<ChickenRecipes />} />
       <Route path="/pães" element={<BreadRecipes />} />
       <Route path="/sopas" element={<SoupRecipes />} />
+      <Route path="/receita/:id(-)?/:name" element={<RecipeDetails />} />
+      <Route path="*/*" element={<NotFoundPage />} />
     </Routes>
   );
 }

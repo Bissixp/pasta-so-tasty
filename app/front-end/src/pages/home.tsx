@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import Header from "../components/header";
-import AllRecipes from '../components/allReceipes';
+import AllRecipes from '../components/allRecipes';
 
 const Home = () => {
   const [isUserLoggedIn, setIsUserLoggedIn] = useState<boolean>(false);

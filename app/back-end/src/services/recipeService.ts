@@ -82,11 +82,12 @@ export default class RecipeService {
     };
   };
 
-  static async getRecipe(id: number) {
+  static async getRecipe(id: number, name: string) {
     try {
       const getRecipe = await Recipes.findOne({
         where: {
           id,
+          recipe_name: name,
         }
       });
       return getRecipe;

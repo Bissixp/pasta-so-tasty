@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
 import { requestGetTypeRecipes } from '../services/requests';
+import { Link } from 'react-router-dom';
 import IRecipe from '../interface/IRecipe';
 import ImageLoader from '../helpers/imageLoader';
 
@@ -27,7 +28,10 @@ const TypesReceipes: React.FC<TypesReceipesProps> = ({ type }) => {
       {recipes.length > 0 ? (
         recipes.map((recipe: IRecipe) => (
           <div key={recipe.recipe_name}>
-            <h3>{recipe.recipe_name}</h3>
+            <Link to={`/receita/${recipe.id}${'-'}${recipe.recipe_name.split(' ').join('-')}`}
+            >
+              <h3>{recipe.recipe_name}</h3>
+            </Link>
             {recipe.recipe_photo.toLowerCase().startsWith('http') ? (
               <img src={recipe.recipe_photo} alt={recipe.recipe_name} width="200" height="150" />
             ) : (

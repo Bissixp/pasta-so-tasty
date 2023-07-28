@@ -52,4 +52,9 @@ export const requestGetTypeRecipes = async (endpoint: string): Promise<IRecipe[]
   return data;
 };
 
+export const requestGetRecipe = async (endpoint: string): Promise<IRecipe> => {
+  const { data } = await api.get(endpoint);
+  return data;
+};
+
 export default api;
