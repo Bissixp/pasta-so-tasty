@@ -6,12 +6,12 @@ import IRecipe from '../interface/IRecipe';
 import ImageLoader from '../helpers/imageLoader';
 
 interface RecipeDetailsParams {
-  name: string;
+  recipeIdName: string;
   [key: string]: string | undefined;
 }
 
 const RecipeDetails: React.FC = () => {
-  const { name } = useParams<RecipeDetailsParams>();
+  const { recipeIdName } = useParams<RecipeDetailsParams>();
   const [recipe, setRecipe] = useState<IRecipe[]>([]);
   const navigate = useNavigate();
 
@@ -21,21 +21,21 @@ const RecipeDetails: React.FC = () => {
       const getRecipe = async (id: string | null, nameRecipe: string) => {
         const response = await requestGetRecipe(`recipe/getRecipe/${id}-${nameRecipe}`);
         if (!response) {
-          navigate('/')
+          navigate('/404');
         }
         setRecipe(prev => prev = [response]);
       };
-      if (name !== undefined) {
-        const matchResult = name.match(/^\d+/);
+      if (recipeIdName !== undefined) {
+        const matchResult = recipeIdName.match(/^\d+/);
         const formatedId = matchResult ? matchResult[0] : null;
-        const splitString = name.split("-");
+        const splitString = recipeIdName.split("-");
         const formatedName = splitString.slice(1).join("-");
         getRecipe(formatedId, formatedName);
       }
     } catch (error) {
       console.log(error);
     };
-  }, [name, navigate]);
+  }, [recipeIdName, navigate]);
 
   return (
     <div>

@@ -28,8 +28,8 @@ function RoutesPastaSoTasty() {
       <Route path="/aves" element={<ChickenRecipes />} />
       <Route path="/pães" element={<BreadRecipes />} />
       <Route path="/sopas" element={<SoupRecipes />} />
-      <Route path="/receita/:id(-)?/:name" element={<RecipeDetails />} />
-      <Route path="*/*" element={<NotFoundPage />} />
+      <Route path="/receita/:recipeIdName" element={<RecipeDetails />} />
+      <Route path="*" element={<NotFoundPage />} />
     </Routes>
   );
 }
