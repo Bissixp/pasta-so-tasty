@@ -18,6 +18,8 @@ const atributtes = {
   },
   recipe_ingredients_id: {
     type: DataTypes.INTEGER,
+    allowNull: false,
+    unique: true,
     references: {
       model: 'RecipeIngredients',
       key: 'id'

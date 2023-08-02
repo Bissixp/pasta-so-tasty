@@ -4,11 +4,13 @@ module.exports = {
       'RecipeIngredients',
       [
         {
+          id: 1,
           recipe_ingredient_1: '500g de Massa para lasanha',
           recipe_ingredient_2: '1kg de Carne Moída',
           recipe_ingredient_3: '1 pacote de Molho de Tomate'
         },
         {
+          id: 2,
           recipe_ingredient_1: '4 xícaras de Farinha de trigo',
           recipe_ingredient_2: '2 Calabresas',
           recipe_ingredient_3: '1 pacote de Fermento para pão',

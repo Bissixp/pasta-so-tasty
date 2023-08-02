@@ -51,21 +51,6 @@ const atributtes = {
   },
   recipe_ingredient_15: {
     type: DataTypes.STRING
-  },
-  recipe_ingredient_16: {
-    type: DataTypes.STRING
-  },
-  recipe_ingredient_17: {
-    type: DataTypes.STRING
-  },
-  recipe_ingredient_18: {
-    type: DataTypes.STRING
-  },
-  recipe_ingredient_19: {
-    type: DataTypes.STRING
-  },
-  recipe_ingredient_20: {
-    type: DataTypes.STRING
   }
 }
 
