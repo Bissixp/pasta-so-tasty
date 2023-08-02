@@ -10,5 +10,6 @@ recipeRoute.post('/create-recipe/upload', upload.single('cookPhoto'), RecipeCont
 recipeRoute.get('/getAll', RecipeController.getAllRecipes);
 recipeRoute.get('/getTypeRecipes/:searchParam', RecipeController.getTypeRecipes);
 recipeRoute.get('/getRecipe/:id-:name', RecipeController.getRecipe);
+recipeRoute.get('/getIngredients/:id', RecipeController.getIngredients);
 
 export default recipeRoute;

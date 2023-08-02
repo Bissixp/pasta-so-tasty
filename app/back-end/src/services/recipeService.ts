@@ -21,8 +21,8 @@ export default class RecipeService {
     try {
       const dynamicFields: { [key: string]: string } = {};
       ingredientsRecipe.forEach((ingredient: string, index: number) => {
-        const fild = `recipe_ingredient_${index + 1}`;
-        dynamicFields[fild] = ingredient;
+        const field = `recipe_ingredient_${index + 1}`;
+        dynamicFields[field] = ingredient;
       });
       const recipe = await RecipeIngredients.create(
         {
@@ -49,6 +49,7 @@ export default class RecipeService {
         },
         { transaction }
       );
+
       await transaction.commit();
     } catch (error) {
       await transaction.rollback();
@@ -94,5 +95,32 @@ export default class RecipeService {
     } catch (error) {
       throw new ErrorHttp('Recipe not found', 404)
     };
+  };
+
+  static async getIngredients(id: number) {
+    try {
+      const getIngredients = await RecipeIngredients.findOne({
+        where: {
+          id,
+        }
+      });
+
+      if (!getIngredients) {
+        return null;
+      }
+
+      const ingredientFields: { [key: string]: string } = {};
+      const numIngredients = 15;
+      for (let i = 1; i <= numIngredients; i++) {
+        const fieldName = `recipe_ingredient_${i}`;
+        const fieldValue = getIngredients.get(fieldName) as string;
+        if (fieldValue !== null) {
+          ingredientFields[fieldName] = fieldValue;
+        }
+      }
+      return ingredientFields;
+    } catch (error) {
+      throw new ErrorHttp('Ingredients not found', 404)
+    }
   };
 };
