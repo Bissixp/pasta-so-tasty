@@ -1,10 +1,8 @@
 import { Model, DataTypes } from 'sequelize';
-import Recipes from './recipesModel';
 import db from '.';
 
 class RecipeIngredients extends Model {
   id!: number;
-  recipe_ingredients_id!: number | null;
 }
 
 interface IngredientFields {
@@ -31,10 +29,6 @@ RecipeIngredients.init(
       type: DataTypes.INTEGER,
     },
     ...fields,
-    recipe_ingredients_id: {
-      allowNull: true,
-      type: DataTypes.INTEGER,
-    },
   },
   {
     sequelize: db,
@@ -43,7 +37,4 @@ RecipeIngredients.init(
   }
 );
 
-RecipeIngredients.belongsTo(Recipes, { foreignKey: 'recipe_ingredients_id' });
-
 export default RecipeIngredients;
-

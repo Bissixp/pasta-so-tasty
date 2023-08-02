@@ -1,4 +1,5 @@
 import { Model, INTEGER, STRING, TEXT } from 'sequelize';
+import RecipeIngredients from './recipesIngredientsModel';
 import db from '.';
 
 class Recipes extends Model {
@@ -6,7 +7,6 @@ class Recipes extends Model {
   recipe_author_name!: string;
   recipe_name!: string;
   recipe_photo!: string | FormData | Express.Multer.File;
-  recipe_ingredients_id!: number | null;
   recipe_description!: string;
   recipe_cooking_time!: number;
   recipe_type!: string;
@@ -33,10 +33,6 @@ Recipes.init(
       type: TEXT,
       allowNull: true,
     },
-    recipe_ingredients_id: {
-      type: INTEGER,
-      allowNull: true,
-    },
     recipe_description: {
       type: STRING(255),
       allowNull: false,
@@ -53,6 +49,10 @@ Recipes.init(
       type: STRING(10),
       allowNull: false,
     },
+    recipe_ingredients_id: {
+      type: INTEGER,
+      allowNull: false,
+    },
   },
   {
     sequelize: db,
@@ -60,5 +60,10 @@ Recipes.init(
     timestamps: false,
   }
 );
+
+Recipes.belongsTo(RecipeIngredients, {
+  foreignKey: 'recipe_ingredients_id',
+  as: 'ingredients',
+});
 
 export default Recipes;
