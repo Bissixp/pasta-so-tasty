@@ -1,9 +1,11 @@
 import Joi from "joi";
 import ErrorHttp from '../middlewares/utils';
 import Users from '../database/models/userModel';
+import IRegister from "../interface/IRegister";
+import UserFav from "../database/models/userFavModel";
 
 export default class UserService {
-  static async validateBodyLogin(body: string): Promise<void> {
+  static async validateBodyLogin(body: string): Promise<any> {
     try {
       const schema = Joi.object({
         email: Joi.string().required().email(),
@@ -17,10 +19,11 @@ export default class UserService {
     }
   }
 
-  static async validateBodyRegistration(body: string): Promise<void> {
+  static async validateBodyRegistration(body: string): Promise<any> {
     try {
       const schema = Joi.object({
-        username: Joi.string().required().max(12),
+        firstName: Joi.string().required().max(12).min(3),
+        lastName: Joi.string().required().max(12).min(3),
         password: Joi.string().required().min(8),
         email: Joi.string().required().email(),
       });
@@ -48,9 +51,17 @@ export default class UserService {
     return findUser;
   }
 
-  static async userRegistration(username: string, password: string, email: string) {
+  static async createAccount(accountBody: IRegister) {
+    const {
+      firstName,
+      lastName,
+      password,
+      email
+    } = accountBody;
+
     const createrUser = await Users.create({
-      username: username,
+      first_name: firstName,
+      last_name: lastName,
       password: password,
       email: email,
       role: 'member'
@@ -58,14 +69,15 @@ export default class UserService {
     return createrUser;
   }
 
-  static async findUsername(username: string) {
-    const findUsername = await Users.findOne({
-      where: {
-        username,
-      },
-    });
-    return findUsername;
-  };
+  // static async findUser(id: number, email: string) {
+  //   const findUser = await Users.findOne({
+  //     where: {
+  //       id,
+  //       email
+  //     },
+  //   });
+  //   return findUser;
+  // };
 
   static async findEmail(email: string) {
     const findEmail = await Users.findOne({
@@ -74,5 +86,32 @@ export default class UserService {
       },
     });
     return findEmail;
+  };
+
+  static async getUserFavs(idUser: number) {
+    const findFavs = await UserFav.findAll({
+      where: {
+        user_id: idUser,
+      },
+    });
+
+    const favIds = findFavs.map((fav) => fav.recipe_fav_id);
+
+    return favIds;
+  };
+
+  static async getAllFavs(idUser: number) {
+    const findFavs = await UserFav.findAll({
+      where: {
+        user_id: idUser,
+      },
+    });
+
+    if (idUser === 0) {
+      return null;
+    } else {
+      const favIds = findFavs.map((fav) => fav.recipe_fav_id);
+      return favIds;
+    }
   };
 };

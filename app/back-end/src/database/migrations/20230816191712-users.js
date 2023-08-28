@@ -7,7 +7,10 @@ const atributtes = {
     primaryKey: true,
     type: DataTypes.INTEGER
   },
-  username: {
+  first_name: {
+    type: DataTypes.STRING
+  },
+  last_name: {
     type: DataTypes.STRING
   },
   password: {

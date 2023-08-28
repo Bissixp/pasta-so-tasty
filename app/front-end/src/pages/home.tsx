@@ -1,23 +1,22 @@
-import { useEffect, useState } from 'react';
+import React, { useEffect, useContext } from 'react';
 import Header from "../components/header";
 import AllRecipes from '../components/allRecipes';
+import pastaSoTastyContext from '../context/context';
 
-const Home = () => {
-  const [isUserLoggedIn, setIsUserLoggedIn] = useState<boolean>(false);
-  const [username, setUsername] = useState<string>('');
+const Home: React.FC = () => {
+  const { fullName, logged, setLogged } = useContext(pastaSoTastyContext);
 
   useEffect(() => {
-    const loggedIn = localStorage.getItem('LoggedIn') === 'true';
-    setIsUserLoggedIn(loggedIn);
-    const userAlreadyLoggedIn = localStorage.getItem('username');
-    if (userAlreadyLoggedIn !== null) {
-      setUsername(userAlreadyLoggedIn);
+    if (fullName.length >= 1) {
+      setLogged(true);
+    } else {
+      setLogged(false);
     }
-  }, []);
+  }, [fullName, logged, setLogged]);
 
   return (
     <>
-      <Header isUserLoggedIn={isUserLoggedIn} username={username}>
+      <Header isUserLoggedIn={logged} fullName={fullName}>
         <h1>Bem vindo ao Pasta so Tasty!</h1>
       </Header >
       <AllRecipes />

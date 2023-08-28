@@ -1,87 +1,49 @@
-import { useState, useEffect, FormEvent } from 'react';
-import { requestLogin, setToken, requestData } from '../services/requests';
+import React, { useState, FormEvent } from 'react';
+import { fetchLogin } from '../services/requests';
 import { useNavigate } from 'react-router-dom';
 
 const Login: React.FC = () => {
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
-  const [role, setRole] = useState('');
-  const [isLogged, setIsLogged] = useState(false);
-  const [failedTryLogin, setFailedTryLogin] = useState(false);
-
-  const login = async (event: FormEvent<HTMLButtonElement>): Promise<void> => {
-    event.preventDefault();
-
-    try {
-      const { token } = await requestLogin('/login', { email, password });
-
-      setToken(token);
-
-      const { data } = await requestData('/login/validate');
-      const { role, username } = data;
-
-      localStorage.setItem('token', token);
-      localStorage.setItem('role', role);
-      localStorage.setItem('username', username);
-
-      setIsLogged(true);
-      setRole(role);
-
-    } catch (error) {
-      setFailedTryLogin(true);
-      setIsLogged(false);
-    }
-  };
+  const [email, setEmail] = useState<string>('');
+  const [password, setPassword] = useState<string>('');
+  const [failedTryLogin, setFailedTryLogin] = useState<boolean>(false);
 
   const navigate = useNavigate();
 
-  useEffect(() => {
-    setFailedTryLogin(false);
-    const isLoggedIn = localStorage.getItem('LoggedIn');
+  const login = async (event: FormEvent<HTMLFormElement>): Promise<void> => {
+    event.preventDefault();
 
-    if (isLoggedIn === 'true') {
+    try {
+      await fetchLogin({ email, password });
       navigate('/');
+      window.location.reload();
+    } catch (error) {
+      setFailedTryLogin(true);
     }
-
-    if (isLogged && role === 'admin') {
-      const userAlreadyLoggedIn = localStorage.getItem('username');
-      if (userAlreadyLoggedIn !== null) {
-        localStorage.setItem('username', userAlreadyLoggedIn);
-      }
-      localStorage.setItem('LoggedIn', 'true');
-      navigate('/admin');
-    }
-
-    if (isLogged && role === 'member') {
-      const userAlreadyLoggedIn = localStorage.getItem('username');
-      if (userAlreadyLoggedIn !== null) {
-        localStorage.setItem('username', userAlreadyLoggedIn);
-      }
-      localStorage.setItem('LoggedIn', 'true');
-      navigate('/');
-    }
-
-  }, [isLogged, role, navigate]);
+  };
 
   return (
     <>
       <section className="user-login-area">
-        <form>
+        <form onSubmit={(event) => login(event)}>
           <h1>Área do usuário</h1>
           <label htmlFor="email-input">
+            Email:
             <input
+              id="email-input"
               className="login__login_input"
               type="text"
               value={email}
-              onChange={({ target: { value } }) => setEmail(value)}
+              onChange={(event) => setEmail(event.target.value)}
               placeholder="Login"
             />
           </label>
           <label htmlFor="password-input">
+            Senha:
             <input
+              id="password-input"
               type="password"
               value={password}
-              onChange={({ target: { value } }) => setPassword(value)}
+              onChange={(event) => setPassword(event.target.value)}
               placeholder="Senha"
             />
           </label>
@@ -91,9 +53,7 @@ const Login: React.FC = () => {
               tente novamente.
             </p>
           )}
-          <button type="submit" onClick={(event) => login(event)}>
-            Entrar
-          </button>
+          <button type="submit">Entrar</button>
         </form>
       </section>
     </>

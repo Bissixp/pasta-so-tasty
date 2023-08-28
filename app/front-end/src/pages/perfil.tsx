@@ -1,47 +1,32 @@
-import { useEffect, useState, useContext } from "react";
-import { useNavigate, Link } from 'react-router-dom';
-import { requestData } from '../services/requests';
+import React, { useEffect, useContext } from "react";
+import { useNavigate } from 'react-router-dom';
 import Header from "../components/header";
-import pastaSoTastyContext from "../context/context";
-import IContext from '../interface/IContext';
+import { Link } from 'react-router-dom';
 import '../styles/pages/perfil.css';
+import pastaSoTastyContext from '../context/context';
 
-const Perfil = () => {
-  const { username, setUsername }: IContext = useContext(pastaSoTastyContext);
-  const [emailUser, setEmailUser] = useState<string>('');
+const Perfil: React.FC = () => {
+  const { fullName, logged, email } = useContext(pastaSoTastyContext);
 
   const navigate = useNavigate();
 
   useEffect(() => {
-    const isLoggedIn = localStorage.getItem('LoggedIn');
-    if (!isLoggedIn) {
+    if (!logged) {
       navigate('/');
     }
-    const getUserProfile = async (): Promise<void> => {
-      try {
-        const loggedUsername = localStorage.getItem('username');
-        const { data } = await requestData(`/login/username/${loggedUsername}`);
-
-        const { username, email, role } = data;
-        localStorage.setItem('role', role);
-        setUsername(username);
-        setEmailUser(email);
-      } catch (error) {
-        console.error('Erro na requisição:', error);
-      };
-    };
-    getUserProfile();
-  }, [navigate, setUsername]);
+  }, [navigate, logged]);
 
   return (
     <>
-      <Header isUserLoggedIn={true} username={username}>
+      <Header isUserLoggedIn={logged} fullName={fullName}>
       </Header>
+      <Link to="/minhas-receitas" className="header-button">Minhas Receitas</Link>
+      <Link to="/meus-favoritos" className="header-button">Meus Favoritos</Link>
+      <Link to="/aguardando-aprovação" className="header-button">Minhas Receitas</Link>
       <div className="user-perfil">
         <div className="user-perfil-content">
-          <Link to="/criar-receita">Criar Receita</Link>
-          <h3>Nome: {username}</h3>
-          <h3>Email: {emailUser}</h3>
+          <h3>Nome: {fullName} </h3>
+          <h3>Email: {email} </h3>
         </div>
       </div>
     </>

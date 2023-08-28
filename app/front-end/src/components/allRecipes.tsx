@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { requestGetAllRecipes } from '../services/requests';
+import { fetchAllRecipes } from '../services/requests';
 import { Link } from 'react-router-dom';
 import IRecipe from '../interface/IRecipe';
 import ImageLoader from '../helpers/imageLoader';
@@ -10,7 +10,7 @@ const AllRecipes = () => {
   useEffect(() => {
     try {
       const getRecipes = async () => {
-        const response = await requestGetAllRecipes('recipe/getAll');
+        const response = await fetchAllRecipes();
         setRecipes(prev => prev = response);
       };
       getRecipes();

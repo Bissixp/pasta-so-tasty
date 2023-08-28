@@ -1,27 +1,27 @@
-import { useEffect, useState } from 'react';
+import React, { useEffect, useContext } from 'react';
 import Header from "../components/header";
 import TypesReceipes from '../components/typesReceipes';
+import pastaSoTastyContext from '../context/context';
 
-const BreadRecipes = () => {
-  const [isUserLoggedIn, setIsUserLoggedIn] = useState<boolean>(false);
-  const [username, setUsername] = useState<string>('');
+const BreadRecipes: React.FC = () => {
+  const { fullName, logged, setLogged } = useContext(pastaSoTastyContext);
 
   useEffect(() => {
-    const loggedIn = localStorage.getItem('LoggedIn') === 'true';
-    setIsUserLoggedIn(loggedIn);
-    const userAlreadyLoggedIn = localStorage.getItem('username');
-    if (userAlreadyLoggedIn !== null) {
-      setUsername(userAlreadyLoggedIn);
+    if (fullName.length >= 1) {
+      setLogged(true);
+    } else {
+      setLogged(false);
     }
-  }, []);
+  }, [fullName, logged, setLogged]);
 
   return (
     <>
-      <Header isUserLoggedIn={isUserLoggedIn} username={username}>
+      <Header isUserLoggedIn={logged} fullName={fullName}>
       </Header >
       <TypesReceipes type={'Pão'} />
     </>
   );
 };
+
 
 export default BreadRecipes;

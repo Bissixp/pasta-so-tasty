@@ -4,7 +4,8 @@ import db from '.';
 
 class Recipes extends Model {
   id!: number;
-  recipe_author_name!: string;
+  author_id!: number;
+  author_name!: string;
   recipe_name!: string;
   recipe_photo!: string | FormData | Express.Multer.File;
   recipe_description!: string;
@@ -21,8 +22,12 @@ Recipes.init(
       primaryKey: true,
       type: INTEGER,
     },
-    recipe_author_name: {
-      type: STRING(30),
+    author_id: {
+      type: INTEGER,
+      allowNull: false,
+    },
+    author_name: {
+      type: STRING(50),
       allowNull: false,
     },
     recipe_name: {

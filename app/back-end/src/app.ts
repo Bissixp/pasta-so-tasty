@@ -1,11 +1,10 @@
 import express from 'express';
-import path from 'path';
+import cookieParser from 'cookie-parser';
 import 'express-async-errors';
 import errorMiddleware from './middlewares/errorHandlerMiddleware';
 import loginRoute from './routes/loginRoute';
 import registrationRoute from './routes/registrationRoute';
-import recipeRoute from './routes/recipeRoute'
-import cors from 'cors';
+import recipeRoute from './routes/recipeRoute';
 
 class App {
   public app: express.Application;
@@ -16,8 +15,17 @@ class App {
   }
 
   private setup(): void {
+    const accessControl: express.RequestHandler = (_req, res, next) => {
+      res.header('Access-Control-Allow-Origin', 'http://localhost:3000');
+      res.header('Access-Control-Allow-Methods', 'GET,POST,DELETE,OPTIONS,PUT,PATCH');
+      res.header('Access-Control-Allow-Headers', 'Content-Type, Authorization');
+      res.header('Access-Control-Allow-Credentials', 'true');
+      next();
+    };
+
     this.app.use(express.json());
-    this.app.use(cors());
+    this.app.use(cookieParser());
+    this.app.use(accessControl);
     this.app.use('/uploads', express.static('./uploads'));
 
     this.routes();

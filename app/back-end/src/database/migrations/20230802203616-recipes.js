@@ -7,7 +7,10 @@ const atributtes = {
     primaryKey: true,
     type: DataTypes.INTEGER
   },
-  recipe_author_name: {
+  author_id: {
+    type: DataTypes.INTEGER
+  },
+  author_name: {
     type: DataTypes.STRING
   },
   recipe_name: {

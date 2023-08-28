@@ -4,7 +4,8 @@ module.exports = {
       'Users',
       [
         {
-          username: 'bissixp',
+          first_name: 'Fernando',
+          last_name: 'Bissi',
           password: 'bissi@23',
           email: 'bissixp@gmail.com',
           role: 'admin'

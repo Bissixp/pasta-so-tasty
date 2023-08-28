@@ -1,14 +1,14 @@
 import { useEffect, useState } from 'react';
-import { requestGetUpload } from '../services/requests';
+import { fetchUpload } from '../services/requests';
+
 const ImageLoader: React.FC<{ photo: string; alt: string }> = ({ photo, alt }) => {
   const [imageUrl, setImageUrl] = useState<string | undefined>(undefined);
 
   const loadImage = async (photo: string) => {
     try {
-      const imageUrl = await requestGetUpload(photo);
+      const imageUrl = await fetchUpload(photo);
       return imageUrl;
-    } catch (error) {
-      console.log(error);
+    } catch (error: any) {
       return 'https://www.ncenet.com/wp-content/uploads/2020/04/No-image-found.jpg';
     }
   };

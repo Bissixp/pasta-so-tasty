@@ -1,10 +1,11 @@
-import { useEffect, useState, ChangeEvent, FormEvent } from "react";
+import React, { useEffect, useState, ChangeEvent, FormEvent, useContext } from "react";
 import { useNavigate, Link } from 'react-router-dom';
 import ICreateRecipe from "../interface/ICreateRecipe";
-import { requestCreateRecipe, requestCreateRecipeUpload } from "../services/requests";
+import { createRecipe, createUpload } from "../services/requests";
 import '../styles/pages/recipe.css';
+import pastaSoTastyContext from '../context/context';
 
-const Recipe = () => {
+const Recipe: React.FC = () => {
   const [recipeName, setRecipeName] = useState<string>('');
   const [selectedFile, setSelectedFile] = useState<File | null>(null);
   const [photoLink, setPhotoLink] = useState<string>('');
@@ -12,20 +13,14 @@ const Recipe = () => {
   const [ingredientInput, setIngredientInput] = useState<string>('');
   const [recipeDescription, setRecipeDescription] = useState<string>('');
   const [preparationTime, setPreparationTime] = useState<number>(0);
-  const [selectedType, setSelectedType] = useState('');
+  const [selectedType, setSelectedType] = useState<string>('');
   const [showButton, setShowButton] = useState<boolean>(false);
 
-  const isFormValid = !!(recipeName && (selectedFile || photoLink) && ingredients.length && recipeDescription && preparationTime);
+  const { id, role, fullName, logged } = useContext(pastaSoTastyContext);
 
   const navigate = useNavigate();
 
-  const handleRecipeNameChange = (event: ChangeEvent<HTMLInputElement>): void => {
-    setRecipeName(event.target.value);
-  };
-
-  const handleTypeChange = (event: ChangeEvent<HTMLSelectElement>) => {
-    setSelectedType(event.target.value);
-  };
+  const isFormValid = !!(recipeName && (selectedFile || photoLink) && ingredients.length && recipeDescription && preparationTime);
 
   const handleFileChange = (event: ChangeEvent<HTMLInputElement>) => {
     const file = event.target.files?.[0];
@@ -37,10 +32,6 @@ const Recipe = () => {
     const link = event.target.value;
     setPhotoLink(link);
     setSelectedFile(null);
-  };
-
-  const handleIngredientChange = (event: ChangeEvent<HTMLInputElement>) => {
-    setIngredientInput(event.target.value);
   };
 
   const handleAddIngredient = () => {
@@ -56,11 +47,6 @@ const Recipe = () => {
     );
   };
 
-  const handleRecipeDescriptionChange = (event: ChangeEvent<HTMLTextAreaElement>) => {
-    const description = event.target.value;
-    setRecipeDescription(description);
-  };
-
   const handlePreparationTimeChange = (event: ChangeEvent<HTMLInputElement>) => {
     const inputTime = event.target.value;
     const parsedTime = parseInt(inputTime, 10);
@@ -70,11 +56,8 @@ const Recipe = () => {
     }
   };
 
-  const handleSubmit = async (event: FormEvent<HTMLButtonElement>): Promise<void> => {
+  const handleSubmit = async (event: FormEvent<HTMLFormElement>): Promise<void> => {
     event.preventDefault();
-
-    const username = localStorage.getItem('username');
-    const role = localStorage.getItem('role');
 
     let roleCheck: string = 'pending';
     if (role === 'admin') {
@@ -87,7 +70,8 @@ const Recipe = () => {
         cookPhoto.append('cookPhoto', selectedFile);
 
         const payload: ICreateRecipe = {
-          cookAuthor: username,
+          authorId: id,
+          authorName: fullName,
           cookName: recipeName,
           cookPhoto: null,
           cookInfo: recipeDescription,
@@ -99,12 +83,13 @@ const Recipe = () => {
 
         cookPhoto.append('data', JSON.stringify(payload));
 
-        await requestCreateRecipeUpload('/recipe/create-recipe/upload', cookPhoto);
+        await createUpload(cookPhoto);
         setShowButton(true);
 
       } else {
         const payload: ICreateRecipe = {
-          cookAuthor: username,
+          authorId: id,
+          authorName: fullName,
           cookName: recipeName,
           cookPhoto: photoLink,
           cookInfo: recipeDescription,
@@ -114,24 +99,30 @@ const Recipe = () => {
           status: roleCheck,
         };
 
-        await requestCreateRecipe('/recipe/create-recipe', payload);
+        await createRecipe(payload);
         setShowButton(true);
       };
-    } catch (error) {
-      console.log(error);
+    } catch (error: any) {
+      console.error("Erro:", error.message);
     }
   };
 
+  const handleGoBack = () => {
+    window.history.back();
+  };
+
   useEffect(() => {
-    const isLoggedIn = localStorage.getItem('LoggedIn');
-    if (!isLoggedIn) {
+    if (!logged) {
       navigate('/');
     }
-  }, [navigate]);
+  }, [navigate, logged]);
 
   return (
     <div className="recipe-container">
-      <form className="recipe-form">
+      <button onClick={handleGoBack}>
+        Voltar
+      </button>
+      <form className="recipe-form" onSubmit={handleSubmit}>
         <label htmlFor="recipe-name">
           <h4>Nome da receita</h4>
           <input
@@ -139,14 +130,16 @@ const Recipe = () => {
             id="recipe-name"
             maxLength={40}
             value={recipeName}
-            onChange={handleRecipeNameChange}
+            onChange={(event) => setRecipeName(event.target.value)}
             readOnly={showButton}
           />
         </label>
         <div>
           <label htmlFor="recipe-type">
             <h4>Tipo de Receita</h4>
-            <select id="recipe-type" value={selectedType} onChange={handleTypeChange} disabled={showButton}>
+            <select id="recipe-type" value={selectedType}
+              onChange={(event) => setSelectedType(event.target.value)}
+              disabled={showButton}>
               <option value="" disabled>Selecione o tipo</option>
               <option value="Carne">Carne</option>
               <option value="Massa">Massa</option>
@@ -212,7 +205,7 @@ const Recipe = () => {
                   type="text"
                   value={ingredientInput}
                   maxLength={50}
-                  onChange={handleIngredientChange}
+                  onChange={(event) => setIngredientInput(event.target.value)}
                   disabled={showButton}
                 />
                 <button
@@ -232,7 +225,7 @@ const Recipe = () => {
             id="recipe-description"
             value={recipeDescription}
             maxLength={10000}
-            onChange={handleRecipeDescriptionChange}
+            onChange={(event) => setRecipeDescription(event.target.value)}
             readOnly={showButton}
           />
         </label>
@@ -251,7 +244,7 @@ const Recipe = () => {
           </label>
         </div>
         {!showButton && (
-          <button onClick={handleSubmit} type="submit" disabled={!isFormValid}>
+          <button type="submit" disabled={!isFormValid}>
             Criar
           </button>
         )}

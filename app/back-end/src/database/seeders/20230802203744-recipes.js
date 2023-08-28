@@ -4,7 +4,8 @@ module.exports = {
       'Recipes',
       [
         {
-          recipe_author_name: 'Fernando',
+          author_id: 1,
+          author_name: 'Fernando Bissi',
           recipe_name: 'Lasanha à Bolonhesa',
           recipe_photo: 'https://zh.rbsdirect.com.br/imagesrc/23094103.jpg?w=700',
           recipe_ingredients_id: 1,
@@ -14,7 +15,8 @@ module.exports = {
           status_recipe: 'approved'
         },
         {
-          recipe_author_name: 'Vinicius',
+          author_id: 2,
+          author_name: 'Vinicius Bertolazzi',
           recipe_name: 'Pão recheado de calabresa',
           recipe_photo: 'https://cozinhaparamortais.files.wordpress.com/2016/09/67_pao_calabresa1.jpg?w=1200',
           recipe_ingredients_id: 2,

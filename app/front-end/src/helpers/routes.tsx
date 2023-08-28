@@ -7,11 +7,14 @@ import Perfil from '../pages/perfil';
 import Recipe from '../pages/recipe';
 import MeatRecipes from '../pages/meatRecipes';
 import PastaRecipes from '../pages/pastaRecipes';
-import ChickenRecipes from '../pages/chickenRecipes';
+import BirdRecipes from '../pages/birdsRecipes';
 import BreadRecipes from '../pages/breadRecipes';
-import SoupRecipes from '../pages/soupRecites';
+import SoupRecipes from '../pages/soupRecipes';
 import RecipeDetails from '../pages/recipeDetails';
 import NotFoundPage from '../pages/notFound';
+import MyRecipes from '../pages/myRecipes';
+import MyFavs from '../pages/myFavs';
+import PendingApprov from '../pages/pendingApprov';
 
 function RoutesPastaSoTasty() {
   return (
@@ -25,10 +28,13 @@ function RoutesPastaSoTasty() {
       <Route path="/criar-receita" element={<Recipe />} />
       <Route path="/carnes" element={<MeatRecipes />} />
       <Route path="/massas" element={<PastaRecipes />} />
-      <Route path="/aves" element={<ChickenRecipes />} />
+      <Route path="/aves" element={<BirdRecipes />} />
       <Route path="/pães" element={<BreadRecipes />} />
       <Route path="/sopas" element={<SoupRecipes />} />
       <Route path="/receita/:recipeIdName" element={<RecipeDetails />} />
+      <Route path="/minhas-receitas" element={<MyRecipes />} />
+      <Route path="/meus-favoritos" element={<MyFavs />} />
+      <Route path="/aguardando-aprovação" element={<PendingApprov />} />
       <Route path="*" element={<NotFoundPage />} />
     </Routes>
   );

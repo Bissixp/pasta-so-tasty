@@ -3,12 +3,12 @@ import db from '.';
 
 class Users extends Model {
   id: number;
-  username: string;
+  first_name: string;
+  last_name: string;
   password: string;
   email: string;
   role: string;
 }
-
 
 Users.init({
   id: {
@@ -17,7 +17,11 @@ Users.init({
     primaryKey: true,
     type: INTEGER,
   },
-  username: {
+  first_name: {
+    type: STRING(30),
+    allowNull: false,
+  },
+  last_name: {
     type: STRING(30),
     allowNull: false,
   },
@@ -37,7 +41,6 @@ Users.init({
   sequelize: db,
   modelName: 'Users',
   timestamps: false
-})
-
+});
 
 export default Users;

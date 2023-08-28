@@ -1,5 +1,6 @@
 import RecipeIngredients from '../database/models/recipesIngredientsModel';
 import Recipes from '../database/models/recipesModel';
+import UserFav from '../database/models/userFavModel';
 import db from '../database/models';
 import IRecipe from '../interface/IRecipe';
 import ErrorHttp from '../middlewares/utils';
@@ -7,7 +8,8 @@ import ErrorHttp from '../middlewares/utils';
 export default class RecipeService {
   static async createRecipe(recipeBody: IRecipe, fileName?: string) {
     const {
-      cookAuthor,
+      authorId,
+      authorName,
       cookName,
       cookPhoto,
       cookInfo,
@@ -38,7 +40,8 @@ export default class RecipeService {
 
       await Recipes.create(
         {
-          recipe_author_name: cookAuthor,
+          author_id: authorId,
+          author_name: authorName,
           recipe_name: cookName,
           recipe_photo: realCookPhoto,
           recipe_ingredients_id: recipe.id,
@@ -53,7 +56,7 @@ export default class RecipeService {
       await transaction.commit();
     } catch (error) {
       await transaction.rollback();
-      throw new ErrorHttp('All fields must be filled', 409)
+      throw new ErrorHttp('All fields must be filled', 400)
     }
   }
 
@@ -123,4 +126,58 @@ export default class RecipeService {
       throw new ErrorHttp('Ingredients not found', 404)
     }
   };
-};
+
+  static async addFav(idUser: number, idRecipe: number) {
+    try {
+      const existingFav = await UserFav.findOne({
+        where: {
+          user_id: idUser,
+          recipe_fav_id: idRecipe,
+        },
+      });
+
+      if (existingFav) {
+        await UserFav.destroy({
+          where: {
+            user_id: idUser,
+            recipe_fav_id: idRecipe,
+          },
+        });
+      } else {
+        await UserFav.create({
+          user_id: idUser,
+          recipe_fav_id: idRecipe,
+        });
+      }
+    } catch (error) {
+      throw new ErrorHttp('Error adding to favorites', 404);
+    }
+  }
+
+  static async deleteFav(idUser: number, idRecipe: number) {
+    try {
+      await UserFav.destroy({
+        where: {
+          user_id: idUser,
+          recipe_fav_id: idRecipe,
+        },
+      });
+    } catch (error) {
+      throw new ErrorHttp('Error deleting favorite', 500);
+    }
+  }
+
+  static async getFav(idUser: number, idRecipe: number) {
+    try {
+      const fav = await UserFav.findOne({
+        where: {
+          user_id: idUser,
+          recipe_fav_id: idRecipe,
+        }
+      });
+      return fav ? [fav] : [];
+    } catch (error) {
+      throw new ErrorHttp('error to localize favorite', 404)
+    };
+  }
+}

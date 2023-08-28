@@ -1,3 +1,4 @@
+import UserService from '../services/userService';
 import RecipeService from '../services/recipeService';
 import { Request, Response } from 'express';
 
@@ -36,5 +37,35 @@ export default class RecipeController {
     const id = parseInt(req.params.id, 10);
     const data = await RecipeService.getIngredients(id);
     res.status(201).json(data);
+  };
+
+  static async addFav(req: Request, res: Response): Promise<void> {
+    const { idUser, idRecipe } = req.body;
+    await RecipeService.addFav(idUser, idRecipe);
+    res.status(201).json({ message: 'Recipe added to favorites successfully!' });
+  };
+
+  static async deleteFav(req: Request, res: Response): Promise<void> {
+    const idUser = parseInt(req.params.idUser, 10);
+    const idRecipe = parseInt(req.params.idRecipe, 10);
+    await RecipeService.deleteFav(idUser, idRecipe);
+    res.status(201).json({ message: 'Recipe removed to favorites successfully!' });
+  };
+
+  static async getFav(req: Request, res: Response): Promise<void> {
+    const idUser = parseInt(req.params.idUser, 10);
+    const idRecipe = parseInt(req.params.idRecipe, 10);
+    const fav = await RecipeService.getFav(idUser, idRecipe);
+    res.status(201).json(fav);
+  };
+
+  static async getAllFavs(req: Request, res: Response): Promise<void> {
+    const idUser = parseInt(req.params.id, 10);
+    const updatedFavIds = await UserService.getAllFavs(idUser);
+    if (updatedFavIds) {
+      res.status(201).json(updatedFavIds);
+    } else {
+      res.status(201).json(null);
+    }
   };
 };

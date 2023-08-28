@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { requestGetTypeRecipes } from '../services/requests';
+import { fetchRecipesByType } from '../services/requests';
 import { Link } from 'react-router-dom';
 import IRecipe from '../interface/IRecipe';
 import ImageLoader from '../helpers/imageLoader';
@@ -14,12 +14,12 @@ const TypesReceipes: React.FC<TypesReceipesProps> = ({ type }) => {
   useEffect(() => {
     try {
       const getRecipes = async () => {
-        const response = await requestGetTypeRecipes(`recipe/getTypeRecipes/${type}`);
+        const response = await fetchRecipesByType(type);
         setRecipes(response);
       };
       getRecipes();
-    } catch (error) {
-      console.log(error);
+    } catch (error: any) {
+      console.error("Erro:", error.message);
     };
   }, [type])
 

@@ -7,7 +7,12 @@ const secret = process.env.JWT_SECRET;
 export default class token {
   static async makeToken(user: any): Promise<String> {
     const { password, ...restOfUser } = user;
-    const payload = { data: restOfUser };
+    const payload = {
+      data: {
+        ...restOfUser,
+        logged: false,
+      }
+    };
     const options = {
       expiresIn: '24h',
     };

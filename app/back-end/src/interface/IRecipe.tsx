@@ -1,5 +1,6 @@
 interface IRecipe {
-  cookAuthor: string;
+  authorId: number;
+  authorName: string | null;
   cookName: string;
   cookPhoto: string | FormData | Express.Multer.File;
   cookInfo: string;
@@ -8,6 +9,5 @@ interface IRecipe {
   cookType: string;
   status: string;
 }
-
 
 export default IRecipe;

@@ -1,9 +1,8 @@
 import React, { useEffect, useContext } from 'react';
 import Header from "../components/header";
-import TypesReceipes from '../components/typesReceipes';
 import pastaSoTastyContext from '../context/context';
 
-const PastaRecipes: React.FC = () => {
+const MyRecipes: React.FC = () => {
   const { fullName, logged, setLogged } = useContext(pastaSoTastyContext);
 
   useEffect(() => {
@@ -18,10 +17,9 @@ const PastaRecipes: React.FC = () => {
     <>
       <Header isUserLoggedIn={logged} fullName={fullName}>
       </Header >
-      <TypesReceipes type={'Massa'} />
+      <h1>Macarrão</h1>
     </>
   );
 };
 
-
-export default PastaRecipes;
+export default MyRecipes;

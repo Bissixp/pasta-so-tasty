@@ -1,6 +1,7 @@
 interface Recipe {
   id: number;
-  recipe_author_name: string;
+  author_id: number;
+  author_name: string
   recipe_name: string;
   recipe_photo: string;
   recipe_ingredients_id: number | null;

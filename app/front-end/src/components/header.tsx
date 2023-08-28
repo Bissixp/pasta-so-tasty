@@ -1,4 +1,4 @@
-import React, { ReactNode } from 'react';
+import React, { ReactNode, useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import BtnLogoff from './btnLogoff';
 import Menu from './menu';
@@ -8,15 +8,17 @@ import '../styles/components/header.css';
 type HeaderProps = {
   children: ReactNode;
   isUserLoggedIn: boolean;
-  username: string;
+  fullName: string;
 };
 
-const upperCaseFirstLetter = (string: string) => {
-  return string.charAt(0).toUpperCase() + string.slice(1);
-};
+const Header = ({ isUserLoggedIn, fullName }: HeaderProps) => {
+  const [logged, setLogged] = useState(false);
 
-const Header = ({ isUserLoggedIn, username }: HeaderProps) => {
-  const upperCaseName = upperCaseFirstLetter(username);
+
+  useEffect(() => {
+    setLogged(isUserLoggedIn);
+  }, [isUserLoggedIn])
+
   return (
     <>
       <header className="common-header">
@@ -24,10 +26,11 @@ const Header = ({ isUserLoggedIn, username }: HeaderProps) => {
           <Link to="/home"><img src={logo} alt="Logo" className="logo" /></Link>
         </div>
         <Menu>
-          {isUserLoggedIn ? (
+          {logged ? (
             <div>
               <div className="button-container">
-                <span>Olá {upperCaseName}</span>
+                <span>Olá {fullName}</span>
+                <Link to="/criar-receita" className="header-button">Criar Receita</Link>
                 <Link to="/perfil" className="header-button">Perfil</Link>
                 <BtnLogoff />
               </div>

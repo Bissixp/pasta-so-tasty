@@ -1,4 +1,4 @@
-import PastaSoTastyProvider from './context/provider';
+import PastaSoTastyProvider from './context/provider.tsx';
 import RoutesPastaSoTasty from './helpers/routes';
 import './styles/app.css';
 

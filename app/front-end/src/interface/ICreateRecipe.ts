@@ -1,5 +1,6 @@
 interface ICreateRecipe {
-  cookAuthor: string | null;
+  authorId: number;
+  authorName: string
   cookName: string;
   cookPhoto: string | FormData | null;
   cookInfo: string;

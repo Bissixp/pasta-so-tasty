@@ -3,7 +3,7 @@ import Header from "../components/header";
 import TypesReceipes from '../components/typesReceipes';
 import pastaSoTastyContext from '../context/context';
 
-const PastaRecipes: React.FC = () => {
+const SoupRecipes: React.FC = () => {
   const { fullName, logged, setLogged } = useContext(pastaSoTastyContext);
 
   useEffect(() => {
@@ -18,10 +18,10 @@ const PastaRecipes: React.FC = () => {
     <>
       <Header isUserLoggedIn={logged} fullName={fullName}>
       </Header >
-      <TypesReceipes type={'Massa'} />
+      <TypesReceipes type={'Sopa'} />
     </>
   );
 };
 
 
-export default PastaRecipes;
+export default SoupRecipes;
