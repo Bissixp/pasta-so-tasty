@@ -2,13 +2,22 @@ import React, { useEffect, useContext, useState } from 'react';
 import Header from "../components/header";
 import pastaSoTastyContext from '../context/context';
 import IRecipe from '../interface/IRecipe';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import ImageLoader from '../helpers/imageLoader';
 import { fetchMyRecipes } from '../services/requests';
 
 const MyRecipes: React.FC = () => {
   const [recipes, setRecipes] = useState<IRecipe[]>([]);
   const { id, fullName, logged, setLogged } = useContext(pastaSoTastyContext);
+
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    if (!logged) {
+      navigate('/registro');
+    }
+  }, [navigate, logged]);
+
 
   useEffect(() => {
     if (fullName.length >= 1) {

@@ -1,5 +1,5 @@
 import React, { useEffect, useContext, useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { fetchMyFavs } from '../services/requests';
 import Header from "../components/header";
 import pastaSoTastyContext from '../context/context';
@@ -9,6 +9,14 @@ import ImageLoader from '../helpers/imageLoader';
 const MyFavs: React.FC = () => {
   const [recipes, setRecipes] = useState<IRecipe[]>([]);
   const { id, fullName, logged, setLogged } = useContext(pastaSoTastyContext);
+
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    if (!logged) {
+      navigate('/registro');
+    }
+  }, [navigate, logged]);
 
   useEffect(() => {
     if (fullName.length >= 1) {

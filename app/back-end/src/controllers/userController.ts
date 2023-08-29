@@ -58,7 +58,8 @@ export default class UserController {
     res.status(200).json({ data: getEmail });
   };
 
-  static async logout(_req: Request, res: Response): Promise<Response | void> {
+  static async logout(req: Request, res: Response): Promise<Response | void> {
+    res.clearCookie('jwt');
     res.cookie('jwt', '', { httpOnly: true, maxAge: -1, sameSite: 'lax', path: '/' })
     res.status(200).json({ message: 'logeg out with sucess' })
   }

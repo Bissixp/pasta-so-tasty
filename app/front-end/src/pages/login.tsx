@@ -1,13 +1,22 @@
-import React, { useState, FormEvent } from 'react';
+import React, { useState, FormEvent, useContext, useEffect } from 'react';
 import { fetchLogin } from '../services/requests';
 import { useNavigate } from 'react-router-dom';
+import pastaSoTastyContext from '../context/context';
 
 const Login: React.FC = () => {
   const [email, setEmail] = useState<string>('');
   const [password, setPassword] = useState<string>('');
   const [failedTryLogin, setFailedTryLogin] = useState<boolean>(false);
 
+  const { fullName } = useContext(pastaSoTastyContext);
+
   const navigate = useNavigate();
+
+  useEffect(() => {
+    if (fullName.length >= 1) {
+      navigate('/');
+    }
+  }, [navigate, fullName]);
 
   const login = async (event: FormEvent<HTMLFormElement>): Promise<void> => {
     event.preventDefault();
