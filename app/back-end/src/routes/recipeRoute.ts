@@ -14,6 +14,7 @@ recipeRoute.get('/all-favorites/:id', RecipeController.getAllFavs);
 recipeRoute.get('/getAll', RecipeController.getAllRecipes);
 recipeRoute.get('/getTypeRecipes/:searchParam', RecipeController.getTypeRecipes);
 recipeRoute.get('/getRecipe/:id-:name', RecipeController.getRecipe);
+recipeRoute.get('/getMyRecipe/:id', RecipeController.getMyRecipes);
 recipeRoute.get('/getIngredients/:id', RecipeController.getIngredients);
 
 export default recipeRoute;

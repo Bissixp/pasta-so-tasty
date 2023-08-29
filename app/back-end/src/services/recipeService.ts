@@ -4,6 +4,7 @@ import UserFav from '../database/models/userFavModel';
 import db from '../database/models';
 import IRecipe from '../interface/IRecipe';
 import ErrorHttp from '../middlewares/utils';
+const { Op } = require('sequelize');
 
 export default class RecipeService {
   static async createRecipe(recipeBody: IRecipe, fileName?: string) {
@@ -97,6 +98,19 @@ export default class RecipeService {
       return getRecipe;
     } catch (error) {
       throw new ErrorHttp('Recipe not found', 404)
+    };
+  };
+
+  static async getMyRecipes(id: number) {
+    try {
+      const getMyRecipes = await Recipes.findAll({
+        where: {
+          author_id: id,
+        }
+      });
+      return getMyRecipes;
+    } catch (error) {
+      throw new ErrorHttp('Recipes not found', 404)
     };
   };
 

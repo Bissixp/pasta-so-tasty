@@ -57,6 +57,11 @@ export const fetchRecipe = async (id: string | null, nameRecipe: string): Promis
   return data;
 };
 
+export const fetchMyRecipes = async (id: number): Promise<IRecipe[]> => {
+  const { data } = await api.get(`recipe/getMyRecipe/${id}`);
+  return data;
+};
+
 export const fetchAllFavs = async (id: number): Promise<IAllFavs> => {
   const { data } = await api.get(`/recipe/all-favorites/${id}`);
   return data;

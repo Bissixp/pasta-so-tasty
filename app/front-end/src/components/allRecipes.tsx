@@ -14,8 +14,8 @@ const AllRecipes = () => {
         setRecipes(prev => prev = response);
       };
       getRecipes();
-    } catch (error) {
-      console.log(error);
+    } catch (error: any) {
+      console.error("Erro:", error.message);
     };
   }, [])
 
