@@ -1,4 +1,4 @@
-interface IRecipe {
+interface ICreateRecipe {
   authorId: number;
   authorName: string | null;
   cookName: string;
@@ -10,4 +10,4 @@ interface IRecipe {
   status: string;
 }
 
-export default IRecipe;
+export default ICreateRecipe;

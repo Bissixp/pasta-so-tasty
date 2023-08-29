@@ -2,12 +2,12 @@ import RecipeIngredients from '../database/models/recipesIngredientsModel';
 import Recipes from '../database/models/recipesModel';
 import UserFav from '../database/models/userFavModel';
 import db from '../database/models';
+import ICreateRecipe from '../interface/ICreateRecipe';
 import IRecipe from '../interface/IRecipe';
 import ErrorHttp from '../middlewares/utils';
-const { Op } = require('sequelize');
 
 export default class RecipeService {
-  static async createRecipe(recipeBody: IRecipe, fileName?: string) {
+  static async createRecipe(recipeBody: ICreateRecipe, fileName?: string) {
     const {
       authorId,
       authorName,
@@ -109,6 +109,68 @@ export default class RecipeService {
         }
       });
       return getMyRecipes;
+    } catch (error) {
+      throw new ErrorHttp('Recipes not found', 404)
+    };
+  };
+
+
+  static async getRecipeById(id: number) {
+    try {
+      const getRecipe = await Recipes.findOne({
+        where: {
+          id,
+        }
+      });
+      console.log(getRecipe);
+
+      return getRecipe;
+    } catch (error) {
+      throw new ErrorHttp('Recipe not found', 404)
+    };
+  };
+
+
+  static async getMyFavs(id: number): Promise<IRecipe[]> {
+    try {
+      const getMyFavs = await UserFav.findAll({
+        where: {
+          user_id: id,
+        }
+      });
+      const favIds = getMyFavs.map((fav) => fav.recipe_fav_id);
+      const favRecipes: IRecipe[] = [];
+      await Promise.all(favIds.map(async (favId) => {
+        const recipe = await this.getRecipeById(favId);
+        if (recipe) {
+          const {
+            id,
+            author_id,
+            author_name,
+            recipe_name,
+            recipe_photo,
+            recipe_description,
+            recipe_cooking_time,
+            recipe_type,
+            status_recipe,
+            recipe_ingredients_id,
+          } = recipe.dataValues;
+
+          favRecipes.push({
+            id,
+            author_id,
+            author_name,
+            recipe_name,
+            recipe_photo,
+            recipe_description,
+            recipe_cooking_time,
+            recipe_type,
+            status_recipe,
+            recipe_ingredients_id,
+          });
+        }
+      }));
+      return favRecipes;
     } catch (error) {
       throw new ErrorHttp('Recipes not found', 404)
     };

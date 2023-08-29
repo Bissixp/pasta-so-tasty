@@ -4,7 +4,6 @@ import pastaSoTastyContext from '../context/context';
 import IRecipe from '../interface/IRecipe';
 import { Link } from 'react-router-dom';
 import ImageLoader from '../helpers/imageLoader';
-
 import { fetchMyRecipes } from '../services/requests';
 
 const MyRecipes: React.FC = () => {
