@@ -113,7 +113,7 @@ const Recipe: React.FC = () => {
 
   useEffect(() => {
     if (!logged) {
-      navigate('/');
+      navigate('/registro');
     }
   }, [navigate, logged]);
 

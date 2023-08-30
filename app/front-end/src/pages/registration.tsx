@@ -1,6 +1,7 @@
-import React, { useState, ChangeEvent, FormEvent } from 'react';
+import React, { useState, ChangeEvent, FormEvent, useContext, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { createAccount, fetchEmail } from '../services/requests';
+import pastaSoTastyContext from '../context/context';
 import '../styles/pages/registration.css';
 
 const Registration: React.FC = () => {
@@ -16,7 +17,16 @@ const Registration: React.FC = () => {
   const [redirectToHome, setRedirectToHome] = useState<boolean>(false);
   const [isEmailAlreadyUsed, setIsEmailAlreadyUsed] = useState<boolean>(false);
 
+  const { fullName } = useContext(pastaSoTastyContext);
+
   const navigate = useNavigate();
+
+  useEffect(() => {
+    if (fullName.length >= 1) {
+      navigate('/');
+    }
+  }, [navigate, fullName]);
+
 
   const isFormValid = !(errorMessage || isEmailAlreadyUsed || errorFirstName || errorLastName);
 

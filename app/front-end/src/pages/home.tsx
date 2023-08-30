@@ -1,18 +1,10 @@
-import React, { useEffect, useContext } from 'react';
+import React, { useContext } from 'react';
 import Header from "../components/header";
 import AllRecipes from '../components/allRecipes';
 import pastaSoTastyContext from '../context/context';
 
 const Home: React.FC = () => {
-  const { fullName, logged, setLogged } = useContext(pastaSoTastyContext);
-
-  useEffect(() => {
-    if (fullName.length >= 1) {
-      setLogged(true);
-    } else {
-      setLogged(false);
-    }
-  }, [fullName, logged, setLogged]);
+  const { fullName, logged } = useContext(pastaSoTastyContext);
 
   return (
     <>

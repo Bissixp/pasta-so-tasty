@@ -8,7 +8,7 @@ import { fetchMyRecipes } from '../services/requests';
 
 const MyRecipes: React.FC = () => {
   const [recipes, setRecipes] = useState<IRecipe[]>([]);
-  const { id, fullName, logged, setLogged } = useContext(pastaSoTastyContext);
+  const { id, fullName, logged } = useContext(pastaSoTastyContext);
 
   const navigate = useNavigate();
 
@@ -18,14 +18,6 @@ const MyRecipes: React.FC = () => {
     }
   }, [navigate, logged]);
 
-
-  useEffect(() => {
-    if (fullName.length >= 1) {
-      setLogged(true);
-    } else {
-      setLogged(false);
-    }
-  }, [fullName, logged, setLogged]);
 
   useEffect(() => {
     try {

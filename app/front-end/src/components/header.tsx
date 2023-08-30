@@ -14,7 +14,6 @@ type HeaderProps = {
 const Header = ({ isUserLoggedIn, fullName }: HeaderProps) => {
   const [logged, setLogged] = useState(false);
 
-
   useEffect(() => {
     setLogged(isUserLoggedIn);
   }, [isUserLoggedIn])

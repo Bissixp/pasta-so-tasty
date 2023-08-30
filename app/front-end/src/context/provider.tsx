@@ -10,6 +10,7 @@ function PastaSoTastyProvider({ children }: { children: React.ReactNode }) {
   const [role, setRole] = useState<string>('');
   const [logged, setLogged] = useState<boolean>(false);
 
+
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -19,7 +20,7 @@ function PastaSoTastyProvider({ children }: { children: React.ReactNode }) {
           setFullName(`${data.first_name} ${data.last_name}`);
           setEmail(data.email);
           setRole(data.role);
-          setLogged(data.logged)
+          setLogged(true);
         }
       } catch (e: any) {
         console.error("Erro:", e.message);
@@ -40,8 +41,11 @@ function PastaSoTastyProvider({ children }: { children: React.ReactNode }) {
     };
 
     fetchData();
-    fetchFavs();
-  }, [id]);
+    if (logged) {
+      fetchFavs();
+    }
+  }, [id, logged]);
+
 
   const contextValue = useMemo(() => ({
     id,
