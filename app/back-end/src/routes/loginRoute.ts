@@ -6,8 +6,10 @@ const loginRoute = Router();
 
 loginRoute.post('/', UserController.login);
 loginRoute.get('/validate', UserController.authentication);
-// loginRoute.get('/username/:searchParam', UserController.findUser);
 loginRoute.get('/email/:searchParam', UserController.getUserEmail);
-loginRoute.get('/logoff', UserController.logout);
+loginRoute.get('/logoff', (_req, res) => {
+  res.setHeader('Cache-Control', 'no-store');
+  UserController.logout(_req, res);
+});
 
 export default loginRoute;
