@@ -10,7 +10,7 @@ export default class token {
     const payload = {
       data: {
         ...restOfUser,
-        logged: false,
+        logged: true,
       }
     };
     const options = {

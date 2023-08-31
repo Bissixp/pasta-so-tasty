@@ -8,7 +8,7 @@ import ImageLoader from '../helpers/imageLoader';
 
 const MyFavs: React.FC = () => {
   const [recipes, setRecipes] = useState<IRecipe[]>([]);
-  const { id, fullName, logged, setLogged } = useContext(pastaSoTastyContext);
+  const { id, fullName, logged } = useContext(pastaSoTastyContext);
 
   const navigate = useNavigate();
 
@@ -17,14 +17,6 @@ const MyFavs: React.FC = () => {
       navigate('/registro');
     }
   }, [navigate, logged]);
-
-  useEffect(() => {
-    if (fullName.length >= 1) {
-      setLogged(true);
-    } else {
-      setLogged(false);
-    }
-  }, [fullName, logged, setLogged]);
 
   useEffect(() => {
     try {
@@ -37,6 +29,7 @@ const MyFavs: React.FC = () => {
       console.error("Erro:", error.message);
     };
   }, [id, fullName]);
+
 
   return (
     <div>

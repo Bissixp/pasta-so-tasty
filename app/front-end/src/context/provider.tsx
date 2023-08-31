@@ -24,7 +24,7 @@ function PastaSoTastyProvider({ children }: { children: React.ReactNode }) {
           setFullName(`${data.first_name} ${data.last_name}`);
           setEmail(data.email);
           setRole(data.role);
-          setLogged(true);
+          setLogged(data.logged);
         }
       } catch (e: any) {
         console.error("Erro:", e.message);
