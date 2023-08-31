@@ -18,6 +18,11 @@ export const fetchAllRecipes = async (): Promise<IRecipe[]> => {
   return data;
 };
 
+export const fetchRecipesByName = async (name: string | null): Promise<IRecipe[]> => {
+  const { data } = await api.get(`recipe/getRecipesByName/${name}`);
+  return data;
+};
+
 export const fetchEmail = async (email: string) => {
   const { data } = await api.get(`/login/email/${email}`, {
     withCredentials: true,

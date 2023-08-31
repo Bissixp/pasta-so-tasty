@@ -5,6 +5,7 @@ import db from '../database/models';
 import ICreateRecipe from '../interface/ICreateRecipe';
 import IRecipe from '../interface/IRecipe';
 import ErrorHttp from '../middlewares/utils';
+import { Op } from 'sequelize';
 
 export default class RecipeService {
   static async createRecipe(recipeBody: ICreateRecipe, fileName?: string) {
@@ -268,6 +269,24 @@ export default class RecipeService {
       });
       return pedingRecipes;
     } catch (error) {
+      throw new ErrorHttp('Recipes not found', 404)
+    };
+  }
+
+  static async getRecipesByName(name: string) {
+    try {
+      const allRecipes = await Recipes.findAll({
+        where: {
+          recipe_name: {
+            [Op.like]: `%${name}%`,
+          },
+          status_recipe: 'approved',
+        },
+      });
+      return allRecipes;
+    } catch (error) {
+      console.log(error);
+
       throw new ErrorHttp('Recipes not found', 404)
     };
   }

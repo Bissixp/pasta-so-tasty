@@ -86,4 +86,10 @@ export default class RecipeController {
     const data = await RecipeService.pedingRecipes(id);
     res.status(201).json(data);
   };
+
+  static async getRecipesByName(req: Request, res: Response): Promise<void> {
+    const name = req.params.name;
+    const data = await RecipeService.getRecipesByName(name);
+    res.status(201).json(data);
+  };
 };
