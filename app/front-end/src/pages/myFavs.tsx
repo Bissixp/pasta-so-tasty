@@ -60,7 +60,7 @@ const MyFavs: React.FC = () => {
           </div>
         ))
       ) : (
-        <p>Carregando receitas...</p>
+        <p>Nenhuma receita adicionada aos favoritos</p>
       )}
     </div >
   );

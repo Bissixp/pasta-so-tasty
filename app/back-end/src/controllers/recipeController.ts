@@ -80,4 +80,10 @@ export default class RecipeController {
       res.status(201).json(null);
     }
   };
+
+  static async pedingRecipes(req: Request, res: Response): Promise<void> {
+    const id = parseInt(req.params.id, 10);
+    const data = await RecipeService.pedingRecipes(id);
+    res.status(201).json(data);
+  };
 };

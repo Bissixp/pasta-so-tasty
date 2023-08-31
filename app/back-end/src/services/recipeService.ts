@@ -79,6 +79,7 @@ export default class RecipeService {
       const getAll = await Recipes.findAll({
         where: {
           recipe_type: typeRecipe,
+          status_recipe: 'approved',
         }
       });
       return getAll;
@@ -106,6 +107,7 @@ export default class RecipeService {
       const getMyRecipes = await Recipes.findAll({
         where: {
           author_id: id,
+          status_recipe: 'approved'
         }
       });
       return getMyRecipes;
@@ -113,7 +115,6 @@ export default class RecipeService {
       throw new ErrorHttp('Recipes not found', 404)
     };
   };
-
 
   static async getRecipeById(id: number) {
     try {
@@ -254,6 +255,20 @@ export default class RecipeService {
       return fav ? [fav] : [];
     } catch (error) {
       throw new ErrorHttp('error to localize favorite', 404)
+    };
+  }
+
+  static async pedingRecipes(id: number) {
+    try {
+      const pedingRecipes = await Recipes.findAll({
+        where: {
+          author_id: id,
+          status_recipe: 'pending',
+        }
+      });
+      return pedingRecipes;
+    } catch (error) {
+      throw new ErrorHttp('Recipes not found', 404)
     };
   }
 }

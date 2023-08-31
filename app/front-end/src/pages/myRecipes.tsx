@@ -53,7 +53,7 @@ const MyRecipes: React.FC = () => {
           </div>
         ))
       ) : (
-        <p>Carregando receitas...</p>
+        <p>Nenhuma receita criada</p>
       )}
     </div >
   );

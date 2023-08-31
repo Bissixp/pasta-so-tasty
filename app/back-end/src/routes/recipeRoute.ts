@@ -17,5 +17,6 @@ recipeRoute.get('/getRecipe/:id-:name', RecipeController.getRecipe);
 recipeRoute.get('/getMyRecipe/:id', RecipeController.getMyRecipes);
 recipeRoute.get('/getMyFavs/:id', RecipeController.getMyFavs);
 recipeRoute.get('/getIngredients/:id', RecipeController.getIngredients);
+recipeRoute.get('/pending/:id', RecipeController.pedingRecipes);
 
 export default recipeRoute;

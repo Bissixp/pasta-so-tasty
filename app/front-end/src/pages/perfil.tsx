@@ -22,7 +22,7 @@ const Perfil: React.FC = () => {
       </Header>
       <Link to="/minhas-receitas" className="header-button">Minhas Receitas</Link>
       <Link to="/meus-favoritos" className="header-button">Meus Favoritos</Link>
-      <Link to="/aguardando-aprovação" className="header-button">Minhas Receitas</Link>
+      <Link to="/aguardando-aprovação" className="header-button">Aguardando Aprovação</Link>
       <div className="user-perfil">
         <div className="user-perfil-content">
           <h3>Nome: {fullName} </h3>
