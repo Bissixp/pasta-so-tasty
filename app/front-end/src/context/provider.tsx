@@ -1,5 +1,6 @@
 import React, { useEffect, useMemo, useState } from 'react';
 import { fetchValidate, fetchAllFavs } from '../services/requests';
+import { useNavigate, useLocation } from 'react-router-dom';
 import PastaSoTastyContext from './context';
 import ICookies from '../interface/ICookies';
 
@@ -9,7 +10,10 @@ function PastaSoTastyProvider({ children }: { children: React.ReactNode }) {
   const [email, setEmail] = useState<string>('');
   const [role, setRole] = useState<string>('');
   const [logged, setLogged] = useState<boolean>(false);
+  const [currentPage, setCurrentPage] = useState<string>('');
 
+  const navigate = useNavigate();
+  const routerLocation = useLocation();
 
   useEffect(() => {
     const fetchData = async () => {
@@ -46,6 +50,18 @@ function PastaSoTastyProvider({ children }: { children: React.ReactNode }) {
     }
   }, [id, logged]);
 
+  useEffect(() => {
+    const currentPage = routerLocation.pathname;
+    if (currentPage !== "/") {
+      setCurrentPage(currentPage);
+    }
+  }, [routerLocation.pathname]);
+
+  useEffect(() => {
+    if (currentPage && currentPage !== "/" && !routerLocation.pathname) {
+      navigate(currentPage);
+    }
+  }, [navigate, currentPage, routerLocation.pathname]);
 
   const contextValue = useMemo(() => ({
     id,
@@ -57,7 +73,7 @@ function PastaSoTastyProvider({ children }: { children: React.ReactNode }) {
     role,
     setRole,
     logged,
-    setLogged
+    setLogged,
   }), [id, fullName, email, role, logged]);
 
   return (
