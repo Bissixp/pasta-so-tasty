@@ -145,8 +145,5 @@ export const createFav = async (body: IFav) => {
 }
 
 // DELETE Requests
-export const deleteFav = async ({ idUser, idRecipe }: IFav) => {
-  await api.delete(`/recipe/favorites/${idUser}/${idRecipe}`);
-};
 
 export default api;

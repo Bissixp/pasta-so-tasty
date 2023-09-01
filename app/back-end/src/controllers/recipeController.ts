@@ -56,14 +56,7 @@ export default class RecipeController {
     await RecipeService.addFav(idUser, idRecipe);
     res.status(201).json({ message: 'Recipe added to favorites successfully!' });
   };
-
-  static async deleteFav(req: Request, res: Response): Promise<void> {
-    const idUser = parseInt(req.params.idUser, 10);
-    const idRecipe = parseInt(req.params.idRecipe, 10);
-    await RecipeService.deleteFav(idUser, idRecipe);
-    res.status(201).json({ message: 'Recipe removed to favorites successfully!' });
-  };
-
+  
   static async getFav(req: Request, res: Response): Promise<void> {
     const idUser = parseInt(req.params.idUser, 10);
     const idRecipe = parseInt(req.params.idRecipe, 10);

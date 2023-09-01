@@ -232,19 +232,6 @@ export default class RecipeService {
     }
   }
 
-  static async deleteFav(idUser: number, idRecipe: number) {
-    try {
-      await UserFav.destroy({
-        where: {
-          user_id: idUser,
-          recipe_fav_id: idRecipe,
-        },
-      });
-    } catch (error) {
-      throw new ErrorHttp('Error deleting favorite', 500);
-    }
-  }
-
   static async getFav(idUser: number, idRecipe: number) {
     try {
       const fav = await UserFav.findOne({

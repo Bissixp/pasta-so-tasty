@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { createFav, deleteFav, fetchFav } from '../services/requests';
+import { createFav, fetchFav } from '../services/requests';
 import { ReactSVG } from 'react-svg';
 import FavoriteFilledIcon from '../images/fav-on.svg';
 import FavoriteEmptyIcon from '../images/fav-off.svg';
@@ -58,7 +58,7 @@ const FavoriteButton: React.FC<IFav> = ({ idUser, idRecipe }) => {
       };
 
       if (isFavorited) {
-        await deleteFav(payload);
+        await createFav(payload);
         setRecipes((prevRecipes: any) => prevRecipes.filter((fav: any) => fav.recipe_fav_id !== idRecipe));
         setIsFavorited(false);
 
