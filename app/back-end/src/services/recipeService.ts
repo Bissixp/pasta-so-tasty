@@ -260,6 +260,19 @@ export default class RecipeService {
     };
   }
 
+  static async getAllPedingRecipes() {
+    try {
+      const pedingRecipes = await Recipes.findAll({
+        where: {
+          status_recipe: 'pending',
+        }
+      });
+      return pedingRecipes;
+    } catch (error) {
+      throw new ErrorHttp('Recipes not found', 404)
+    };
+  }
+
   static async getRecipesByName(name: string) {
     try {
       const allRecipes = await Recipes.findAll({
@@ -274,5 +287,44 @@ export default class RecipeService {
     } catch (error) {
       throw new ErrorHttp('Recipes not found', 404)
     };
+  }
+
+  static async approveRecipe(id: number) {
+    try {
+      const approveRecipes = await Recipes.findOne({
+        where: {
+          id: id,
+          status_recipe: 'pending',
+        }
+      });
+      if (!approveRecipes) {
+        throw new ErrorHttp('Recipe not found or already approved', 404);
+      }
+      await Recipes.update(
+        { status_recipe: 'approved' },
+        { where: { id: id } }
+      );
+    } catch (error) {
+      throw new ErrorHttp('Recipes not found', 404)
+    };
+  }
+
+  static async deleteRecipe(id: number) {
+    try {
+      const recipeToDelete = await Recipes.findOne({
+        where: {
+          id: id,
+          status_recipe: 'pending',
+        }
+      });
+      if (!recipeToDelete) {
+        throw new ErrorHttp('Recipe not found or not pending', 404);
+      }
+      await Recipes.destroy({
+        where: { id: id },
+      });
+    } catch (error) {
+      throw new ErrorHttp('Error deleting recipe', 500);
+    }
   }
 }

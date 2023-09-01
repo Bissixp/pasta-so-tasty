@@ -72,6 +72,11 @@ export const fetchMyPedingRecipes = async (id: number): Promise<IRecipe[]> => {
   return data;
 };
 
+export const fetchAllPedingRecipes = async (): Promise<IRecipe[]> => {
+  const { data } = await api.get('recipe/getAllPending');
+  return data;
+};
+
 export const fetchMyFavs = async (id: number): Promise<IRecipe[]> => {
   const { data } = await api.get(`recipe/getMyFavs/${id}`);
   return data;
@@ -116,6 +121,11 @@ export const fetchLogout = async () => {
     return error.message;
   }
 };
+// PUT Requests
+
+export const approveRecipe = async (id: number) => {
+  await api.patch(`recipe/approveRecipe/${id}`);
+};
 
 // POST Requests
 export const fetchLogin = async (body: any) => {
@@ -145,5 +155,9 @@ export const createFav = async (body: IFav) => {
 }
 
 // DELETE Requests
+
+export const deleteRecipe = async (id: number) => {
+  await api.delete(`recipe/deleteRecipe/${id}`);
+};
 
 export default api;

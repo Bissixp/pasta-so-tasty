@@ -56,7 +56,7 @@ export default class RecipeController {
     await RecipeService.addFav(idUser, idRecipe);
     res.status(201).json({ message: 'Recipe added to favorites successfully!' });
   };
-  
+
   static async getFav(req: Request, res: Response): Promise<void> {
     const idUser = parseInt(req.params.idUser, 10);
     const idRecipe = parseInt(req.params.idRecipe, 10);
@@ -74,6 +74,11 @@ export default class RecipeController {
     }
   };
 
+  static async getAllPedingRecipes(_req: Request, res: Response): Promise<void> {
+    const data = await RecipeService.getAllPedingRecipes();
+    res.status(201).json(data);
+  };
+
   static async pedingRecipes(req: Request, res: Response): Promise<void> {
     const id = parseInt(req.params.id, 10);
     const data = await RecipeService.pedingRecipes(id);
@@ -84,5 +89,17 @@ export default class RecipeController {
     const name = req.params.name;
     const data = await RecipeService.getRecipesByName(name);
     res.status(201).json(data);
+  };
+
+  static async approveRecipe(req: Request, res: Response): Promise<void> {
+    const id = parseInt(req.params.id, 10);
+    await RecipeService.approveRecipe(id);
+    res.status(201).json();
+  };
+
+  static async deleteRecipe(req: Request, res: Response): Promise<void> {
+    const id = parseInt(req.params.id, 10);
+    await RecipeService.deleteRecipe(id);
+    res.status(201).json();
   };
 };
