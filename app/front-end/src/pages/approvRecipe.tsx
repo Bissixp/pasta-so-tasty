@@ -6,7 +6,7 @@ import pastaSoTastyContext from '../context/context';
 import IRecipe from '../interface/IRecipe';
 import ImageLoader from '../helpers/imageLoader';
 
-const Admin: React.FC = () => {
+const AprovarReceitas: React.FC = () => {
   const [recipes, setRecipes] = useState<IRecipe[]>([]);
   const { id, fullName, logged, role } = useContext(pastaSoTastyContext);
 
@@ -34,14 +34,14 @@ const Admin: React.FC = () => {
     await approveRecipe(id);
     const response = await fetchAllPedingRecipes();
     setRecipes(prev => prev = response);
-    navigate('/admin');
+    navigate('/aprovar-receitas');
   };
 
   const handleDelete = async (id: number) => {
     await deleteRecipe(id);
     const response = await fetchAllPedingRecipes();
     setRecipes(prev => prev = response);
-    navigate('/admin');
+    navigate('/aprovar-receitas');
   };
 
   return (
@@ -74,4 +74,4 @@ const Admin: React.FC = () => {
   );
 };
 
-export default Admin;
+export default AprovarReceitas;
