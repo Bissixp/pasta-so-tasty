@@ -1,0 +1,50 @@
+h1 {
+  padding: 10px;
+}
+
+.recipe-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.recipe-list {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: flex-start;
+}
+
+.recipe-card {
+  flex: 0 0 calc(33.33% - 20px);
+  margin-bottom: 20px;
+  padding: 10px;
+  background-color: transparent;
+  text-align: center;
+  box-shadow: none;
+}
+
+.recipe-card h3 {
+  margin: 0;
+}
+
+.recipe-card img {
+  max-width: 100%;
+  height: auto;
+  display: block;
+  margin: 0 auto;
+}
+
+.recipe-author {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.link-class {
+  text-decoration: none;
+  color: #151922;
+}
+
+img {
+  border-radius: 20px;
+}
