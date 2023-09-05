@@ -1,4 +1,5 @@
 import { Router } from 'express';
+import { authenticateMiddleware, isAdmin } from '../middlewares/adminHandlerMiddleware';
 import RecipeController from '../controllers/recipeController';
 import multer from 'multer';
 
@@ -18,8 +19,9 @@ recipeRoute.get('/getMyFavs/:id', RecipeController.getMyFavs);
 recipeRoute.get('/getRecipesByName/:name', RecipeController.getRecipesByName);
 recipeRoute.get('/getIngredients/:id', RecipeController.getIngredients);
 recipeRoute.get('/getAllPending', RecipeController.getAllPedingRecipes);
+recipeRoute.get('/pending/:id', RecipeController.pedingRecipes);
 recipeRoute.patch('/approveRecipe/:id', RecipeController.approveRecipe);
 recipeRoute.delete('/deleteRecipe/:id', RecipeController.deleteRecipe);
-recipeRoute.get('/pending/:id', RecipeController.pedingRecipes);
+recipeRoute.delete('/deleteRecipePosted/:id', authenticateMiddleware, isAdmin, RecipeController.deleteRecipePosted);
 
 export default recipeRoute;

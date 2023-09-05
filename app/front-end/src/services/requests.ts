@@ -160,4 +160,10 @@ export const deleteRecipe = async (id: number) => {
   await api.delete(`recipe/deleteRecipe/${id}`);
 };
 
+export const deleteRecipePosted = async (id: number) => {
+  await api.delete(`recipe/deleteRecipePosted/${id}`, {
+    withCredentials: true,
+  });
+};
+
 export default api;

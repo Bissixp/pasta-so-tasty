@@ -327,4 +327,22 @@ export default class RecipeService {
       throw new ErrorHttp('Error deleting recipe', 500);
     }
   }
+
+  static async deleteRecipePosted(id: number) {
+    try {
+      const recipeToDelete = await Recipes.findOne({
+        where: {
+          id: id,
+        }
+      });
+      if (!recipeToDelete) {
+        throw new ErrorHttp('Recipe not found or not pending', 404);
+      }
+      await Recipes.destroy({
+        where: { id: id },
+      });
+    } catch (error) {
+      throw new ErrorHttp('Error deleting recipe', 500);
+    }
+  }
 }

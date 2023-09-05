@@ -1,7 +1,7 @@
 import React from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { useEffect, useState, useContext } from 'react';
-import { fetchRecipe } from '../services/requests';
+import { fetchRecipe, deleteRecipePosted } from '../services/requests';
 import IRecipe from '../interface/IRecipe';
 import ImageLoader from '../helpers/imageLoader';
 import IngredientsLoader from '../helpers/ingredientsLoader';
@@ -18,7 +18,7 @@ const RecipeDetails: React.FC = () => {
   const [recipe, setRecipe] = useState<IRecipe[]>([]);
   const [savedId, setSavedId] = useState<string | null>('');
 
-  const { id } = useContext(pastaSoTastyContext);
+  const { id, role } = useContext(pastaSoTastyContext);
 
   const navigate = useNavigate();
 
@@ -42,7 +42,16 @@ const RecipeDetails: React.FC = () => {
     } catch (error: any) {
       console.error("Erro:", error.message);
     };
-  }, [recipeIdName, navigate]);
+  }, [role, recipeIdName, navigate]);
+
+  const adminDeleteRecipe = async (id: number) => {
+    const confirmMessage = "Você realmente deseja excluir esta receita?";
+    const userConfirmed = window.confirm(confirmMessage);
+    if (userConfirmed) {
+      await deleteRecipePosted(id);
+      window.history.back();
+    }
+  }
 
   return (
     <div>
@@ -63,6 +72,9 @@ const RecipeDetails: React.FC = () => {
             <h4>Modo de Preparo:</h4>
             <h4>Tempo de Preparo:{recipe.recipe_cooking_time}min</h4>
             <p>{recipe.recipe_description}</p>
+            {role === 'admin' && (
+              <button onClick={() => adminDeleteRecipe(recipe.id)}>Excluir Receita</button>
+            )}
           </div>
         ))
       ) : (

@@ -1,6 +1,6 @@
 import React, { useContext } from 'react';
 import Header from "../components/header";
-import TypesReceipes from '../components/typesReceipes';
+import TypesReceipes from '../components/typesRecipes';
 import pastaSoTastyContext from '../context/context';
 
 const SoupRecipes: React.FC = () => {

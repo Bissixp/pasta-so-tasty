@@ -102,4 +102,10 @@ export default class RecipeController {
     await RecipeService.deleteRecipe(id);
     res.status(201).json();
   };
+
+  static async deleteRecipePosted(req: Request, res: Response): Promise<void> {
+    const id = parseInt(req.params.id, 10);
+    await RecipeService.deleteRecipePosted(id);
+    res.status(201).json();
+  };
 };
