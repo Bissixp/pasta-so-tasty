@@ -1,28 +1,48 @@
-import { useEffect, useState } from 'react';
-import { fetchAllRecipes } from '../services/requests';
+import React, { useEffect, useState } from 'react';
+import { useParams, useNavigate } from 'react-router-dom';
+import { fetchMyRecipes } from '../services/requests';
 import { Link } from 'react-router-dom';
 import IRecipe from '../interface/IRecipe';
 import ImageLoader from '../helpers/imageLoader';
-import '../styles/components/allRecipes.css';
 
-const AllRecipes = () => {
+interface RecipeDetailsParams {
+  recipeIdName: string;
+  [key: string]: string | undefined;
+}
+
+const AuthorRecipes: React.FC = () => {
+  const { authorId } = useParams<RecipeDetailsParams>();
   const [recipes, setRecipes] = useState<IRecipe[]>([]);
+  const [authorName, setAuthorName] = useState<string | null>('');
+
+  const navigate = useNavigate();
 
   useEffect(() => {
     try {
-      const getRecipes = async () => {
-        const response = await fetchAllRecipes();
-        setRecipes(prev => prev = response);
+      const getRecipes = async (id: number | null) => {
+        const response = await fetchMyRecipes(id);
+        if (!response) {
+          navigate('/404');
+        }
+        setRecipes(response);
       };
-      getRecipes();
+      if (authorId !== undefined) {
+        const splitString = authorId.split("-");
+        const id = splitString[0];
+        const name = splitString.slice(1).join("-").replace(/-/g, ' ');
+        const idParsed = parseInt(id, 10);
+        setAuthorName(name);
+        getRecipes(idParsed);
+      }
     } catch (error: any) {
       console.error("Erro:", error.message);
     };
-  }, [])
+  }, [authorId, authorName, navigate]);
 
   return (
     <div className="recipe-container">
-      <h1>Bem-vindo ao Pasta So Tasty</h1>
+      <h1>{authorName}</h1>
+      <h4>{recipes.length} Receitas publicadas</h4>
       {recipes.length > 0 ? (
         <div className="recipe-list">
           {recipes.map((recipe: IRecipe, id: number) => (
@@ -35,12 +55,6 @@ const AllRecipes = () => {
               <Link to={`/receita/${recipe.id}-${recipe.recipe_name.split(' ').join('-')}`} className='link-class'>
                 <h3>{recipe.recipe_name.charAt(0).toUpperCase() + recipe.recipe_name.slice(1)}</h3>
               </Link>
-              <div className="recipe-author">
-                <span style={{ marginRight: '5px' }}>Por </span>
-                <Link to={`/receitas/${recipe.author_id}-${recipe.author_name.replace(/\s+/g, '-')}`} className='link-class'>
-                  <h4>{recipe.author_name}</h4>
-                </Link>
-              </div>
             </div>
           ))}
         </div>
@@ -51,4 +65,4 @@ const AllRecipes = () => {
   );
 };
 
-export default AllRecipes;
+export default AuthorRecipes;
