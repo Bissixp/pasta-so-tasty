@@ -69,16 +69,6 @@ export default class UserService {
     return createrUser;
   }
 
-  // static async findUser(id: number, email: string) {
-  //   const findUser = await Users.findOne({
-  //     where: {
-  //       id,
-  //       email
-  //     },
-  //   });
-  //   return findUser;
-  // };
-
   static async findEmail(email: string) {
     const findEmail = await Users.findOne({
       where: {

@@ -15,7 +15,7 @@ export default class UserController {
   };
 
   static async authentication(req: Request, res: Response): Promise<void> {
-    const auth: any = req.cookies.jwt;
+    const auth: string = req.cookies.jwt;
     const tokenValidate = await tokenAuth.readToken(auth);
     res.json(tokenValidate);
   };
@@ -29,17 +29,6 @@ export default class UserController {
     res.cookie('jwt', token, { httpOnly: true, sameSite: 'lax', path: '/', maxAge: MAX_AGE });
     res.status(200).json({ message: 'User created successfully' });
   };
-
-  // static async findUser(req: Request, res: Response): Promise<void> {
-  //   const { id, firstName, lastName } = req.body;
-  //   const userExists = await UserService.findUser(id, firstName, lastName);
-
-  //   if (userExists) {
-  //     res.status(200).json({ data: userExists });
-  //   } else {
-  //     res.status(404).json({ data: null });
-  //   };
-  // };
 
   static async findEmail(req: Request, res: Response): Promise<void> {
     const { email } = req.body;
