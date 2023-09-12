@@ -45,7 +45,6 @@ const AuthorRecipes: React.FC = () => {
   return (
     <div>
       <Header isUserLoggedIn={logged} fullName={fullName}>
-        <h1>Bem vindo ao Pasta so Tasty!</h1>
       </Header >
 
       <div className="recipe-container">

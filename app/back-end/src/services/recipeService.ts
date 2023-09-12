@@ -124,8 +124,6 @@ export default class RecipeService {
           id,
         }
       });
-      console.log(getRecipe);
-
       return getRecipe;
     } catch (error) {
       throw new ErrorHttp('Recipe not found', 404)
