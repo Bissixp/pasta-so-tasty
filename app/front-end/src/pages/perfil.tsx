@@ -21,7 +21,6 @@ const Perfil: React.FC = () => {
       <Header isUserLoggedIn={logged} fullName={fullName}>
       </Header>
       <Link to="/minhas-receitas" className="header-button">Minhas Receitas</Link>
-      <Link to="/meus-favoritos" className="header-button">Meus Favoritos</Link>
       {role === 'admin' ? (
         <Link to="/aprovar-receitas" className="header-button">Aprovar receitas</Link>
       ) : (

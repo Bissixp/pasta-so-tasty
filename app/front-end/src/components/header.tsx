@@ -30,6 +30,7 @@ const Header = ({ isUserLoggedIn, fullName }: HeaderProps) => {
               <div className="button-container">
                 <span>Olá {fullName}</span>
                 <Link to="/criar-receita" className="header-button">Criar Receita</Link>
+                <Link to="/meus-favoritos" className="header-button">Meus Favoritos</Link>
                 <Link to="/perfil" className="header-button">Perfil</Link>
                 <BtnLogoff />
               </div>
