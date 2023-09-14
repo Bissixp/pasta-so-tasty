@@ -1,5 +1,5 @@
 import { Router } from 'express';
-import { authenticateMiddleware, isAdmin } from '../middlewares/adminHandlerMiddleware';
+import { authenticateMiddleware, isAdmin, isUser } from '../middlewares/authenticateHandlerMiddleware';
 import RecipeController from '../controllers/recipeController';
 import multer from 'multer';
 
@@ -22,6 +22,7 @@ recipeRoute.get('/getAllPending', RecipeController.getAllPedingRecipes);
 recipeRoute.get('/pending/:id', RecipeController.pedingRecipes);
 recipeRoute.patch('/approveRecipe/:id', RecipeController.approveRecipe);
 recipeRoute.delete('/deleteRecipe/:id', RecipeController.deleteRecipe);
-recipeRoute.delete('/deleteRecipePosted/:id', authenticateMiddleware, isAdmin, RecipeController.deleteRecipePosted);
+recipeRoute.delete('/adminDeleteRecipe/:id', authenticateMiddleware, isAdmin, RecipeController.deleteRecipePosted);
+recipeRoute.delete('/userDeleteRecipe/:id/:authorId', authenticateMiddleware, isUser, RecipeController.deleteRecipePosted);
 
 export default recipeRoute;
