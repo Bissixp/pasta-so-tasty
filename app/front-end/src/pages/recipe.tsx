@@ -224,7 +224,7 @@ const Recipe: React.FC = () => {
           <textarea
             id="recipe-description"
             value={recipeDescription}
-            maxLength={10000}
+            maxLength={5000}
             onChange={(event) => setRecipeDescription(event.target.value)}
             readOnly={showButton}
           />

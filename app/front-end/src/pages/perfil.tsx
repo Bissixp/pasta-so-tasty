@@ -2,8 +2,8 @@ import React, { useEffect, useContext } from "react";
 import { useNavigate } from 'react-router-dom';
 import Header from "../components/header";
 import { Link } from 'react-router-dom';
-import '../styles/pages/perfil.css';
 import pastaSoTastyContext from '../context/context';
+import '../styles/pages/perfil.css';
 
 const Perfil: React.FC = () => {
   const { fullName, logged, role } = useContext(pastaSoTastyContext);

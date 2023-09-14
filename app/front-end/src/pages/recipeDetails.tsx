@@ -1,12 +1,14 @@
 import React from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { useEffect, useState, useContext } from 'react';
-import { fetchRecipe, deleteRecipePosted } from '../services/requests';
+import { fetchRecipe, adminDeleteRecipe, userDeleteRecipe } from '../services/requests';
 import IRecipe from '../interface/IRecipe';
 import ImageLoader from '../helpers/imageLoader';
 import IngredientsLoader from '../helpers/ingredientsLoader';
 import pastaSoTastyContext from '../context/context';
 import FavoriteButton from '../components/btnFav';
+import Header from "../components/header";
+import '../styles/pages/recipeDetails.css';
 
 interface RecipeDetailsParams {
   recipeIdName: string;
@@ -18,7 +20,7 @@ const RecipeDetails: React.FC = () => {
   const [recipe, setRecipe] = useState<IRecipe[]>([]);
   const [savedId, setSavedId] = useState<string | null>('');
 
-  const { id, role } = useContext(pastaSoTastyContext);
+  const { id, role, fullName, logged } = useContext(pastaSoTastyContext);
 
   const navigate = useNavigate();
 
@@ -44,42 +46,75 @@ const RecipeDetails: React.FC = () => {
     };
   }, [role, recipeIdName, navigate]);
 
-  const adminDeleteRecipe = async (id: number) => {
+  const admDeleteRecipe = async (id: number) => {
     const confirmMessage = "Você realmente deseja excluir esta receita?";
     const userConfirmed = window.confirm(confirmMessage);
     if (userConfirmed) {
-      await deleteRecipePosted(id);
+      await adminDeleteRecipe(id);
+      window.history.back();
+    }
+  }
+
+  const authorDeleteRecipe = async (id: number, authorId: number) => {
+    const confirmMessage = "Você realmente deseja excluir esta receita?";
+    const userConfirmed = window.confirm(confirmMessage);
+    if (userConfirmed) {
+      await userDeleteRecipe(id, authorId);
       window.history.back();
     }
   }
 
   return (
     <div>
-      {recipe.length > 0 ? (
-        recipe.map((recipe: IRecipe) => (
-          <div key={recipe.recipe_name}>
-            <span>Receita feita por: {recipe.author_name}</span>
-            <br></br>
-            {recipe.recipe_photo.toLowerCase().startsWith('http') ? (
-              <img src={recipe.recipe_photo} alt={recipe.recipe_name} width="200" height="150" />
-            ) : (
-              <ImageLoader photo={recipe.recipe_photo} alt={recipe.recipe_name} />
-            )}
-            <br></br>
-            <FavoriteButton idUser={id} idRecipe={savedId}></FavoriteButton>
-            <h4>Ingredientes:</h4>
-            <IngredientsLoader ingredientId={recipe.recipe_ingredients_id} />
-            <h4>Modo de Preparo:</h4>
-            <h4>Tempo de Preparo:{recipe.recipe_cooking_time}min</h4>
-            <p>{recipe.recipe_description}</p>
-            {role === 'admin' && (
-              <button onClick={() => adminDeleteRecipe(recipe.id)}>Excluir Receita</button>
-            )}
-          </div>
-        ))
-      ) : (
-        <p>Carregando receita...</p>
-      )}
+      <Header isUserLoggedIn={logged} fullName={fullName}>
+      </Header >
+      <div className="details-container">
+        {recipe.length > 0 ? (
+          recipe.map((recipe: IRecipe) => (
+            <div key={recipe.recipe_name}>
+              <div className='centered-container'>
+                <h3>{recipe.recipe_name}</h3>
+              </div>
+              <br></br>
+              {recipe.recipe_photo.toLowerCase().startsWith('http') ? (
+                <img src={recipe.recipe_photo} alt={recipe.recipe_name} className="centered-image" />
+              ) : (
+                <div className="centered-image">
+                  <ImageLoader photo={recipe.recipe_photo} alt={recipe.recipe_name} />
+                </div>
+              )}
+              <div className='centered-content'>
+                <h4>Tempo de Preparo: {recipe.recipe_cooking_time}min</h4>
+              </div>
+              <FavoriteButton idUser={id} idRecipe={savedId}></FavoriteButton>
+              <br></br>
+              <h4>Ingredientes:</h4>
+              <IngredientsLoader ingredientId={recipe.recipe_ingredients_id} />
+              <h4>Modo de Preparo:</h4>
+              {recipe.recipe_description.split('\n').map((line, index) => (
+                <React.Fragment key={index}>
+                  <p>{line}</p>
+                  <br />
+                </React.Fragment>
+              ))}
+              {role === 'admin' && (
+                <button onClick={() => admDeleteRecipe(recipe.id)}
+                  className="btn-delete">
+                  Excluir Receita
+                </button>
+              )}
+              {id === recipe.author_id && role === 'member' && (
+                <button onClick={() => authorDeleteRecipe(recipe.id, recipe.author_id)}
+                  className="btn-delete">
+                  Excluir Receita
+                </button>
+              )}
+            </div>
+          ))
+        ) : (
+          <p>Carregando receita...</p>
+        )}
+      </div>
     </div>
   );
 };

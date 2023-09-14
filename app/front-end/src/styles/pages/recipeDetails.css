@@ -1,0 +1,55 @@
+.centered-container {
+  text-align: center;
+  margin-top: 10px;
+}
+
+.details-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  background: #CC8963;
+  max-width: 900px;
+  margin: 20px auto;
+  border-radius: 10px;
+  color: #151922;
+  padding: 20px;
+}
+
+.details-container ul {
+  max-width: 100%;
+}
+
+.details-container ul li {
+  margin-left: 20px;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
+.centered-image {
+  text-align: center;
+  margin-left: auto;
+  margin-right: auto;
+  display: block;
+  width: 450px;
+  height: 350px;
+}
+
+.centered-content {
+  text-align: center;
+}
+
+.btn-delete {
+  display: flex;
+  align-items: center;
+  border: 1px solid lighten(gray, 24%);
+  height: 48px;
+  padding: 0 24px 0 16px;
+  letter-spacing: .25px;
+  border-radius: 24px;
+  cursor: pointer;
+  background-color: #151922;
+  margin-right: 8px;
+  font-size: 16px;
+  color: white;
+}

@@ -47,6 +47,12 @@ const SearchRecipes: React.FC = () => {
                 <Link to={`/receita/${recipe.id}-${recipe.recipe_name.split(' ').join('-')}`} className='link-class'>
                   <h3>{recipe.recipe_name.charAt(0).toUpperCase() + recipe.recipe_name.slice(1)}</h3>
                 </Link>
+                <div className="recipe-author">
+                  <span style={{ marginRight: '5px' }}>Por </span>
+                  <Link to={`/receitas/${recipe.author_id}-${recipe.author_name.replace(/\s+/g, '-')}`} className='link-class'>
+                    <h4>{recipe.author_name}</h4>
+                  </Link>
+                </div>
               </div>
             ))}
           </div>
