@@ -29,7 +29,7 @@ const atributtes = {
     }
   },
   recipe_description: {
-    type: DataTypes.STRING
+    type: DataTypes.TEXT
   },
   recipe_cooking_time: {
     type: DataTypes.INTEGER

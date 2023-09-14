@@ -39,7 +39,7 @@ Recipes.init(
       allowNull: true,
     },
     recipe_description: {
-      type: STRING(255),
+      type: TEXT,
       allowNull: false,
     },
     recipe_cooking_time: {
