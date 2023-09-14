@@ -49,4 +49,14 @@ const isAdmin = (req: Request, res: Response, next: NextFunction) => {
   }
 };
 
-export { authenticateMiddleware, isAdmin };
+const isUser = (req: Request, res: Response, next: NextFunction) => {
+  const userId = req.user?.data.id;
+  const paramId = Number(req.params.authorId);
+  if (userId === paramId) {
+    next();
+  } else {
+    res.status(403).json({ message: 'Access Denied, you are not the owner of this recipe.' });
+  }
+};
+
+export { authenticateMiddleware, isAdmin, isUser };
