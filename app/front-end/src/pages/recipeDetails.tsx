@@ -88,6 +88,7 @@ const RecipeDetails: React.FC = () => {
               </div>
               <FavoriteButton idUser={id} idRecipe={savedId}></FavoriteButton>
               <br></br>
+              <span style={{ display: 'inline' }}>Tipo da Receita: </span><h4 style={{ display: 'inline' }}>{recipe.recipe_type}</h4>
               <h4>Ingredientes:</h4>
               <IngredientsLoader ingredientId={recipe.recipe_ingredients_id} />
               <h4>Modo de Preparo:</h4>
