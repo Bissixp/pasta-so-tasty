@@ -4,10 +4,10 @@ module.exports = {
       'Users',
       [
         {
-          first_name: 'Fernando',
-          last_name: 'Bissi',
-          password: 'bissi@23',
-          email: 'bissixp@gmail.com',
+          first_name: 'Pasta',
+          last_name: 'So Tasty',
+          password: 'pasta@23',
+          email: 'pastasotasty@gmail.com',
           role: 'admin'
         }
       ],
