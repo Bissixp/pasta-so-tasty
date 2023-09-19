@@ -1,10 +1,20 @@
 .user-perfil {
   display: flex;
   justify-content: center;
-  align-items: center;
-  height: 100vh;
+  align-items: flex-start;
+  flex-wrap: wrap;
+  padding: 20px;
 }
 
-.user-perfil-content {
-  text-align: center;
+.card-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin: 20px;
+  flex-grow: 1;
+  max-width: 300px;
+}
+
+.link-name {
+  color: black;
 }
