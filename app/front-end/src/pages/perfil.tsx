@@ -39,7 +39,7 @@ const Perfil: React.FC = () => {
           </div>
         ) : (
           <div className="card-container">
-            <img src={pedingCard} alt="pasta-card" width="100" height="100" />
+            <img src={pedingCard} alt="pasta-card" width="300" height="300" />
             <Link to="/aguardando-aprovação" className="link-name">
               Aguardando Aprovação
             </Link>
