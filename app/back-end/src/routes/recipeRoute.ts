@@ -1,5 +1,5 @@
 import { Router } from 'express';
-import { authenticateMiddleware, isAdmin, isUser } from '../middlewares/authenticateHandlerMiddleware';
+import { authenticateMiddleware, isUser, isAdmin } from '../middlewares/authenticateHandlerMiddleware';
 import RecipeController from '../controllers/recipeController';
 import multer from 'multer';
 
@@ -9,6 +9,8 @@ const recipeRoute = Router();
 recipeRoute.post('/create-recipe', RecipeController.createRecipe);
 recipeRoute.post('/create-recipe/upload', upload.single('cookPhoto'), RecipeController.createRecipeUpload);
 recipeRoute.post('/favorites', RecipeController.addFav);
+recipeRoute.put('/edit-recipe/:id/:authorId', authenticateMiddleware, isUser, RecipeController.editRecipe);
+recipeRoute.put('/edit-recipe/upload/:id/:authorId', authenticateMiddleware, isUser, upload.single('cookPhoto'), RecipeController.editRecipeUpload);
 recipeRoute.get('/favorites/:idUser/:idRecipe', RecipeController.getFav);
 recipeRoute.get('/all-favorites/:id', RecipeController.getAllFavs);
 recipeRoute.get('/getAll', RecipeController.getAllRecipes);
@@ -21,8 +23,7 @@ recipeRoute.get('/getIngredients/:id', RecipeController.getIngredients);
 recipeRoute.get('/getAllPending', RecipeController.getAllPedingRecipes);
 recipeRoute.get('/pending/:id', RecipeController.pedingRecipes);
 recipeRoute.patch('/approveRecipe/:id', RecipeController.approveRecipe);
-recipeRoute.delete('/deleteRecipe/:id', RecipeController.deleteRecipe);
-recipeRoute.delete('/adminDeleteRecipe/:id', authenticateMiddleware, isAdmin, RecipeController.deleteRecipePosted);
-recipeRoute.delete('/userDeleteRecipe/:id/:authorId', authenticateMiddleware, isUser, RecipeController.deleteRecipePosted);
+recipeRoute.delete('/deleteRecipe/:id', authenticateMiddleware, isAdmin, RecipeController.deleteRecipe);
+recipeRoute.delete('/deleteRecipePosted/:id/:authorId', authenticateMiddleware, isUser, RecipeController.deleteRecipePosted);
 
 export default recipeRoute;

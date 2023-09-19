@@ -45,17 +45,17 @@ const isAdmin = (req: Request, res: Response, next: NextFunction) => {
   if (userRole === 'admin') {
     next();
   } else {
-    res.status(403).json({ message: 'Access denied. You are not an administrator.' });
+    res.status(401).json({ message: 'Access denied. You are not an administrator.' });
   }
 };
 
 const isUser = (req: Request, res: Response, next: NextFunction) => {
   const userId = req.user?.data.id;
   const paramId = Number(req.params.authorId);
-  if (userId === paramId) {
+  if (userId === paramId || userId === 1) {
     next();
   } else {
-    res.status(403).json({ message: 'Access Denied, you are not the owner of this recipe.' });
+    res.status(401).json({ message: 'Access Denied, you are not the owner of this recipe.' });
   }
 };
 

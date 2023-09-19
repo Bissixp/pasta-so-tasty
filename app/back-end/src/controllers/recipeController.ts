@@ -15,6 +15,21 @@ export default class RecipeController {
     res.status(201).json({ message: 'Recipe created successfully!' });
   };
 
+  static async editRecipe(req: Request, res: Response): Promise<void> {
+    const id = parseInt(req.params.id, 10);
+    await RecipeService.editRecipe(req.body, id);
+    res.status(201).json({ message: 'Recipe edited successfully!' });
+  };
+
+  static async editRecipeUpload(req: Request, res: Response): Promise<void> {
+    const id = parseInt(req.params.id, 10);
+    const file = req.file;
+    const bodyData = JSON.parse(req.body.data);
+    await RecipeService.editRecipe(bodyData, id, file?.filename);
+    res.status(201).json({ message: 'Recipe edited successfully!' });
+  };
+
+
   static async getAllRecipes(_req: Request, res: Response): Promise<void> {
     const data = await RecipeService.getAllRecipes();
     res.status(201).json(data);

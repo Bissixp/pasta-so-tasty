@@ -3,6 +3,7 @@ import Recipes from '../database/models/recipesModel';
 import UserFav from '../database/models/userFavModel';
 import db from '../database/models';
 import ICreateRecipe from '../interface/ICreateRecipe';
+import IEditRecipe from '../interface/IEditRecipe';
 import IRecipe from '../interface/IRecipe';
 import ErrorHttp from '../middlewares/utils';
 import { Op } from 'sequelize';
@@ -59,6 +60,75 @@ export default class RecipeService {
     } catch (error) {
       await transaction.rollback();
       throw new ErrorHttp('All fields must be filled', 400)
+    }
+  }
+
+  static async editRecipe(recipeBody: IEditRecipe, id: number, fileName?: string) {
+    const {
+      cookName,
+      cookPhoto,
+      cookInfo,
+      cookTime,
+      ingredientsRecipe,
+      cookType,
+      status,
+    } = recipeBody;
+
+    const transaction = await db.transaction();
+    try {
+      const existingRecipe = await Recipes.findOne({
+        where: {
+          id: id,
+        },
+        transaction,
+      });
+
+      if (!existingRecipe) {
+        throw new ErrorHttp('recipe not found', 404);
+      }
+
+      let realCookPhoto = cookPhoto;
+      if (fileName && fileName.length) {
+        realCookPhoto = fileName;
+      }
+
+      existingRecipe.recipe_name = cookName;
+      existingRecipe.recipe_photo = realCookPhoto;
+      existingRecipe.recipe_description = cookInfo;
+      existingRecipe.recipe_cooking_time = cookTime;
+      existingRecipe.recipe_type = cookType;
+      existingRecipe.status_recipe = status;
+
+      await existingRecipe.save({ transaction });
+
+      const existingIngredients = await RecipeIngredients.findOne({
+        where: {
+          id: id,
+        },
+        transaction,
+      });
+
+      if (!existingIngredients) {
+        throw new ErrorHttp('ingredients not found', 404);
+      }
+
+      const MAX_NUM_INGREDIENTS = 15;
+      for (let i = ingredientsRecipe.length; i < MAX_NUM_INGREDIENTS; i++) {
+        const field = `recipe_ingredient_${i + 1}`;
+        existingIngredients.setDataValue(field, null);
+      }
+
+      ingredientsRecipe.forEach((ingredient, index) => {
+        const field = `recipe_ingredient_${index + 1}`;
+        existingIngredients.setDataValue(field, ingredient);
+      });
+
+      await existingIngredients.save({ transaction });
+
+      await transaction.commit();
+    } catch (error) {
+      await transaction.rollback();
+      throw error;
     }
   }
 
@@ -333,10 +403,24 @@ export default class RecipeService {
           id: id,
         }
       });
+
       if (!recipeToDelete) {
         throw new ErrorHttp('Recipe not found or not pending', 404);
-      }
+      };
+
+      const ingredientsToDelete = await RecipeIngredients.findOne({
+        where: {
+          id: id,
+        }
+      });
+      if (!ingredientsToDelete) {
+        throw new ErrorHttp('ingredients not found', 404);
+      };
+
       await Recipes.destroy({
+        where: { id: id },
+      });
+      await RecipeIngredients.destroy({
         where: { id: id },
       });
     } catch (error) {

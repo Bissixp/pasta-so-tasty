@@ -1,5 +1,6 @@
 import axios from 'axios';
 import ICreateRecipe from '../interface/ICreateRecipe';
+import IEditRecipe from '../interface/IEditRecipe';
 import IRecipe from '../interface/IRecipe';
 import ICookies from '../interface/ICookies';
 import IFav from '../interface/IFav';
@@ -123,8 +124,22 @@ export const fetchLogout = async () => {
 };
 // PUT Requests
 
+export const editRecipe = async (body: IEditRecipe, idRecipe: number, authorId: number) => {
+  await api.put(`/recipe/edit-recipe/${idRecipe}/${authorId}`, body, {
+    withCredentials: true,
+  });
+}
+
+export const editRecipeUpload = async (body: FormData, idRecipe: number, authorId: number) => {
+  await api.put(`/recipe/edit-recipe/upload/${idRecipe}/${authorId}`, body, {
+    withCredentials: true,
+  });
+};
+
 export const approveRecipe = async (id: number) => {
-  await api.patch(`recipe/approveRecipe/${id}`);
+  await api.patch(`recipe/approveRecipe/${id}`, {
+    withCredentials: true,
+  });
 };
 
 // POST Requests
@@ -160,14 +175,8 @@ export const deleteRecipe = async (id: number) => {
   await api.delete(`recipe/deleteRecipe/${id}`);
 };
 
-export const adminDeleteRecipe = async (id: number) => {
-  await api.delete(`recipe/adminDeleteRecipe/${id}`, {
-    withCredentials: true,
-  });
-};
-
 export const userDeleteRecipe = async (id: number, authorId: number) => {
-  await api.delete(`recipe/userDeleteRecipe/${id}/${authorId}`, {
+  await api.delete(`recipe/deleteRecipePosted/${id}/${authorId}`, {
     withCredentials: true,
   });
 };

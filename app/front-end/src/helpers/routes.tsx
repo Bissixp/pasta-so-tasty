@@ -17,6 +17,7 @@ import MyFavs from '../pages/myFavs';
 import PendingApprov from '../pages/pendingApprov';
 import SearchRecipes from '../pages/searchRecipes';
 import AuthorRecipes from '../pages/authorRecipes';
+import EditRecipe from '../pages/editRecipe';
 
 function RoutesPastaSoTasty() {
   return (
@@ -27,6 +28,7 @@ function RoutesPastaSoTasty() {
       <Route path="/home" element={<Home />} />
       <Route path="/registro" element={<Registration />} />
       <Route path="/criar-receita" element={<Recipe />} />
+      <Route path="/editar-receita/:recipeIdName" element={<EditRecipe />} />
       <Route path="/carnes" element={<MeatRecipes />} />
       <Route path="/massas" element={<PastaRecipes />} />
       <Route path="/aves" element={<BirdRecipes />} />
