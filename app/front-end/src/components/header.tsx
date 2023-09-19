@@ -28,7 +28,7 @@ const Header = ({ isUserLoggedIn, fullName }: HeaderProps) => {
           {logged ? (
             <div>
               <div className="button-container">
-                <span>Olá {fullName}</span>
+                <span style={{ color: 'white' }}>Olá {fullName}</span>
                 <Link to="/criar-receita" className="header-button">Criar Receita</Link>
                 <Link to="/meus-favoritos" className="header-button">Meus Favoritos</Link>
                 <Link to="/perfil" className="header-button">Perfil</Link>
@@ -44,7 +44,7 @@ const Header = ({ isUserLoggedIn, fullName }: HeaderProps) => {
             </div>
           )}
         </Menu>
-      </header>
+      </header >
     </>
   );
 };

@@ -1,6 +1,6 @@
 import { useNavigate } from 'react-router-dom';
-import '../styles/components/btnLogoff.css';
 import { fetchLogout, fetchValidate } from '../services/requests';
+import '../styles/components/btnLogoff.css';
 
 const BtnLogoff = () => {
   const navigate = useNavigate();
