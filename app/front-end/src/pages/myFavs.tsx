@@ -49,6 +49,7 @@ const MyFavs: React.FC = () => {
                   )
                 }
                 <Link to={`/receita/${recipe.id}-${recipe.recipe_name.split(' ').join('-')}`}
+                  className='link-class'
                 >
                   <h3>{recipe.recipe_name}</h3>
                 </Link>

@@ -391,6 +391,9 @@ export default class RecipeService {
       await Recipes.destroy({
         where: { id: id },
       });
+      await RecipeIngredients.destroy({
+        where: { id: id },
+      });
     } catch (error) {
       throw new ErrorHttp('Error deleting recipe', 500);
     }
