@@ -79,7 +79,9 @@ const Login: React.FC = () => {
                 placeholder="Senha"
               />
             </label>
+            <br></br>
           </div>
+          <br></br>
           {errorEmail && (
             <p>
               Endereço de e-mail não localizado.
@@ -97,6 +99,7 @@ const Login: React.FC = () => {
           )}
           <button type="submit" className='btn-visu'  >Entrar</button>
           <h4>
+            <br></br>
             Quero me cadastrar,{' '}
             <a href="http://localhost:3000/registro" className="login-color">
               Cadastrar

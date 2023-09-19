@@ -120,103 +120,107 @@ const Registration: React.FC = () => {
   }
 
   return (
-    <div>
-      <form onSubmit={handleSubmit}>
-        <label htmlFor="firstName">
-          <h4>Nome</h4>
-          <input
-            type="text"
-            minLength={3}
-            maxLength={12}
-            id="firstName"
-            value={firstName}
-            onChange={(event) => setFirstName(event.target.value)}
-            onBlur={handleBlurFirstName}
-          />
-          {errorFirstName && (
-            <div className="error-balloon">
-              <p className="error-message">{errorFirstName}</p>
-            </div>
-          )}
-        </label>
-        <label htmlFor="lastName">
-          <h4>Sobrenome</h4>
-          <input
-            type="text"
-            minLength={3}
-            maxLength={12}
-            id="lastName"
-            value={lastName}
-            onChange={(event) => setLastName(event.target.value)}
-            onBlur={handleBlurLastName}
-          />
-          {errorLastName && (
-            <div className="error-balloon">
-              <p className="error-message">{errorLastName}</p>
-            </div>
-          )}
-        </label>
-        <label htmlFor="email">
-          <h4>Email</h4>
-          <input
-            type="email"
-            id="email"
-            value={email}
-            onChange={handleEmailChange}
-            onBlur={handleBlurEmail}
-          />
-          {errorEmail && (
-            <div className="error-balloon">
-              <p className="error-message">{errorEmail}</p>
-            </div>
-          )}
-        </label>
-        <label htmlFor="password">
-          <h4>Senha</h4>
-          <input
-            type="password"
-            id="password"
-            minLength={8}
-            value={password}
-            onChange={handlePasswordChange}
-          />
-          <p>Sua senha deve atender aos seguintes requisitos:</p>
-          <ul>
-            <li>8 caracteres mínimo</li>
-            <li>1 dígito</li>
-            <li>1 minúscula</li>
-            <li>1 maiúscula</li>
-            <li>1 caractere especial (ex: ! @ # $)</li>
-          </ul>
-        </label>
-        <label htmlFor="confirmation-password">
-          <h4>Confirmação da Senha</h4>
-          <input
-            type="password"
-            id="confirmation-password"
-            value={confirmationPassword}
-            onChange={handleConfirmationPasswordChange}
-          />
-          {errorMessage && (
-            <div className="error-balloon">
-              <p className="error-message">{errorMessage}</p>
-            </div>
-          )}
-        </label>
-        <label>
-          <br />
-          <br />
-          <button type="submit" disabled={!isFormValid}>
-            Cadastrar
-          </button>
-        </label>
-        <h4>
-          Já tenho uma conta,{' '}
-          <a href="http://localhost:3000/login" className="login-color">
-            logar
-          </a>
-        </h4>
-      </form>
+    <div className="user-login-area">
+      <div className="login-card">
+        <form onSubmit={handleSubmit}>
+          <label htmlFor="firstName">
+            <h4>Nome</h4>
+            <input
+              type="text"
+              minLength={3}
+              maxLength={12}
+              id="firstName"
+              value={firstName}
+              onChange={(event) => setFirstName(event.target.value)}
+              onBlur={handleBlurFirstName}
+            />
+            {errorFirstName && (
+              <div className="error-balloon">
+                <p className="error-message">{errorFirstName}</p>
+              </div>
+            )}
+          </label>
+          <label htmlFor="lastName">
+            <h4>Sobrenome</h4>
+            <input
+              type="text"
+              minLength={3}
+              maxLength={12}
+              id="lastName"
+              value={lastName}
+              onChange={(event) => setLastName(event.target.value)}
+              onBlur={handleBlurLastName}
+            />
+            {errorLastName && (
+              <div className="error-balloon">
+                <p className="error-message">{errorLastName}</p>
+              </div>
+            )}
+          </label>
+          <label htmlFor="email">
+            <h4>Email</h4>
+            <input
+              type="email"
+              id="email"
+              value={email}
+              onChange={handleEmailChange}
+              onBlur={handleBlurEmail}
+            />
+            {errorEmail && (
+              <div className="error-balloon">
+                <p className="error-message">{errorEmail}</p>
+              </div>
+            )}
+          </label>
+          <label htmlFor="password">
+            <h4>Senha</h4>
+            <input
+              type="password"
+              id="password"
+              minLength={8}
+              value={password}
+              onChange={handlePasswordChange}
+            />
+            <p>Sua senha deve atender aos seguintes requisitos:</p>
+            <ul>
+              <li className={password.length >= 8 ? 'green-li' : 'black-li'}>8 caracteres mínimo</li>
+              <li className={/[0-9]/.test(password) ? 'green-li' : 'black-li'}>1 dígito</li>
+              <li className={/[a-z]/.test(password) ? 'green-li' : 'black-li'}>1 minúscula</li>
+              <li className={/[A-Z]/.test(password) ? 'green-li' : 'black-li'}>1 maiúscula</li>
+              <li className={/[!@#$%^&*]/.test(password) ? 'green-li' : 'black-li'}>1 caractere especial (ex: ! @ # $)</li>
+            </ul>
+          </label>
+          <label htmlFor="confirmation-password">
+            <h4>Confirmação da Senha</h4>
+            <input
+              type="password"
+              id="confirmation-password"
+              value={confirmationPassword}
+              onChange={handleConfirmationPasswordChange}
+            />
+            {errorMessage && (
+              <div className="error-balloon">
+                <p className="error-message">{errorMessage}</p>
+              </div>
+            )}
+          </label>
+          <label>
+            <br />
+            <br />
+            <button type="submit" className='btn-visu' disabled={!isFormValid}>
+              Cadastrar
+            </button>
+            <br></br>
+          </label>
+          <br></br>
+          <h4>
+            Já tenho uma conta,{' '}
+            <a href="http://localhost:3000/login" className="login-color">
+              Logar
+            </a>
+          </h4>
+        </form>
+      </div>
     </div>
   );
 };

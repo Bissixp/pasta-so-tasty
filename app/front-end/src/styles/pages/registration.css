@@ -17,7 +17,15 @@ a {
   left: 30%;
   width: 200px;
   padding: 5px;
-  background-color: red;
+  background-color: #AB0B23;
   color: white;
   border-radius: 5px;
+}
+
+.black-li {
+  color: #151922;
+}
+
+.green-li {
+  color: #3CB043;
 }
