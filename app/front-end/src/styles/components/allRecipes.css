@@ -2,7 +2,7 @@ h1 {
   padding: 10px;
 }
 
-.recipe-container {
+.home-recipes {
   display: flex;
   flex-direction: column;
   align-items: center;

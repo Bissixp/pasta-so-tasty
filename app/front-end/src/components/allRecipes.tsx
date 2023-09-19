@@ -21,7 +21,7 @@ const AllRecipes = () => {
   }, [])
 
   return (
-    <div className="recipe-container">
+    <div className="home-recipes">
       <h1>Bem-vindo ao Pasta So Tasty</h1>
       {recipes.length > 0 ? (
         <div className="recipe-list">

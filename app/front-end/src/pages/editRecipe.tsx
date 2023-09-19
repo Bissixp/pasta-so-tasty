@@ -2,8 +2,8 @@ import React, { useEffect, useState, ChangeEvent, FormEvent, useContext } from "
 import { useNavigate, Link, useParams } from 'react-router-dom';
 import { fetchRecipe, editRecipe, editRecipeUpload, fetchRecipeIngredients } from "../services/requests";
 import IEditRecipe from "../interface/IEditRecipe";
-import '../styles/pages/recipe.css';
 import pastaSoTastyContext from '../context/context';
+import '../styles/pages/recipe.css';
 
 interface RecipeDetailsParams {
   recipeId: string;
@@ -104,11 +104,13 @@ const EditRecipe: React.FC = () => {
 
   const handlePreparationTimeChange = (event: ChangeEvent<HTMLInputElement>) => {
     const inputTime = event.target.value;
-    const parsedTime = parseInt(inputTime, 10);
+    let parsedTime = parseInt(inputTime, 10);
 
-    if (!isNaN(parsedTime) && parsedTime >= 0) {
-      setPreparationTime(parsedTime);
+    if (isNaN(parsedTime) || parsedTime < 0) {
+      parsedTime = 0;
     }
+
+    setPreparationTime(parsedTime);
   };
 
   const handleSubmit = async (event: FormEvent<HTMLFormElement>): Promise<void> => {
@@ -119,50 +121,54 @@ const EditRecipe: React.FC = () => {
       roleCheck = 'approved'
     }
 
-    try {
-      if (selectedFile !== null) {
-        const cookPhoto = new FormData();
-        cookPhoto.append('cookPhoto', selectedFile);
+    const confirmMessage = "Você realmente deseja editar esta receita?";
+    const userConfirmed = window.confirm(confirmMessage);
+    if (userConfirmed) {
+      try {
+        if (selectedFile !== null) {
+          const cookPhoto = new FormData();
+          cookPhoto.append('cookPhoto', selectedFile);
 
-        const ingredientValues = ingredients.map((ingredient) => ingredient.value);
+          const ingredientValues = ingredients.map((ingredient) => ingredient.value);
 
-        const payload: IEditRecipe = {
-          authorId: id,
-          authorName: fullName,
-          cookName: recipeName,
-          cookPhoto: null,
-          cookInfo: recipeDescription,
-          cookTime: preparationTime,
-          ingredientsRecipe: ingredientValues,
-          cookType: selectedType,
-          status: roleCheck,
+          const payload: IEditRecipe = {
+            authorId: id,
+            authorName: fullName,
+            cookName: recipeName,
+            cookPhoto: null,
+            cookInfo: recipeDescription,
+            cookTime: preparationTime,
+            ingredientsRecipe: ingredientValues,
+            cookType: selectedType,
+            status: roleCheck,
+          };
+
+          cookPhoto.append('data', JSON.stringify(payload));
+
+          await editRecipeUpload(cookPhoto, idRecipe, authorId);
+          setShowButton(true);
+
+        } else {
+          const ingredientValues = ingredients.map((ingredient) => ingredient.value);
+
+          const payload: IEditRecipe = {
+            authorId: id,
+            authorName: fullName,
+            cookName: recipeName,
+            cookPhoto: photoLink,
+            cookInfo: recipeDescription,
+            cookTime: preparationTime,
+            ingredientsRecipe: ingredientValues,
+            cookType: selectedType,
+            status: roleCheck,
+          };
+
+          await editRecipe(payload, idRecipe, authorId);
+          setShowButton(true);
         };
-
-        cookPhoto.append('data', JSON.stringify(payload));
-
-        await editRecipeUpload(cookPhoto, idRecipe, authorId);
-        setShowButton(true);
-
-      } else {
-        const ingredientValues = ingredients.map((ingredient) => ingredient.value);
-
-        const payload: IEditRecipe = {
-          authorId: id,
-          authorName: fullName,
-          cookName: recipeName,
-          cookPhoto: photoLink,
-          cookInfo: recipeDescription,
-          cookTime: preparationTime,
-          ingredientsRecipe: ingredientValues,
-          cookType: selectedType,
-          status: roleCheck,
-        };
-
-        await editRecipe(payload, idRecipe, authorId);
-        setShowButton(true);
-      };
-    } catch (error: any) {
-      console.error("Erro:", error.message);
+      } catch (error: any) {
+        console.error("Erro:", error.message);
+      }
     }
   };
 
@@ -196,31 +202,29 @@ const EditRecipe: React.FC = () => {
           </label>
         </div>
         <div>
-          <label htmlFor="cookPhoto">
-            <h4>Foto da receita</h4>
-            <input
-              type="file"
-              id="cookPhoto"
-              name="cookPhoto"
-              onChange={handleFileChange}
-              disabled={showButton}
-            />
-            <p>OU</p>
-            <input
-              type="text"
-              id="cookPhoto"
-              placeholder="Insira o link da foto"
-              value={photoLink}
-              onChange={handleLinkChange}
-              readOnly={showButton}
-            />
-          </label>
+          <h4>Foto da receita</h4>
+          <input
+            type="file"
+            id="cookPhoto"
+            name="cookPhoto"
+            onChange={handleFileChange}
+            disabled={showButton}
+          />
+          <p>Ou</p>
+          <input
+            type="text"
+            id="cookPhoto"
+            placeholder="Insira o link da foto"
+            value={photoLink}
+            onChange={handleLinkChange}
+            readOnly={showButton}
+          />
           {selectedFile && <p>Nome do arquivo: {selectedFile.name}</p>}
         </div>
         <div>
           <label htmlFor="recipe-ingredient">
             <h4>Informe os ingredientes da receita</h4>
-            <h4>Ingrediente e quantidade</h4>
+            <h4>Quantidade e Ingrediente</h4>
             {ingredients.map((ingredient, index) => (
               <div key={index}>
                 <input
@@ -293,7 +297,7 @@ const EditRecipe: React.FC = () => {
           </label>
         </div>
         {!showButton && (
-          <button type="submit" disabled={!isFormValid}>
+          <button type="submit" className="btn-edit" disabled={!isFormValid}>
             Editar
           </button>
         )}

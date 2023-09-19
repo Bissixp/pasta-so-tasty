@@ -49,11 +49,13 @@ const Recipe: React.FC = () => {
 
   const handlePreparationTimeChange = (event: ChangeEvent<HTMLInputElement>) => {
     const inputTime = event.target.value;
-    const parsedTime = parseInt(inputTime, 10);
+    let parsedTime = parseInt(inputTime, 10);
 
-    if (!isNaN(parsedTime) && parsedTime >= 0) {
-      setPreparationTime(parsedTime);
+    if (isNaN(parsedTime) || parsedTime < 0) {
+      parsedTime = 0;
     }
+
+    setPreparationTime(parsedTime);
   };
 
   const handleSubmit = async (event: FormEvent<HTMLFormElement>): Promise<void> => {
@@ -64,51 +66,51 @@ const Recipe: React.FC = () => {
       roleCheck = 'approved'
     }
 
-    try {
-      if (selectedFile !== null) {
-        const cookPhoto = new FormData();
-        cookPhoto.append('cookPhoto', selectedFile);
+    const confirmMessage = "Você realmente deseja criar esta receita?";
+    const userConfirmed = window.confirm(confirmMessage);
+    if (userConfirmed) {
+      try {
+        if (selectedFile !== null) {
+          const cookPhoto = new FormData();
+          cookPhoto.append('cookPhoto', selectedFile);
 
-        const payload: ICreateRecipe = {
-          authorId: id,
-          authorName: fullName,
-          cookName: recipeName,
-          cookPhoto: null,
-          cookInfo: recipeDescription,
-          cookTime: preparationTime,
-          ingredientsRecipe: ingredients,
-          cookType: selectedType,
-          status: roleCheck,
+          const payload: ICreateRecipe = {
+            authorId: id,
+            authorName: fullName,
+            cookName: recipeName,
+            cookPhoto: null,
+            cookInfo: recipeDescription,
+            cookTime: preparationTime,
+            ingredientsRecipe: ingredients,
+            cookType: selectedType,
+            status: roleCheck,
+          };
+
+          cookPhoto.append('data', JSON.stringify(payload));
+
+          await createUpload(cookPhoto);
+          setShowButton(true);
+
+        } else {
+          const payload: ICreateRecipe = {
+            authorId: id,
+            authorName: fullName,
+            cookName: recipeName,
+            cookPhoto: photoLink,
+            cookInfo: recipeDescription,
+            cookTime: preparationTime,
+            ingredientsRecipe: ingredients,
+            cookType: selectedType,
+            status: roleCheck,
+          };
+
+          await createRecipe(payload);
+          setShowButton(true);
         };
-
-        cookPhoto.append('data', JSON.stringify(payload));
-
-        await createUpload(cookPhoto);
-        setShowButton(true);
-
-      } else {
-        const payload: ICreateRecipe = {
-          authorId: id,
-          authorName: fullName,
-          cookName: recipeName,
-          cookPhoto: photoLink,
-          cookInfo: recipeDescription,
-          cookTime: preparationTime,
-          ingredientsRecipe: ingredients,
-          cookType: selectedType,
-          status: roleCheck,
-        };
-
-        await createRecipe(payload);
-        setShowButton(true);
-      };
-    } catch (error: any) {
-      console.error("Erro:", error.message);
+      } catch (error: any) {
+        console.error("Erro:", error.message);
+      }
     }
-  };
-
-  const handleGoBack = () => {
-    window.history.back();
   };
 
   useEffect(() => {
@@ -119,9 +121,6 @@ const Recipe: React.FC = () => {
 
   return (
     <div className="recipe-container">
-      <button onClick={handleGoBack}>
-        Voltar
-      </button>
       <form className="recipe-form" onSubmit={handleSubmit}>
         <label htmlFor="recipe-name">
           <h4>Nome da receita</h4>
@@ -150,31 +149,29 @@ const Recipe: React.FC = () => {
           </label>
         </div>
         <div>
-          <label htmlFor="cookPhoto">
-            <h4>Foto da receita</h4>
-            <input
-              type="file"
-              id="cookPhoto"
-              name="cookPhoto"
-              onChange={handleFileChange}
-              disabled={showButton}
-            />
-            <p>OU</p>
-            <input
-              type="text"
-              id="cookPhoto"
-              placeholder="Insira o link da foto"
-              value={photoLink}
-              onChange={handleLinkChange}
-              readOnly={showButton}
-            />
-          </label>
+          <h4>Foto da receita</h4>
+          <input
+            type="file"
+            id="cookPhoto"
+            name="cookPhoto"
+            onChange={handleFileChange}
+            disabled={showButton}
+          />
+          <p>OU</p>
+          <input
+            type="text"
+            id="cookPhoto"
+            placeholder="Insira o link da foto"
+            value={photoLink}
+            onChange={handleLinkChange}
+            readOnly={showButton}
+          />
           {selectedFile && <p>Nome do arquivo: {selectedFile.name}</p>}
         </div>
         <div>
           <label htmlFor="recipe-ingredient">
             <h4>Informe os ingredientes da receita</h4>
-            <h4>Ingrediente e quantidade</h4>
+            <h4>Quantidade e Ingrediente</h4>
             {ingredients.map((ingredient, index) => (
               <div key={index}>
                 <input
@@ -244,7 +241,7 @@ const Recipe: React.FC = () => {
           </label>
         </div>
         {!showButton && (
-          <button type="submit" disabled={!isFormValid}>
+          <button type="submit" className="btn-edit" disabled={!isFormValid}>
             Criar
           </button>
         )}
