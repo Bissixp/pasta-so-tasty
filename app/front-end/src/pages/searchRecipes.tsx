@@ -36,9 +36,9 @@ const SearchRecipes: React.FC = () => {
       <div className="home-recipes">
         <h1>{upperCase} {recipes.length} {recipes.length === 1 ? 'receita' : 'receitas'}</h1>
         {recipes.length > 0 ? (
-          <div className={`recipe-card${recipes.length === 1 ? ' single-card' : ''}`}>
+          <div className="recipe-list">
             {recipes.map((recipe: IRecipe, id: number) => (
-              <div key={id} className="recipe-card">
+              <div key={id} className={`recipe-card${recipes.length === 1 ? ' single-card' : ''}`}>
                 {recipe.recipe_photo.toLowerCase().startsWith('http') ? (
                   <img src={recipe.recipe_photo} alt={recipe.recipe_name} width="200" height="150" />
                 ) : (
