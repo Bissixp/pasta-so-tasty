@@ -39,7 +39,7 @@
   text-align: center;
 }
 
-.btn-delete {
+.btn-visu {
   display: flex;
   align-items: center;
   border: 1px solid lighten(gray, 24%);
@@ -52,4 +52,9 @@
   margin-right: 8px;
   font-size: 16px;
   color: white;
+}
+
+.auth-container {
+  display: flex;
+  justify-content: space-between;
 }

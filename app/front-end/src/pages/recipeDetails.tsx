@@ -1,7 +1,7 @@
 import React from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { useEffect, useState, useContext } from 'react';
-import { fetchRecipe, adminDeleteRecipe, userDeleteRecipe } from '../services/requests';
+import { fetchRecipe, userDeleteRecipe } from '../services/requests';
 import IRecipe from '../interface/IRecipe';
 import ImageLoader from '../helpers/imageLoader';
 import IngredientsLoader from '../helpers/ingredientsLoader';
@@ -46,16 +46,12 @@ const RecipeDetails: React.FC = () => {
     };
   }, [role, recipeIdName, navigate]);
 
-  const admDeleteRecipe = async (id: number) => {
-    const confirmMessage = "Você realmente deseja excluir esta receita?";
-    const userConfirmed = window.confirm(confirmMessage);
-    if (userConfirmed) {
-      await adminDeleteRecipe(id);
-      window.history.back();
-    }
-  }
 
-  const authorDeleteRecipe = async (id: number, authorId: number) => {
+  const redirectToRecipe = (id: number, name: string) => {
+    navigate(`/editar-receita/${id}-${name.split(' ').join('-')}`);
+  };
+
+  const deleteRecipe = async (id: number, authorId: number) => {
     const confirmMessage = "Você realmente deseja excluir esta receita?";
     const userConfirmed = window.confirm(confirmMessage);
     if (userConfirmed) {
@@ -80,7 +76,7 @@ const RecipeDetails: React.FC = () => {
                 <img src={recipe.recipe_photo} alt={recipe.recipe_name} className="centered-image" />
               ) : (
                 <div className="centered-image">
-                  <ImageLoader photo={recipe.recipe_photo} alt={recipe.recipe_name} />
+                  <ImageLoader photo={recipe.recipe_photo} alt={recipe.recipe_name} width={"450"} height={"350"} />
                 </div>
               )}
               <div className='centered-content'>
@@ -98,17 +94,28 @@ const RecipeDetails: React.FC = () => {
                   <br />
                 </React.Fragment>
               ))}
+
               {role === 'admin' && (
-                <button onClick={() => admDeleteRecipe(recipe.id)}
-                  className="btn-delete">
-                  Excluir Receita
-                </button>
+                <div className="auth-container">
+                  <button onClick={() => redirectToRecipe(recipe.id, recipe.recipe_name)}
+                    className="btn-visu"
+                  >Editar</button>
+                  <button onClick={() => deleteRecipe(recipe.id, recipe.author_id)}
+                    className="btn-visu">
+                    Excluir Receita
+                  </button>
+                </div>
               )}
               {id === recipe.author_id && role === 'member' && (
-                <button onClick={() => authorDeleteRecipe(recipe.id, recipe.author_id)}
-                  className="btn-delete">
-                  Excluir Receita
-                </button>
+                <div className="auth-container">
+                  <button onClick={() => redirectToRecipe(recipe.id, recipe.recipe_name)}
+                    className="btn-visu"
+                  >Editar</button>
+                  <button onClick={() => deleteRecipe(recipe.id, recipe.author_id)}
+                    className="btn-visu">
+                    Excluir Receita
+                  </button>
+                </div>
               )}
             </div>
           ))
@@ -116,7 +123,7 @@ const RecipeDetails: React.FC = () => {
           <p>Carregando receita...</p>
         )}
       </div>
-    </div>
+    </div >
   );
 };
 

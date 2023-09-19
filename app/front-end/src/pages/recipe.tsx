@@ -199,7 +199,7 @@ const Recipe: React.FC = () => {
                 )}
               </div>
             ))}
-            {!showButton && (
+            {!showButton && ingredients.length < 15 && (
               <div>
                 <input
                   type="text"
