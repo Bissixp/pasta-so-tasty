@@ -1,9 +1,10 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import '../styles/pages/notFound.css';
 
 const NotFoundPage: React.FC = () => {
   return (
-    <div>
+    <div className="not-found-container">
       <h1>404 - Desculpe, a página solicitada não está disponível!</h1>
       <Link to={'/'}
       >
