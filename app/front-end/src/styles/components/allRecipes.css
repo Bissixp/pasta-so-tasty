@@ -12,15 +12,21 @@ h1 {
   display: flex;
   flex-wrap: wrap;
   justify-content: flex-start;
+  margin: -10px;
 }
 
 .recipe-card {
   flex: 0 0 calc(33.33% - 20px);
+  margin: 10px;
   margin-bottom: 20px;
   padding: 10px;
   background-color: transparent;
   text-align: center;
   box-shadow: none;
+}
+
+.recipe-card.single-card {
+  flex: 0 0 calc(100% - 20px);
 }
 
 .recipe-card h3 {

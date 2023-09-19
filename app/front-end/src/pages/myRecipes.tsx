@@ -35,27 +35,31 @@ const MyRecipes: React.FC = () => {
     <div>
       <Header isUserLoggedIn={logged} fullName={fullName}>
       </Header >
-      <h1>Minhas Receitas</h1>
-      {recipes.length > 0 ? (
-        recipes.map((recipe: IRecipe) => (
-          <div key={recipe.recipe_name}>
-            <Link to={`/receita/${recipe.id}-${recipe.recipe_name.split(' ').join('-')}`}
-            >
-              <h3>{recipe.recipe_name}</h3>
-            </Link>
-            {
-              recipe.recipe_photo.toLowerCase().startsWith('http') ? (
-                <img src={recipe.recipe_photo} alt={recipe.recipe_name} width="200" height="150" />
-              ) : (
-                <ImageLoader photo={recipe.recipe_photo} alt={recipe.recipe_name} />
-              )
-            }
+      <div className="home-recipes">
+        <h1>Minhas Receitas</h1>
+        {recipes.length > 0 ? (
+          <div className="recipe-list">
+            {recipes.map((recipe: IRecipe) => (
+              <div key={recipe.recipe_name} className="recipe-card">
+                {
+                  recipe.recipe_photo.toLowerCase().startsWith('http') ? (
+                    <img src={recipe.recipe_photo} alt={recipe.recipe_name} width="200" height="150" />
+                  ) : (
+                    <ImageLoader photo={recipe.recipe_photo} alt={recipe.recipe_name} width={"200"} height={"150"} />
+                  )
+                }
+                <Link to={`/receita/${recipe.id}-${recipe.recipe_name.split(' ').join('-')}`}
+                >
+                  <h3>{recipe.recipe_name}</h3>
+                </Link>
+              </div>
+            ))}
           </div>
-        ))
-      ) : (
-        <p>Nenhuma receita criada</p>
-      )}
-    </div >
+        ) : (
+          <p>Nenhuma receita criada</p>
+        )}
+      </div >
+    </div>
   );
 };
 

@@ -40,7 +40,7 @@ const MyFavs: React.FC = () => {
         {recipes.length > 0 ? (
           <div className="recipe-list">
             {recipes.map((recipe: IRecipe) => (
-              <div key={recipe.recipe_name} className="recipe-card">
+              <div key={recipe.recipe_name} className={`recipe-card${recipes.length === 1 ? ' single-card' : ''}`}>
                 {
                   recipe.recipe_photo.toLowerCase().startsWith('http') ? (
                     <img src={recipe.recipe_photo} alt={recipe.recipe_name} width="200" height="150" />

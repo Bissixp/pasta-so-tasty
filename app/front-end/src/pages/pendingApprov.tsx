@@ -38,7 +38,7 @@ const PendingApprov: React.FC = () => {
       <h1>Receitas aguardando a Aprovação</h1>
       {recipes.length > 0 ? (
         recipes.map((recipe: IRecipe) => (
-          <div key={recipe.recipe_name}>
+          <div key={recipe.recipe_name} className={`recipe-card${recipes.length === 1 ? ' single-card' : ''}`}>
             <Link to={`/receita/${recipe.id}-${recipe.recipe_name.split(' ').join('-')}`}
             >
               <h3>{recipe.recipe_name}</h3>
@@ -47,7 +47,7 @@ const PendingApprov: React.FC = () => {
               recipe.recipe_photo.toLowerCase().startsWith('http') ? (
                 <img src={recipe.recipe_photo} alt={recipe.recipe_name} width="200" height="150" />
               ) : (
-                <ImageLoader photo={recipe.recipe_photo} alt={recipe.recipe_name} />
+                <ImageLoader photo={recipe.recipe_photo} alt={recipe.recipe_name} width={"200"} height={"150"} />
               )
             }
           </div>

@@ -1,0 +1,10 @@
+.approv-card-name {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+}
+
+.approv-card-h3 {
+  margin: 10px;
+}

@@ -172,7 +172,9 @@ export const createFav = async (body: IFav) => {
 // DELETE Requests
 
 export const deleteRecipe = async (id: number) => {
-  await api.delete(`recipe/deleteRecipe/${id}`);
+  await api.delete(`recipe/deleteRecipe/${id}`, {
+    withCredentials: true,
+  });
 };
 
 export const userDeleteRecipe = async (id: number, authorId: number) => {

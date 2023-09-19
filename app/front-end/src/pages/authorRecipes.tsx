@@ -47,17 +47,17 @@ const AuthorRecipes: React.FC = () => {
       <Header isUserLoggedIn={logged} fullName={fullName}>
       </Header >
 
-      <div className="recipe-container">
+      <div className="home-recipes">
         <h1>{authorName}</h1>
         <h4>{recipes.length} Receitas publicadas</h4>
         {recipes.length > 0 ? (
           <div className="recipe-list">
             {recipes.map((recipe: IRecipe, id: number) => (
-              <div key={id} className="recipe-card">
+              <div key={id} className={`recipe-card${recipes.length === 1 ? ' single-card' : ''}`}>
                 {recipe.recipe_photo.toLowerCase().startsWith('http') ? (
                   <img src={recipe.recipe_photo} alt={recipe.recipe_name} width="200" height="150" />
                 ) : (
-                  <ImageLoader photo={recipe.recipe_photo} alt={recipe.recipe_name} />
+                  <ImageLoader photo={recipe.recipe_photo} alt={recipe.recipe_name} width="200" height="150" />
                 )}
                 <Link to={`/receita/${recipe.id}-${recipe.recipe_name.split(' ').join('-')}`} className='link-class'>
                   <h3>{recipe.recipe_name.charAt(0).toUpperCase() + recipe.recipe_name.slice(1)}</h3>

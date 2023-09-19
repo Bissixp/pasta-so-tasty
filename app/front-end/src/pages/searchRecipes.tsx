@@ -33,16 +33,16 @@ const SearchRecipes: React.FC = () => {
         <h1>Bem vindo ao Pasta so Tasty!</h1>
       </Header >
 
-      <div className="recipe-container">
+      <div className="home-recipes">
         <h1>{upperCase} {recipes.length} {recipes.length === 1 ? 'receita' : 'receitas'}</h1>
         {recipes.length > 0 ? (
-          <div className="recipe-list">
+          <div className={`recipe-card${recipes.length === 1 ? ' single-card' : ''}`}>
             {recipes.map((recipe: IRecipe, id: number) => (
               <div key={id} className="recipe-card">
                 {recipe.recipe_photo.toLowerCase().startsWith('http') ? (
                   <img src={recipe.recipe_photo} alt={recipe.recipe_name} width="200" height="150" />
                 ) : (
-                  <ImageLoader photo={recipe.recipe_photo} alt={recipe.recipe_name} />
+                  <ImageLoader photo={recipe.recipe_photo} alt={recipe.recipe_name} width={"200"} height={"150"} />
                 )}
                 <Link to={`/receita/${recipe.id}-${recipe.recipe_name.split(' ').join('-')}`} className='link-class'>
                   <h3>{recipe.recipe_name.charAt(0).toUpperCase() + recipe.recipe_name.slice(1)}</h3>
