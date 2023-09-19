@@ -53,7 +53,7 @@ const Login: React.FC = () => {
     <section className="user-login-area">
       <div className="login-card">
         <form onSubmit={(event) => login(event)}>
-          <h1>Área do usuário</h1>
+          <h1>Entrar</h1>
           <div className="input-container">
             <label htmlFor="email-input">
               Email:
@@ -83,19 +83,28 @@ const Login: React.FC = () => {
           </div>
           <br></br>
           {errorEmail && (
-            <p>
-              Endereço de e-mail não localizado.
-            </p>
+            <div>
+              <p>
+                Endereço de e-mail não localizado.
+              </p>
+              <br></br>
+            </div>
           )}
           {errorPassword && (
-            <p>
-              A senha está incorreta, por favor, tente novamente.
-            </p>
+            <div>
+              <p>
+                A senha está incorreta, por favor, tente novamente.
+              </p>
+              <br></br>
+            </div>
           )}
           {emptyInput && (
-            <p>
-              Informe o e-mail e a senha.
-            </p>
+            <div>
+              <p>
+                Informe o e-mail e a senha.
+              </p>
+              <br></br>
+            </div>
           )}
           <button type="submit" className='btn-visu'  >Entrar</button>
           <h4>
@@ -106,8 +115,8 @@ const Login: React.FC = () => {
             </a>
           </h4>
         </form>
-      </div>
-    </section>
+      </div >
+    </section >
   );
 };
 
