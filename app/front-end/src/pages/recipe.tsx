@@ -1,9 +1,10 @@
 import React, { useEffect, useState, ChangeEvent, FormEvent, useContext } from "react";
-import { useNavigate, Link } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import ICreateRecipe from "../interface/ICreateRecipe";
 import { createRecipe, createUpload } from "../services/requests";
-import '../styles/pages/recipe.css';
 import pastaSoTastyContext from '../context/context';
+import ConfirmRedirect from "../helpers/ConfirmRedirect";
+import '../styles/pages/recipe.css';
 
 const Recipe: React.FC = () => {
   const [recipeName, setRecipeName] = useState<string>('');
@@ -121,6 +122,12 @@ const Recipe: React.FC = () => {
 
   return (
     <div className="recipe-container">
+      {showButton && (
+        <ConfirmRedirect
+          message="Agora só aguardar a aprovação da receita!"
+          redirectUrl="/home"
+        />
+      )}
       <form className="recipe-form" onSubmit={handleSubmit}>
         <label htmlFor="recipe-name">
           <h4>Nome da receita</h4>
@@ -244,11 +251,6 @@ const Recipe: React.FC = () => {
           <button type="submit" className="btn-edit" disabled={!isFormValid}>
             Criar
           </button>
-        )}
-        {showButton && (
-          <div className="centered-button">
-            <Link to="/" className="home-button">Agora só aguardar a aprovação da receita!</Link>
-          </div>
         )}
       </form>
     </div>

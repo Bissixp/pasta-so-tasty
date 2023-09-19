@@ -1,8 +1,9 @@
 import React, { useEffect, useState, ChangeEvent, FormEvent, useContext } from "react";
-import { useNavigate, Link, useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import { fetchRecipe, editRecipe, editRecipeUpload, fetchRecipeIngredients } from "../services/requests";
 import IEditRecipe from "../interface/IEditRecipe";
 import pastaSoTastyContext from '../context/context';
+import ConfirmRedirect from "../helpers/ConfirmRedirect";
 import '../styles/pages/recipe.css';
 
 interface RecipeDetailsParams {
@@ -174,6 +175,12 @@ const EditRecipe: React.FC = () => {
 
   return (
     <div className="recipe-container">
+      {showButton && (
+        <ConfirmRedirect
+          message="Agora só aguardar a aprovação da receita!"
+          redirectUrl="/home"
+        />
+      )}
       <form className="recipe-form" onSubmit={handleSubmit}>
         <label htmlFor="recipe-name">
           <h4>Nome da receita</h4>
@@ -300,11 +307,6 @@ const EditRecipe: React.FC = () => {
           <button type="submit" className="btn-edit" disabled={!isFormValid}>
             Editar
           </button>
-        )}
-        {showButton && (
-          <div className="centered-button">
-            <Link to="/" className="home-button">Agora só aguardar a aprovação da edição da receita!</Link>
-          </div>
         )}
       </form>
     </div>
