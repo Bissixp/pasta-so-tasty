@@ -25,8 +25,8 @@ recipeRoute.put('/edit-recipe/upload/:id/:authorId', authenticateMiddleware, isU
 recipeRoute.patch('/approveRecipe/:id', authenticateMiddleware, isAdmin, RecipeController.approveRecipe);
 
 // POST
-recipeRoute.post('/create-recipe', RecipeController.createRecipe);
-recipeRoute.post('/create-recipe/upload', upload.single('cookPhoto'), RecipeController.createRecipeUpload);
+recipeRoute.post('/create-recipe/:cookiesId', authenticateMiddleware, checkUser, RecipeController.createRecipe);
+recipeRoute.post('/create-recipe/upload/:cookiesId', authenticateMiddleware, checkUser, upload.single('cookPhoto'), RecipeController.createRecipeUpload);
 recipeRoute.post('/favorites/:cookiesId', authenticateMiddleware, checkUser, RecipeController.addFav);
 
 // DELETE

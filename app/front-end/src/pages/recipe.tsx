@@ -1,7 +1,7 @@
 import React, { useEffect, useState, ChangeEvent, FormEvent, useContext } from "react";
 import { useNavigate } from 'react-router-dom';
-import ICreateRecipe from "../interface/ICreateRecipe";
 import { createRecipe, createUpload } from "../services/requests";
+import ICreateRecipe from "../interface/ICreateRecipe";
 import pastaSoTastyContext from '../context/context';
 import ConfirmRedirect from "../helpers/ConfirmRedirect";
 import '../styles/pages/recipe.css';
@@ -89,7 +89,7 @@ const Recipe: React.FC = () => {
 
           cookPhoto.append('data', JSON.stringify(payload));
 
-          await createUpload(cookPhoto);
+          await createUpload(cookPhoto, id);
           setShowButton(true);
 
         } else {
@@ -105,7 +105,7 @@ const Recipe: React.FC = () => {
             status: roleCheck,
           };
 
-          await createRecipe(payload);
+          await createRecipe(payload, id);
           setShowButton(true);
         };
       } catch (error: any) {

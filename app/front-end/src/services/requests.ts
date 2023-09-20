@@ -159,16 +159,20 @@ export const createAccount = async (body: IRegister) => {
   return data;
 };
 
-export const createRecipe = async (body: ICreateRecipe) => {
-  await api.post("/recipe/create-recipe", body);
+export const createRecipe = async (body: ICreateRecipe, userId: number) => {
+  await api.post(`/recipe/create-recipe/${userId}`, body, {
+    withCredentials: true,
+  });
 }
 
-export const createUpload = async (body: FormData) => {
-  await api.post("/recipe/create-recipe/upload", body);
+export const createUpload = async (body: FormData, userId: number) => {
+  await api.post(`/recipe/create-recipe/upload/${userId}`, body, {
+    withCredentials: true,
+  });
 };
 
-export const createFav = async (body: IFav, cookiesId: number) => {
-  await api.post(`/recipe/favorites/${cookiesId}`, body, {
+export const createFav = async (body: IFav, userId: number) => {
+  await api.post(`/recipe/favorites/${userId}`, body, {
     withCredentials: true,
   });
 };
