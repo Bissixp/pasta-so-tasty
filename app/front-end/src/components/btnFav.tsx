@@ -8,7 +8,7 @@ import FavoriteEmptyIcon from '../images/fav-off.svg';
 import IFav from '../interface/IFav';
 import '../styles/components/btnFav.css';
 
-const FavoriteButton: React.FC<IFav> = ({ idUser, idRecipe }) => {
+const FavoriteButton: React.FC<IFav> = ({ userId, idRecipe }) => {
   const [, setRecipes] = useState<any[]>([]);
   const [isFavorited, setIsFavorited] = useState<boolean>(false);
   const { id } = useContext(pastaSoTastyContext);
@@ -19,7 +19,7 @@ const FavoriteButton: React.FC<IFav> = ({ idUser, idRecipe }) => {
     try {
       const getFav = async () => {
         const payload = {
-          idUser,
+          userId,
           idRecipe: idRecipe || null,
         };
         const response = await fetchFav(payload);
@@ -48,14 +48,14 @@ const FavoriteButton: React.FC<IFav> = ({ idUser, idRecipe }) => {
       getFav();
     } catch (error) {
     }
-  }, [idUser, idRecipe]);
+  }, [userId, idRecipe]);
 
   const handleFavoriteClick = async () => {
-    if (idUser === 0) {
+    if (userId === 0) {
       navigate('/login');
     } else {
       const payload = {
-        idUser,
+        userId,
         idRecipe: idRecipe || null,
       };
 

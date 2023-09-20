@@ -67,15 +67,15 @@ export default class RecipeController {
   };
 
   static async addFav(req: Request, res: Response): Promise<void> {
-    const { idUser, idRecipe } = req.body;
-    await RecipeService.addFav(idUser, idRecipe);
+    const { userId, idRecipe } = req.body;
+    await RecipeService.addFav(userId, idRecipe);
     res.status(201).json({ message: 'Recipe added to favorites successfully!' });
   };
 
   static async getFav(req: Request, res: Response): Promise<void> {
-    const idUser = parseInt(req.params.idUser, 10);
+    const userId = parseInt(req.params.userId, 10);
     const idRecipe = parseInt(req.params.idRecipe, 10);
-    const fav = await RecipeService.getFav(idUser, idRecipe);
+    const fav = await RecipeService.getFav(userId, idRecipe);
     res.status(201).json(fav);
   };
 

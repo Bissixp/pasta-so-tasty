@@ -1,5 +1,5 @@
 interface IFav {
-  idUser: number;
+  userId: number;
   idRecipe: string | null;
 }
 

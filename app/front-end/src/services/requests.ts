@@ -31,8 +31,10 @@ export const fetchEmail = async (email: string) => {
   return data;
 };
 
-export const fetchFav = async ({ idUser, idRecipe }: IFav) => {
-  const data = await api.get(`/recipe/favorites/${idUser}/${idRecipe}`);
+export const fetchFav = async ({ userId, idRecipe }: IFav) => {
+  const data = await api.get(`/recipe/favorites/${userId}/${idRecipe}`, {
+    withCredentials: true,
+  });
   if (data) {
     return data;
   } else {

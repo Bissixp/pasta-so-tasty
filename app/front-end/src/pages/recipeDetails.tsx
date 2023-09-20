@@ -82,7 +82,7 @@ const RecipeDetails: React.FC = () => {
               <div className='centered-content'>
                 <h4>Tempo de Preparo: {recipe.recipe_cooking_time}min</h4>
               </div>
-              <FavoriteButton idUser={id} idRecipe={savedId}></FavoriteButton>
+              <FavoriteButton userId={id} idRecipe={savedId}></FavoriteButton>
               <br></br>
               <span style={{ display: 'inline' }}>Tipo da Receita: </span><h4 style={{ display: 'inline' }}>{recipe.recipe_type}</h4>
               <h4>Ingredientes:</h4>

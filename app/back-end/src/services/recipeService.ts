@@ -273,11 +273,11 @@ export default class RecipeService {
     }
   };
 
-  static async addFav(idUser: number, idRecipe: number) {
+  static async addFav(userId: number, idRecipe: number) {
     try {
       const existingFav = await UserFav.findOne({
         where: {
-          user_id: idUser,
+          user_id: userId,
           recipe_fav_id: idRecipe,
         },
       });
@@ -285,13 +285,13 @@ export default class RecipeService {
       if (existingFav) {
         await UserFav.destroy({
           where: {
-            user_id: idUser,
+            user_id: userId,
             recipe_fav_id: idRecipe,
           },
         });
       } else {
         await UserFav.create({
-          user_id: idUser,
+          user_id: userId,
           recipe_fav_id: idRecipe,
         });
       }
@@ -300,11 +300,11 @@ export default class RecipeService {
     }
   }
 
-  static async getFav(idUser: number, idRecipe: number) {
+  static async getFav(userId: number, idRecipe: number) {
     try {
       const fav = await UserFav.findOne({
         where: {
-          user_id: idUser,
+          user_id: userId,
           recipe_fav_id: idRecipe,
         }
       });
