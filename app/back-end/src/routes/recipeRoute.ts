@@ -16,7 +16,7 @@ recipeRoute.get('/getMyRecipe/:id', RecipeController.getMyRecipes);
 recipeRoute.get('/getMyFavs/:id', authenticateMiddleware, checkUser, RecipeController.getMyFavs);
 recipeRoute.get('/getRecipesByName/:name', RecipeController.getRecipesByName);
 recipeRoute.get('/getIngredients/:id', RecipeController.getIngredients);
-recipeRoute.get('/getAllPending', RecipeController.getAllPedingRecipes);
+recipeRoute.get('/getAllPending', authenticateMiddleware, isAdmin, RecipeController.getAllPedingRecipes);
 recipeRoute.get('/pending/:id', RecipeController.pedingRecipes);
 
 // PUT
