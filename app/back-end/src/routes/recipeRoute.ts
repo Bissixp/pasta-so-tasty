@@ -17,7 +17,7 @@ recipeRoute.get('/getMyFavs/:id', authenticateMiddleware, checkUser, RecipeContr
 recipeRoute.get('/getRecipesByName/:name', RecipeController.getRecipesByName);
 recipeRoute.get('/getIngredients/:id', RecipeController.getIngredients);
 recipeRoute.get('/getAllPending', authenticateMiddleware, isAdmin, RecipeController.getAllPedingRecipes);
-recipeRoute.get('/pending/:id', RecipeController.pedingRecipes);
+recipeRoute.get('/pending/:id', authenticateMiddleware, checkUser, RecipeController.pedingRecipes);
 
 // PUT
 recipeRoute.put('/edit-recipe/:id/:authorId', authenticateMiddleware, isUser, RecipeController.editRecipe);

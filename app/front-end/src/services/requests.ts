@@ -69,7 +69,9 @@ export const fetchMyRecipes = async (id: number | null): Promise<IRecipe[]> => {
 };
 
 export const fetchMyPedingRecipes = async (id: number): Promise<IRecipe[]> => {
-  const { data } = await api.get(`recipe/pending/${id}`);
+  const { data } = await api.get(`recipe/pending/${id}`, {
+    withCredentials: true,
+  });
   return data;
 };
 
