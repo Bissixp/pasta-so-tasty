@@ -8,7 +8,7 @@ const BtnLogoff = () => {
   const logout = async () => {
     await fetchLogout();
     const validate = await fetchValidate();
-    if (validate === false) {
+    if (validate === null) {
       localStorage.removeItem('recipeFavId');
       navigate('/');
       window.location.reload();

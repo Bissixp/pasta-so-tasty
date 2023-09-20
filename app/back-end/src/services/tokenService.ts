@@ -25,7 +25,7 @@ export default class token {
       const { data } = jwt.verify(token, secret);
       return data;
     } catch (error) {
-      throw new ErrorHttp('Token must be a valid token', 401);
+      return null;
     }
   }
 }

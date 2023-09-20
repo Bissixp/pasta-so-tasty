@@ -19,7 +19,7 @@ function PastaSoTastyProvider({ children }: { children: React.ReactNode }) {
     const fetchData = async () => {
       try {
         const data = await fetchValidate() as ICookies;
-        if (data) {
+        if (data !== null) {
           setId(data.id);
           setFullName(`${data.first_name} ${data.last_name}`);
           setEmail(data.email);
@@ -28,6 +28,7 @@ function PastaSoTastyProvider({ children }: { children: React.ReactNode }) {
         }
       } catch (e: any) {
         console.error("Erro:", e.message);
+        return null;
       }
     };
 

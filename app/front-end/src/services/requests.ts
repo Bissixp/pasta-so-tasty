@@ -100,22 +100,17 @@ export const fetchAllFavs = async (id: number): Promise<IAllFavs> => {
   return data;
 };
 
-export const fetchValidate = async (): Promise<boolean | ICookies> => {
+export const fetchValidate = async (): Promise<null | ICookies> => {
   try {
     const response = await api.get("/login/validate", {
       withCredentials: true,
     });
-    if (response.status !== 200) {
-      return false;
-    }
 
     const data = response.data;
-
     return data;
 
   } catch (error) {
-    console.clear();
-    return false;
+    return null;
   }
 };
 
