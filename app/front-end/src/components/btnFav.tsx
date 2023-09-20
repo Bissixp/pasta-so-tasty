@@ -16,38 +16,40 @@ const FavoriteButton: React.FC<IFav> = ({ userId, idRecipe }) => {
   const navigate = useNavigate();
 
   useEffect(() => {
-    try {
-      const getFav = async () => {
-        const payload = {
-          userId,
-          idRecipe: idRecipe || null,
+    if (userId !== 0) {
+      try {
+        const getFav = async () => {
+          const payload = {
+            userId,
+            idRecipe: idRecipe || null,
+          };
+          const response = await fetchFav(payload);
+
+          if (response !== null) {
+            setRecipes(response.data || []);
+          } else {
+            setRecipes([]);
+          }
         };
-        const response = await fetchFav(payload);
 
-        if (response !== null) {
-          setRecipes(response.data || []);
-        } else {
-          setRecipes([]);
-        }
-      };
+        const recipeFavId = localStorage.getItem('recipeFavId');
+        if (recipeFavId !== null) {
+          const recipeFavIdArray = JSON.parse(recipeFavId);
+          const numericIdRecipe = Number(idRecipe);
 
-      const recipeFavId = localStorage.getItem('recipeFavId');
-      if (recipeFavId !== null) {
-        const recipeFavIdArray = JSON.parse(recipeFavId);
-        const numericIdRecipe = Number(idRecipe);
-
-        if (!isNaN(numericIdRecipe) && recipeFavIdArray.includes(numericIdRecipe)) {
-          setIsFavorited(true);
+          if (!isNaN(numericIdRecipe) && recipeFavIdArray.includes(numericIdRecipe)) {
+            setIsFavorited(true);
+          } else {
+            setIsFavorited(false);
+          }
         } else {
           setIsFavorited(false);
         }
-      } else {
-        setIsFavorited(false);
+        getFav();
+      } catch (error) {
       }
-
-      getFav();
-    } catch (error) {
     }
+
   }, [userId, idRecipe]);
 
   const handleFavoriteClick = async () => {

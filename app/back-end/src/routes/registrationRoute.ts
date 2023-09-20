@@ -3,8 +3,7 @@ import UserController from '../controllers/userController';
 
 const registrationRoute = Router();
 
-// GET
+// POST
 registrationRoute.post('/', UserController.createAccount);
-registrationRoute.post('/findEmail', UserController.findEmail);
 
 export default registrationRoute;

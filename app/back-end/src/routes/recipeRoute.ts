@@ -7,7 +7,7 @@ const upload = multer({ dest: 'uploads/' });
 const recipeRoute = Router();
 
 // GET
-recipeRoute.get('/all-favorites/:id', RecipeController.getAllFavs);
+recipeRoute.get('/all-favorites/:id', authenticateMiddleware, checkUser, RecipeController.getAllFavs);
 recipeRoute.get('/favorites/:userId/:idRecipe', authenticateMiddleware, checkUser, RecipeController.getFav);
 recipeRoute.get('/getAll', RecipeController.getAllRecipes);
 recipeRoute.get('/getTypeRecipes/:searchParam', RecipeController.getTypeRecipes);
