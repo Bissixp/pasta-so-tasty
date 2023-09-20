@@ -64,7 +64,9 @@ export const fetchRecipe = async (id: string | null, nameRecipe: string): Promis
 };
 
 export const fetchMyRecipes = async (id: number | null): Promise<IRecipe[]> => {
-  const { data } = await api.get(`recipe/getMyRecipe/${id}`);
+  const { data } = await api.get(`recipe/getMyRecipe/${id}`, {
+    withCredentials: true,
+  });
   return data;
 };
 

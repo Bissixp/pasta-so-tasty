@@ -12,7 +12,7 @@ recipeRoute.get('/favorites/:idUser/:idRecipe', RecipeController.getFav);
 recipeRoute.get('/getAll', RecipeController.getAllRecipes);
 recipeRoute.get('/getTypeRecipes/:searchParam', RecipeController.getTypeRecipes);
 recipeRoute.get('/getRecipe/:id-:name', RecipeController.getRecipe);
-recipeRoute.get('/getMyRecipe/:id', RecipeController.getMyRecipes);
+recipeRoute.get('/getMyRecipe/:id', authenticateMiddleware, checkUser, RecipeController.getMyRecipes);
 recipeRoute.get('/getMyFavs/:id', authenticateMiddleware, checkUser, RecipeController.getMyFavs);
 recipeRoute.get('/getRecipesByName/:name', RecipeController.getRecipesByName);
 recipeRoute.get('/getIngredients/:id', RecipeController.getIngredients);
