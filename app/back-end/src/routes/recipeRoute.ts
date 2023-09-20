@@ -13,7 +13,7 @@ recipeRoute.get('/getAll', RecipeController.getAllRecipes);
 recipeRoute.get('/getTypeRecipes/:searchParam', RecipeController.getTypeRecipes);
 recipeRoute.get('/getRecipe/:id-:name', RecipeController.getRecipe);
 recipeRoute.get('/getMyRecipe/:id', RecipeController.getMyRecipes);
-recipeRoute.get('/getMyFavs/:id', RecipeController.getMyFavs);
+recipeRoute.get('/getMyFavs/:id', authenticateMiddleware, checkUser, RecipeController.getMyFavs);
 recipeRoute.get('/getRecipesByName/:name', RecipeController.getRecipesByName);
 recipeRoute.get('/getIngredients/:id', RecipeController.getIngredients);
 recipeRoute.get('/getAllPending', RecipeController.getAllPedingRecipes);
@@ -25,9 +25,9 @@ recipeRoute.put('/edit-recipe/upload/:id/:authorId', authenticateMiddleware, isU
 recipeRoute.patch('/approveRecipe/:id', authenticateMiddleware, isAdmin, RecipeController.approveRecipe);
 
 // POST
-recipeRoute.post('/create-recipe/:cookiesId', authenticateMiddleware, checkUser, RecipeController.createRecipe);
-recipeRoute.post('/create-recipe/upload/:cookiesId', authenticateMiddleware, checkUser, upload.single('cookPhoto'), RecipeController.createRecipeUpload);
-recipeRoute.post('/favorites/:cookiesId', authenticateMiddleware, checkUser, RecipeController.addFav);
+recipeRoute.post('/create-recipe/:userId', authenticateMiddleware, checkUser, RecipeController.createRecipe);
+recipeRoute.post('/create-recipe/upload/:userId', authenticateMiddleware, checkUser, upload.single('cookPhoto'), RecipeController.createRecipeUpload);
+recipeRoute.post('/favorites/:userId', authenticateMiddleware, checkUser, RecipeController.addFav);
 
 // DELETE
 recipeRoute.delete('/deleteRecipe/:id', authenticateMiddleware, isAdmin, RecipeController.deleteRecipe);

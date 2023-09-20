@@ -79,7 +79,9 @@ export const fetchAllPedingRecipes = async (): Promise<IRecipe[]> => {
 };
 
 export const fetchMyFavs = async (id: number): Promise<IRecipe[]> => {
-  const { data } = await api.get(`recipe/getMyFavs/${id}`);
+  const { data } = await api.get(`recipe/getMyFavs/${id}`, {
+    withCredentials: true,
+  });
   return data;
 };
 

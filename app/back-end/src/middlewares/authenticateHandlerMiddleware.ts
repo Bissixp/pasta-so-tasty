@@ -61,7 +61,7 @@ const isUser = (req: Request, res: Response, next: NextFunction) => {
 
 const checkUser = (req: Request, res: Response, next: NextFunction) => {
   const userId = req.user?.data.id;
-  const paramId = Number(req.params.cookiesId);
+  const paramId = Number(req.params.userId) || Number(req.params.id);
   if (userId === paramId) {
     next();
   } else {
