@@ -137,9 +137,11 @@ export const editRecipeUpload = async (body: FormData, idRecipe: number, authorI
 };
 
 export const approveRecipe = async (id: number) => {
-  await api.patch(`recipe/approveRecipe/${id}`, {
-    withCredentials: true,
-  });
+  await api.patch(`recipe/approveRecipe/${id}`,
+    {},
+    {
+      withCredentials: true,
+    });
 };
 
 // POST Requests
