@@ -177,7 +177,7 @@ const EditRecipe: React.FC = () => {
     <div className="recipe-container">
       {showButton && (
         <ConfirmRedirect
-          message="Agora só aguardar a aprovação da receita!"
+          message="Agora só aguardar a aprovação da edição na receita!"
           redirectUrl="/home"
         />
       )}
