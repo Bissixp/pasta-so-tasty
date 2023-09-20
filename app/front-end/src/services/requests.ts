@@ -167,9 +167,11 @@ export const createUpload = async (body: FormData) => {
   await api.post("/recipe/create-recipe/upload", body);
 };
 
-export const createFav = async (body: IFav) => {
-  await api.post("/recipe/favorites", body);
-}
+export const createFav = async (body: IFav, cookiesId: number) => {
+  await api.post(`/recipe/favorites/${cookiesId}`, body, {
+    withCredentials: true,
+  });
+};
 
 // DELETE Requests
 

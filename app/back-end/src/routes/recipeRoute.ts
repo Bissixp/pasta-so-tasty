@@ -1,5 +1,5 @@
 import { Router } from 'express';
-import { authenticateMiddleware, isUser, isAdmin } from '../middlewares/authenticateHandlerMiddleware';
+import { authenticateMiddleware, isUser, isAdmin, checkUser } from '../middlewares/authenticateHandlerMiddleware';
 import RecipeController from '../controllers/recipeController';
 import multer from 'multer';
 
@@ -27,7 +27,7 @@ recipeRoute.patch('/approveRecipe/:id', authenticateMiddleware, isAdmin, RecipeC
 // POST
 recipeRoute.post('/create-recipe', RecipeController.createRecipe);
 recipeRoute.post('/create-recipe/upload', upload.single('cookPhoto'), RecipeController.createRecipeUpload);
-recipeRoute.post('/favorites', RecipeController.addFav);
+recipeRoute.post('/favorites/:cookiesId', authenticateMiddleware, checkUser, RecipeController.addFav);
 
 // DELETE
 recipeRoute.delete('/deleteRecipe/:id', authenticateMiddleware, isAdmin, RecipeController.deleteRecipe);

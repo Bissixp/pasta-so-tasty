@@ -1,15 +1,17 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useContext } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { createFav, fetchFav } from '../services/requests';
 import { ReactSVG } from 'react-svg';
+import pastaSoTastyContext from '../context/context';
 import FavoriteFilledIcon from '../images/fav-on.svg';
 import FavoriteEmptyIcon from '../images/fav-off.svg';
-import '../styles/components/btnFav.css';
 import IFav from '../interface/IFav';
+import '../styles/components/btnFav.css';
 
 const FavoriteButton: React.FC<IFav> = ({ idUser, idRecipe }) => {
   const [, setRecipes] = useState<any[]>([]);
   const [isFavorited, setIsFavorited] = useState<boolean>(false);
+  const { id } = useContext(pastaSoTastyContext);
 
   const navigate = useNavigate();
 
@@ -58,7 +60,7 @@ const FavoriteButton: React.FC<IFav> = ({ idUser, idRecipe }) => {
       };
 
       if (isFavorited) {
-        await createFav(payload);
+        await createFav(payload, id);
         setRecipes((prevRecipes: any) => prevRecipes.filter((fav: any) => fav.recipe_fav_id !== idRecipe));
         setIsFavorited(false);
 
@@ -72,7 +74,7 @@ const FavoriteButton: React.FC<IFav> = ({ idUser, idRecipe }) => {
           }
         }
       } else {
-        await createFav(payload);
+        await createFav(payload, id);
         setRecipes((prevRecipes: any) => [...prevRecipes, { recipe_fav_id: idRecipe }]);
         setIsFavorited(true);
 

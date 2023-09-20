@@ -59,4 +59,14 @@ const isUser = (req: Request, res: Response, next: NextFunction) => {
   }
 };
 
-export { authenticateMiddleware, isAdmin, isUser };
+const checkUser = (req: Request, res: Response, next: NextFunction) => {
+  const userId = req.user?.data.id;
+  const paramId = Number(req.params.cookiesId);
+  if (userId === paramId) {
+    next();
+  } else {
+    res.status(401).json({ message: 'Access Denied, you are not the owner from this user.' });
+  }
+};
+
+export { authenticateMiddleware, isAdmin, isUser, checkUser };
