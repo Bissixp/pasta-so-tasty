@@ -72,8 +72,6 @@
 .user_dropdown button {
   padding: 8px;
   border-bottom: #9f9a95 1px solid;
-  border-top-right-radius: 10px;
-  border-top-left-radius: 10px;
 }
 
 .user_dropdown a:hover,
@@ -81,6 +79,10 @@
   background-color: #ddd8d2;
 }
 
+.user_dropdown a:nth-child(1) {
+  border-top-right-radius: 10px;
+  border-top-left-radius: 10px;
+}
 
 .user_open {
   max-height: 300px;
@@ -107,6 +109,7 @@
   padding: 5px 10px 2.5px 22px;
   border-radius: 20px;
   white-space: noWrap;
+  cursor: pointer;
 }
 
 .user_container:hover {
