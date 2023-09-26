@@ -57,31 +57,29 @@ const AprovarReceitas: React.FC = () => {
     <div>
       <Header isUserLoggedIn={logged} fullName={fullName}>
       </Header >
+      <h1 className='fav_title'>Receitas aguardando aprovação</h1>
       <div className="home-recipes">
-        <h1>Receitas aguardando aprovação</h1>
         {recipes.length > 0 ? (
           <div className="recipe-list">
             {recipes.map((recipe: IRecipe) => (
-              <div key={recipe.recipe_name} className={`recipe-card${recipes.length === 1 ? ' single-card' : ''}`}>
-                {
-                  recipe.recipe_photo.toLowerCase().startsWith('http') ? (
-                    <img src={recipe.recipe_photo} alt={recipe.recipe_name} width="200" height="150" />
-                  ) : (
-                    <ImageLoader photo={recipe.recipe_photo} alt={recipe.recipe_name} width={"200"} height={"150"} />
-                  )
-                }
-                <div className='approv-card-name'>
-                  <Link to={`/receita/${recipe.id}-${recipe.recipe_name.split(' ').join('-')}`}
-                    className='link-name'
-                  >
-                    <div className='approv-card-h3'>
-                      <h3>{recipe.recipe_name}</h3>
-                    </div>
+              <div key={id} className='recipe-card'>
+                <div className='card_img_container'>
+                  <Link to={`/receita/${recipe.id}-${recipe.recipe_name.split(' ').join('-')}`} className='link-class'>
+                    {recipe.recipe_photo.toLowerCase().startsWith('http') ? (
+                      <img src={recipe.recipe_photo} alt={recipe.recipe_name} />
+                    ) : (
+                      <ImageLoader photo={recipe.recipe_photo} alt={recipe.recipe_name} width={"200"} height={"150"} />
+                    )}
                   </Link>
                 </div>
-                <div>
-                  <button onClick={() => handleAccept(recipe.id)} className='btn-visu'>Aceitar</button>
-                  <button onClick={() => handleDelete(recipe.id)} className='btn-visu'>Negar</button>
+                <div className='card_text_container'>
+                  <Link to={`/receita/${recipe.id}-${recipe.recipe_name.split(' ').join('-')}`} className='link-class'>
+                    <h3>{recipe.recipe_name.charAt(0).toUpperCase() + recipe.recipe_name.slice(1)}</h3>
+                  </Link>
+                  <div>
+                    <button onClick={() => handleAccept(recipe.id)} className='btn-visu btn_accept'>Aceitar</button>
+                    <button onClick={() => handleDelete(recipe.id)} className='btn-visu btn_delete'>Negar</button>
+                  </div>
                 </div>
               </div>
             ))}

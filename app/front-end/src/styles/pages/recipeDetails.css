@@ -1,19 +1,61 @@
 .centered-container {
-  text-align: center;
-  margin-top: 10px;
+  width: 100%;
+  max-width: 100%;
+  overflow: hidden;
+  position: relative;
+}
+
+.centered-container img {
+  background-size: cover;
+  width: 100%;
+  height: 450px;
+  min-width: 100%;
+}
+
+.detail_title {
+  position: absolute;
+  color: #f0eae2;
+  font-size: 40px;
+  font-weight: bold;
+  bottom: calc(3vw + 40px);
+  z-index: 99;
+  left: calc(4vw - 40px);
+}
+
+.details_sub_title {
+  position: absolute;
+  color: #f0eae2;
+  font-size: 20px;
+  font-weight: bold;
+  bottom: calc(1vw + 40px);
+  z-index: 99;
+  left: calc(4vw - 40px);
+}
+
+.details_degrade {
+  content: '';
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 450px;
+  overflow: hidden;
+  background-image: linear-gradient(180deg, rgba(255, 0, 0, 0), rgba(0, 0, 0, 0.695));
+}
+
+.details_recipe_content {
+  padding: 30px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
 }
 
 .details-container {
   display: flex;
   flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  background: #CC8963;
+  background: #f0eae2;
   max-width: 900px;
   margin: 20px auto;
-  border-radius: 10px;
   color: #151922;
-  padding: 20px;
 }
 
 .details-container ul {
@@ -26,15 +68,6 @@
   text-overflow: ellipsis;
 }
 
-.centered-image {
-  text-align: center;
-  margin-left: auto;
-  margin-right: auto;
-  display: block;
-  width: 450px;
-  height: 350px;
-}
-
 .centered-content {
   text-align: center;
 }
@@ -42,18 +75,30 @@
 .btn-visu {
   height: 48px;
   padding: 0 24px;
-  border-radius: 24px;
+  border-radius: 20px;
   cursor: pointer;
   background-color: #151922;
   margin-right: 8px;
-  font-size: 16px;
+  font-size: 18px;
   color: white;
   border: none;
   outline: none;
 }
 
+.btn_edit {
+  background-color: #2176ff;
+}
+
+.btn_delete {
+  background-color: #890f1f;
+}
+
+.btn_accept {
+  background-color: #20bf55;
+}
 
 .auth-container {
   display: flex;
   justify-content: space-between;
+  padding: 30px;
 }

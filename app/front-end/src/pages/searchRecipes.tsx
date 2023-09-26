@@ -30,7 +30,6 @@ const SearchRecipes: React.FC = () => {
   return (
     <div>
       <Header isUserLoggedIn={logged} fullName={fullName}>
-        <h1>Bem vindo ao Pasta so Tasty!</h1>
       </Header >
 
       <div className="home-recipes">
@@ -38,20 +37,26 @@ const SearchRecipes: React.FC = () => {
         {recipes.length > 0 ? (
           <div className="recipe-list">
             {recipes.map((recipe: IRecipe, id: number) => (
-              <div key={id} className={`recipe-card${recipes.length === 1 ? ' single-card' : ''}`}>
-                {recipe.recipe_photo.toLowerCase().startsWith('http') ? (
-                  <img src={recipe.recipe_photo} alt={recipe.recipe_name} width="200" height="150" />
-                ) : (
-                  <ImageLoader photo={recipe.recipe_photo} alt={recipe.recipe_name} width={"200"} height={"150"} />
-                )}
-                <Link to={`/receita/${recipe.id}-${recipe.recipe_name.split(' ').join('-')}`} className='link-class'>
-                  <h3>{recipe.recipe_name.charAt(0).toUpperCase() + recipe.recipe_name.slice(1)}</h3>
-                </Link>
-                <div className="recipe-author">
-                  <span style={{ marginRight: '5px' }}>Por </span>
-                  <Link to={`/receitas/${recipe.author_id}-${recipe.author_name.replace(/\s+/g, '-')}`} className='link-class'>
-                    <h4>{recipe.author_name}</h4>
+              <div key={id} className='recipe-card'>
+                <div className='card_img_container'>
+                  <Link to={`/receita/${recipe.id}-${recipe.recipe_name.split(' ').join('-')}`} className='link-class'>
+                    {recipe.recipe_photo.toLowerCase().startsWith('http') ? (
+                      <img src={recipe.recipe_photo} alt={recipe.recipe_name} />
+                    ) : (
+                      <ImageLoader photo={recipe.recipe_photo} alt={recipe.recipe_name} width={"200"} height={"150"} />
+                    )}
                   </Link>
+                </div>
+                <div className='card_text_container'>
+                  <Link to={`/receita/${recipe.id}-${recipe.recipe_name.split(' ').join('-')}`} className='link-class'>
+                    <h3>{recipe.recipe_name.charAt(0).toUpperCase() + recipe.recipe_name.slice(1)}</h3>
+                  </Link>
+                  <div className="recipe-author">
+                    <span style={{ marginRight: '5px' }}>Por </span>
+                    <Link to={`/receitas/${recipe.author_id}-${recipe.author_name.replace(/\s+/g, '-')}`} className='link-class'>
+                      <h4>{recipe.author_name}</h4>
+                    </Link>
+                  </div>
                 </div>
               </div>
             ))}
@@ -60,7 +65,7 @@ const SearchRecipes: React.FC = () => {
           <p>Nenhuma receita encontrada</p>
         )}
       </div>
-    </div>
+    </div >
   );
 };
 

@@ -50,10 +50,6 @@
   align-self: flex-end;
 }
 
-.user_link {
-  /* color: white; */
-}
-
 .user_dropdown {
   display: flex;
   flex-direction: column;

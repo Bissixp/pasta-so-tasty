@@ -69,39 +69,37 @@ const RecipeDetails: React.FC = () => {
           recipe.map((recipe: IRecipe) => (
             <div key={recipe.recipe_name}>
               <div className='centered-container'>
-                <h3>{recipe.recipe_name}</h3>
-              </div>
-              <br></br>
-              {recipe.recipe_photo.toLowerCase().startsWith('http') ? (
-                <img src={recipe.recipe_photo} alt={recipe.recipe_name} className="centered-image" />
-              ) : (
-                <div className="centered-image">
-                  <ImageLoader photo={recipe.recipe_photo} alt={recipe.recipe_name} width={"450"} height={"350"} />
+                <h3 className='detail_title'>{recipe.recipe_name.toUpperCase()}</h3>
+                {recipe.recipe_photo.toLowerCase().startsWith('http') ? (
+                  <img src={recipe.recipe_photo} alt={recipe.recipe_name} className="centered-image" />
+                ) : (
+                  <div className="centered-image">
+                    <ImageLoader photo={recipe.recipe_photo} alt={recipe.recipe_name} width={"450"} height={"350"} />
+                  </div>
+                )}
+                <FavoriteButton userId={id} idRecipe={savedId} />
+                <div className='details_degrade'>
                 </div>
-              )}
-              <div className='centered-content'>
-                <h4>Tempo de Preparo: {recipe.recipe_cooking_time}min</h4>
+                <h4 className='details_sub_title'>Tempo de Preparo: {recipe.recipe_cooking_time}min</h4>
               </div>
-              <FavoriteButton userId={id} idRecipe={savedId}></FavoriteButton>
-              <br></br>
-              <span style={{ display: 'inline' }}>Tipo da Receita: </span><h4 style={{ display: 'inline' }}>{recipe.recipe_type}</h4>
-              <h4>Ingredientes:</h4>
-              <IngredientsLoader ingredientId={recipe.recipe_ingredients_id} />
-              <h4>Modo de Preparo:</h4>
-              {recipe.recipe_description.split('\n').map((line, index) => (
-                <React.Fragment key={index}>
-                  <p>{line}</p>
-                  <br />
-                </React.Fragment>
-              ))}
-
+              <div className='details_recipe_content'>
+                <span>Tipo da Receita: <strong>{recipe.recipe_type}</strong> </span>
+                <h4>Ingredientes:</h4>
+                <IngredientsLoader ingredientId={recipe.recipe_ingredients_id} />
+                <h4>Modo de Preparo:</h4>
+                {recipe.recipe_description.split('\n').map((line, index) => (
+                  <React.Fragment key={index}>
+                    <p>{line}</p>
+                  </React.Fragment>
+                ))}
+              </div>
               {role === 'admin' && (
                 <div className="auth-container">
                   <button onClick={() => redirectToRecipe(recipe.id, recipe.recipe_name)}
-                    className="btn-visu"
+                    className="btn-visu btn_edit"
                   >Editar</button>
                   <button onClick={() => deleteRecipe(recipe.id, recipe.author_id)}
-                    className="btn-visu">
+                    className="btn-visu btn_delete">
                     Excluir Receita
                   </button>
                 </div>
@@ -109,10 +107,10 @@ const RecipeDetails: React.FC = () => {
               {id === recipe.author_id && role === 'member' && (
                 <div className="auth-container">
                   <button onClick={() => redirectToRecipe(recipe.id, recipe.recipe_name)}
-                    className="btn-visu"
+                    className="btn-visu btn_edit"
                   >Editar</button>
                   <button onClick={() => deleteRecipe(recipe.id, recipe.author_id)}
-                    className="btn-visu">
+                    className="btn-visu btn_delete">
                     Excluir Receita
                   </button>
                 </div>

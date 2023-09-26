@@ -162,7 +162,7 @@ module.exports = {
           author_id: 1,
           author_name: 'Pasta So Tasty',
           recipe_name: 'Sopa de capeletti',
-          recipe_photo: 'https://nacolher.com/wp-content/uploads/2022/08/sopa-de-capaletti.jpg',
+          recipe_photo: 'https://img.cybercook.com.br/receitas/556/sopa-de-capeletti.jpeg',
           recipe_ingredients_id: 15,
           recipe_description: 'Reserve previamente 1 litro de água fervente.\nEm uma panela de pressão, coloque bastante azeite enchendo bem o fundo da panela.\nColoque o alho e o orégano no azeite ainda frio.\nLeve ao fogo, Quando o alho ficar branco, coloque rapidamente a cebola bem ralada.\nMexa um pouco e coloque os cogumelos partidos ao meio.\nColoque a carne escolhida (ou frango), e frite superficialmete, Coloque a salsa, o sal e os temperos referentes ao tipo de carne escolhida.\nColoque meio litro de água já fervente.\nDeixe cozinhar até um pouco antes da carne ficar macia (o tempo depende da carne escolhida).\nTire a panela da pressão antes da carne completar o cozimento.\nAcrescente o capeletti e coloque o restante da água fervente.\nRetorne para pressão por cerca de dez minutos.\nRetire da pressão e verifique se a massa já esta cozida.\nCaso não esteja termine de cozinhar sem a pressão.\nSirva bem quente acompanhado com pães de azeite e alho e queijo ralado.',
           recipe_cooking_time: 30,

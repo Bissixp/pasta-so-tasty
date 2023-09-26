@@ -10,20 +10,29 @@ type HeaderProps = {
 const Menu = ({ children }: HeaderProps) => {
   const [searchRecipe, setSearchRecipe] = useState('');
   const [isOpen, setIsOpen] = useState(false);
+  const [isErrorVisible, setIsErrorVisible] = useState(false);
 
   const navigate = useNavigate();
 
   const handleSearch = () => {
     if (searchRecipe !== '') {
+      setIsErrorVisible(false);
       navigate(`/search?query=${searchRecipe}`);
       setSearchRecipe('');
+    } else {
+      setIsErrorVisible(true);
     }
   };
+
 
   const handleKeyPress = (e: React.KeyboardEvent<HTMLInputElement>) => {
     if (e.key === 'Enter') {
       handleSearch();
     }
+  };
+
+  const handleBlur = () => {
+    setIsErrorVisible(false);
   };
 
   return (
@@ -45,7 +54,9 @@ const Menu = ({ children }: HeaderProps) => {
         </div>
       </div>
       <div className='search_content'>
-        <div className="search_container">
+        <div className="search_container"
+          onBlur={handleBlur}
+        >
           <input
             type="text"
             placeholder="Procure por uma Receita"
@@ -53,7 +64,19 @@ const Menu = ({ children }: HeaderProps) => {
             onChange={(e) => setSearchRecipe(e.target.value)}
             onKeyDown={handleKeyPress}
           />
-          <button onClick={handleSearch}>Procurar</button>
+          <button onClick={handleSearch}
+            className='btn-search'
+          >Procurar</button>
+          {isErrorVisible && (
+            <div
+              aria-label="Preencha este campo."
+              data-balloon="Preencha este campo."
+              data-balloon-pos="down-left"
+              data-balloon-visible={isErrorVisible ? "true" : "false"}
+              className="tooltip-balloon"
+            >
+            </div>
+          )}
         </div>
       </div>
       {children}
