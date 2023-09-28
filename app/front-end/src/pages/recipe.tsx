@@ -128,10 +128,11 @@ const Recipe: React.FC = () => {
           redirectUrl="/home"
         />
       )}
-      <form className="recipe-form" onSubmit={handleSubmit}>
+      <form className="recipe_form" onSubmit={handleSubmit}>
         <label htmlFor="recipe-name">
           <h4>Nome da receita</h4>
           <input
+            className="recipe_input"
             type="text"
             id="recipe-name"
             maxLength={40}
@@ -144,6 +145,7 @@ const Recipe: React.FC = () => {
           <label htmlFor="recipe-type">
             <h4>Tipo de Receita</h4>
             <select id="recipe-type" value={selectedType}
+              className="recipe_input"
               onChange={(event) => setSelectedType(event.target.value)}
               disabled={showButton}>
               <option value="" disabled>Selecione o tipo</option>
@@ -158,6 +160,7 @@ const Recipe: React.FC = () => {
         <div>
           <h4>Foto da receita</h4>
           <input
+            className="recipe_input"
             type="file"
             id="cookPhoto"
             name="cookPhoto"
@@ -166,6 +169,7 @@ const Recipe: React.FC = () => {
           />
           <p>OU</p>
           <input
+            className="recipe_input"
             type="text"
             id="cookPhoto"
             placeholder="Insira o link da foto"
@@ -182,6 +186,7 @@ const Recipe: React.FC = () => {
             {ingredients.map((ingredient, index) => (
               <div key={index}>
                 <input
+                  className="recipe_input"
                   type="text"
                   value={ingredient}
                   maxLength={50}
@@ -195,10 +200,11 @@ const Recipe: React.FC = () => {
                 {!showButton && (
                   <button
                     type="button"
+                    className="recipe_remove_button"
                     onClick={() => handleRemoveIngredient(index)}
                     disabled={showButton}
                   >
-                    Remover
+                    x
                   </button>
                 )}
               </div>
@@ -206,6 +212,7 @@ const Recipe: React.FC = () => {
             {!showButton && ingredients.length < 15 && (
               <div>
                 <input
+                  className="recipe_input"
                   type="text"
                   value={ingredientInput}
                   maxLength={50}
@@ -214,6 +221,7 @@ const Recipe: React.FC = () => {
                 />
                 <button
                   type="button"
+                  className="recipe_add_button"
                   onClick={handleAddIngredient}
                   disabled={showButton}
                 >
@@ -237,6 +245,7 @@ const Recipe: React.FC = () => {
           <label htmlFor="preparation-time">
             <h4> Tempo de Preparo (minutos)</h4>
             <input
+              className="recipe_input"
               id="preparation-time"
               type="number"
               value={preparationTime}
@@ -248,7 +257,7 @@ const Recipe: React.FC = () => {
           </label>
         </div>
         {!showButton && (
-          <button type="submit" className="btn-edit" disabled={!isFormValid}>
+          <button type="submit" className="btn-visu btn_accept" disabled={!isFormValid}>
             Criar
           </button>
         )}

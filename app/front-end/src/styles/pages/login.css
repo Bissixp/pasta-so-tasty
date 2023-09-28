@@ -7,11 +7,39 @@
 
 .login-card {
   text-align: center;
-  background: #800020;
+  background: #f0eae2;
   padding: 20px;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
   border-radius: 5px;
   color: white;
+  width: 400px;
+  height: 550px;
+}
+
+.input_container {
+  display: flex;
+  flex-direction: column;
+  max-width: 100%;
+  margin: 0 auto;
+  gap: 20px;
+}
+
+.input_container input {
+  padding: 10px;
+  border-radius: 5px;
+  font-size: 16px;
+}
+
+.form_login {
+  display: flex;
+  flex-direction: column;
+  height: 525px;
+  justify-content: space-evenly;
+}
+
+.btn_login button {
+  width: 50%;
+  margin: 0 auto;
 }
 
 .input-container {
