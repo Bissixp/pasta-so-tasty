@@ -3,12 +3,44 @@
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  background: #CC8963;
-  max-width: 900px;
+  background: #f0eae2;
+  max-width: 500px;
   margin: 20px auto;
   border-radius: 10px;
   color: #151922;
-  padding: 20px;
+}
+
+.recipe_form {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  padding: 15px;
+}
+
+.recipe_input {
+  padding: 4px;
+  margin-top: 8px;
+}
+
+.recipe_remove_button {
+  background: transparent;
+  border: none;
+  padding: 5px 10px;
+  font-size: 22px;
+  color: #890f1f;
+  cursor: pointer;
+}
+
+.recipe_add_button {
+  background: transparent;
+  border: none;
+  padding: 5px 10px;
+  font-size: 16px;
+  background-color: #20bf55;
+  color: #f0eae2;
+  cursor: pointer;
+  border-radius: 8px;
+  margin-left: 10px;
 }
 
 .btn-edit {
@@ -45,8 +77,9 @@ label {
   padding: 5px;
 }
 
-textarea {
+#recipe-description {
   width: 450px;
   height: 200px;
   resize: none;
+  padding: 5px;
 }

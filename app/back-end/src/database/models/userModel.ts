@@ -26,15 +26,15 @@ Users.init({
     allowNull: false,
   },
   password: {
-    type: STRING(30),
+    type: STRING(60),
     allowNull: false,
   },
   email: {
-    type: INTEGER,
+    type: STRING,
     allowNull: false,
   },
   role: {
-    type: INTEGER,
+    type: STRING,
     allowNull: false,
   }
 }, {

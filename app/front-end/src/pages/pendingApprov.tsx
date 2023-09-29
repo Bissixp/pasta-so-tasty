@@ -35,8 +35,8 @@ const PendingApprov: React.FC = () => {
     <div>
       <Header isUserLoggedIn={logged} fullName={fullName}>
       </Header >
+      <h1 className='fav_title'>Receitas aguardando a Aprovação</h1>
       <div className="home-recipes">
-        <h1>Receitas aguardando a Aprovação</h1>
         {recipes.length > 0 ? (
           <div className="recipe-list">
             {recipes.map((recipe: IRecipe) => (
@@ -61,7 +61,7 @@ const PendingApprov: React.FC = () => {
             ))}
           </div>
         ) : (
-          <p>No momento, sem receitas aguardando a Aprovação</p>
+          <p className='no_recipe'>No momento, sem receitas aguardando a Aprovação</p>
         )}
       </div >
     </div>

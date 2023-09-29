@@ -115,12 +115,12 @@ export default class RecipeController {
   static async deleteRecipe(req: Request, res: Response): Promise<void> {
     const id = parseInt(req.params.id, 10);
     await RecipeService.deleteRecipe(id);
-    res.status(201).json();
+    res.status(201).json({ message: 'Recipe deleted successfully!' });
   };
 
   static async deleteRecipePosted(req: Request, res: Response): Promise<void> {
     const id = parseInt(req.params.id, 10);
     await RecipeService.deleteRecipePosted(id);
-    res.status(201).json();
+    res.status(201).json({ message: 'Recipe deleted successfully!' });
   };
 };

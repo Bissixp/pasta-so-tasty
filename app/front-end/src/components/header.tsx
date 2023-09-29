@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import BtnLogoff from './btnLogoff';
 import Menu from './menu';
 import logo from '../images/PST-logo.png';
+import arrowImage from '../images/arrow_drop_down.svg';
 import '../styles/components/header.css';
 
 type HeaderProps = {
@@ -13,6 +14,7 @@ type HeaderProps = {
 
 const Header = ({ isUserLoggedIn, fullName }: HeaderProps) => {
   const [logged, setLogged] = useState(false);
+  const [isOpen, setIsOpen] = useState(false);
 
   useEffect(() => {
     setLogged(isUserLoggedIn);
@@ -26,12 +28,17 @@ const Header = ({ isUserLoggedIn, fullName }: HeaderProps) => {
         </div>
         <Menu>
           {logged ? (
-            <div>
-              <div className="button-container">
-                <span style={{ color: 'white' }}>Olá {fullName}</span>
-                <Link to="/criar-receita" className="header-button">Criar Receita</Link>
-                <Link to="/meus-favoritos" className="header-button">Meus Favoritos</Link>
-                <Link to="/perfil" className="header-button">Perfil</Link>
+            <div className='user_content'>
+              <Link to="/criar-receita" className="user_link">Criar Receita</Link>
+              <div className="user_container" onClick={() => {
+                setIsOpen(prev => prev = !prev)
+              }}>
+                <span>{fullName}</span>
+                <img src={arrowImage} alt='arrow_img' width={30} className={`${isOpen ? 'rotate_down' : 'rotate_up'}`} />
+              </div>
+              <div className={`user_dropdown ${isOpen ? 'user_open' : 'user_close'}`} >
+                <Link to="/meus-favoritos" className="user_link">Meus Favoritos</Link>
+                <Link to="/perfil" className="user_link">Perfil</Link>
                 <BtnLogoff />
               </div>
             </div>

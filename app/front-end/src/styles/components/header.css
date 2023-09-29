@@ -1,6 +1,5 @@
 .common-header {
   background: #800020;
-  padding: 20px;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -36,7 +35,6 @@
 
 .header-link {
   margin-right: 10px;
-  color: white;
   cursor: pointer;
 }
 
@@ -49,4 +47,78 @@
   background-color: transparent;
   border: none;
   cursor: pointer;
+  align-self: flex-end;
+}
+
+.user_dropdown {
+  display: flex;
+  flex-direction: column;
+  text-align: right;
+  position: absolute;
+  background-color: #f0eae2;
+  transition: max-height 300ms;
+  will-change: auto;
+  right: 0;
+  top: 55px;
+  width: 70%;
+  border-radius: 10px;
+}
+
+.user_dropdown a,
+.user_dropdown button {
+  padding: 8px;
+  border-bottom: #9f9a95 1px solid;
+}
+
+.user_dropdown a:hover,
+.user_dropdown button:hover {
+  background-color: #ddd8d2;
+}
+
+.user_dropdown a:nth-child(1) {
+  border-top-right-radius: 10px;
+  border-top-left-radius: 10px;
+}
+
+.user_open {
+  max-height: 300px;
+  border: solid 1px black;
+}
+
+.user_close {
+  max-height: 0px;
+  overflow: hidden;
+}
+
+.user_content {
+  display: flex;
+  gap: 0.7rem;
+  align-items: center;
+  white-space: noWrap;
+  position: relative;
+}
+
+.user_container {
+  display: flex;
+  align-items: center;
+  border: solid 1px black;
+  padding: 5px 10px 2.5px 22px;
+  border-radius: 20px;
+  white-space: noWrap;
+  cursor: pointer;
+}
+
+.user_container:hover {
+  border: solid 1px rgb(85, 85, 85);
+}
+
+.rotate_up {
+  transform: rotate(-180deg);
+  transition: transform 300ms;
+
+}
+
+.rotate_down {
+  transform: rotate(0deg);
+  transition: transform 300ms;
 }

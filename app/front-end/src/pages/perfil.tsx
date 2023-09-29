@@ -25,23 +25,20 @@ const Perfil: React.FC = () => {
       </Header>
       <div className="user-perfil">
         <div className="card-container">
-          <img src={pastaSoTastyCard} alt="pasta-card" width="300" height="300" />
           <Link to="/minhas-receitas" className="link-name">
-            Minhas Receitas
+            <img src={pastaSoTastyCard} alt="pasta-card" width="300" height="300" />
           </Link>
         </div>
         {role === 'admin' ? (
           <div className="card-container">
-            <img src={approveCard} alt="pasta-card" width="300" height="300" />
             <Link to="/aprovar-receitas" className="link-name">
-              Aprovar receitas
+              <img src={approveCard} alt="pasta-card" width="300" height="300" />
             </Link>
           </div>
         ) : (
           <div className="card-container">
-            <img src={pedingCard} alt="pasta-card" width="300" height="300" />
             <Link to="/aguardando-aprovação" className="link-name">
-              Aguardando Aprovação
+              <img src={pedingCard} alt="pasta-card" width="300" height="300" />
             </Link>
           </div>
         )}

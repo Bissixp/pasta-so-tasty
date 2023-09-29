@@ -7,6 +7,7 @@
     "@types/react": "^18.0.25",
     "@types/react-dom": "^18.0.9",
     "axios": "^1.4.0",
+    "balloon-css": "^1.2.0",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-router-dom": "^6.14.0",
@@ -16,11 +17,14 @@
     "web-vitals": "^2.1.4"
   },
   "scripts": {
-    "start": "react-scripts start",
+    "start": "npm-run-all --parallel start-backend start-frontend",
+    "start-old": "react-scripts start",
     "build": "tsc && vite build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
-    "dev": "vite"
+    "dev": "vite",
+    "start-backend": "cd ../back-end && npm run dev",
+    "start-frontend": "npm run dev"
   },
   "eslintConfig": {
     "extends": [
@@ -42,6 +46,7 @@
   },
   "devDependencies": {
     "@vitejs/plugin-react-swc": "^3.3.2",
+    "npm-run-all": "^4.1.5",
     "vite": "^4.3.9"
   }
 }

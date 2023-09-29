@@ -94,9 +94,9 @@ const FavoriteButton: React.FC<IFav> = ({ userId, idRecipe }) => {
   };
 
   return (
-    <button onClick={handleFavoriteClick} className={`button-transparent ${isFavorited ? 'favorited-button' : 'not-favorited-button'}`}>
+    <button onClick={handleFavoriteClick} className={`btn_fav ${isFavorited ? 'favorited-button' : 'not-favorited-button'}`}>
       <ReactSVG src={isFavorited ? FavoriteFilledIcon : FavoriteEmptyIcon} />
-      {isFavorited ? 'Favoritado' : 'Favoritar'}
+      <p>{isFavorited ? 'Favoritado' : 'Favoritar'}</p>
     </button>
   );
 };

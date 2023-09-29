@@ -5,3 +5,24 @@
 .not-favorited-button {
   color: black;
 }
+
+.btn_fav {
+  background-color: transparent;
+  color: #f0eae2;
+  position: absolute;
+  z-index: 99;
+  bottom: calc(2vw + 20px);
+  right: calc(2vw + 10px);
+  border: none;
+  fill: #f0eae2;
+  width: 65px;
+  font-size: 18px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.btn_fav p {
+  color: #f0eae2;
+}

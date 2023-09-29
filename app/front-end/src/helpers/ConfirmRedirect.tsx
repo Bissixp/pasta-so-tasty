@@ -14,7 +14,7 @@ function ConfirmRedirect({ message, redirectUrl }: ConfirmRedirectProps) {
     <div className="confirmation-message">
       <div className="confirmation-content">
         <p>{message}</p>
-        <button onClick={handleConfirm} className="btn-visu">Ok</button>
+        <button onClick={handleConfirm} className="btn-visu btn_edit">Ok</button>
       </div>
     </div>
   );

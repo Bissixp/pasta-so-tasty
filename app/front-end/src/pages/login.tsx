@@ -15,11 +15,19 @@ const Login: React.FC = () => {
 
   const navigate = useNavigate();
 
+  const isFormValid = !(emptyInput || errorPassword || errorEmail || errorPassword);
+
   useEffect(() => {
     if (fullName.length >= 1) {
       navigate('/');
     }
   }, [navigate, fullName]);
+
+  const handleBlur = (): void => {
+    setErrorPassword(false);
+    setEmptyInput(false);
+    setErrorEmail(false);
+  };
 
   const login = async (event: FormEvent<HTMLFormElement>): Promise<void> => {
     event.preventDefault();
@@ -51,64 +59,64 @@ const Login: React.FC = () => {
 
   return (
     <section className="user-login-area">
-      <div className="login-card">
-        <form onSubmit={(event) => login(event)}>
+      <div className="login-card"
+        onBlur={handleBlur}
+      >
+        <form onSubmit={(event) => login(event)} className='form_login'>
           <h1>Entrar</h1>
-          <div className="input-container">
-            <label htmlFor="email-input">
-              Email:
-              {' '}
-              <input
-                id="email-input"
-                type="text"
-                value={email}
-                onChange={(event) => setEmail(event.target.value)}
-                placeholder="Email"
-              />
-            </label>
+          <div className='input_container'>
+            <input
+              id="email-input"
+              type="text"
+              value={email}
+              onChange={(event) => setEmail(event.target.value)}
+              placeholder="Email"
+            />
+            <input
+              id="password-input"
+              type="password"
+              value={password}
+              onChange={(event) => setPassword(event.target.value)}
+              placeholder="Senha"
+            />
           </div>
-          <div className="input-container">
-            <label htmlFor="password-input">
-              Senha:
-              {' '}
-              <input
-                id="password-input"
-                type="password"
-                value={password}
-                onChange={(event) => setPassword(event.target.value)}
-                placeholder="Senha"
-              />
-            </label>
-            <br></br>
-          </div>
-          <br></br>
           {errorEmail && (
-            <div>
-              <p>
-                Endereço de e-mail não localizado.
-              </p>
-              <br></br>
+            <div
+              aria-label="Endereço de e-mail não localizado."
+              data-balloon="Endereço de e-mail não localizado."
+              data-balloon-pos="right"
+              data-balloon-visible={errorEmail ? "true" : "false"}
+              className="tooltip_balloon_login_email"
+            >
             </div>
           )}
           {errorPassword && (
-            <div>
-              <p>
-                A senha está incorreta, por favor, tente novamente.
-              </p>
-              <br></br>
+            <div
+              aria-label="A senha está incorreta, por favor, tente novamente."
+              data-balloon="A senha está incorreta, por favor, tente novamente."
+              data-balloon-pos="right"
+              data-balloon-visible={errorPassword ? "true" : "false"}
+              className="tooltip_balloon_login_password"
+            >
             </div>
           )}
           {emptyInput && (
-            <div>
-              <p>
-                Informe o e-mail e a senha.
-              </p>
-              <br></br>
+            <div
+              aria-label=" Informe o e-mail e a senha."
+              data-balloon=" Informe o e-mail e a senha."
+              data-balloon-pos="down"
+              data-balloon-visible={emptyInput ? "true" : "false"}
+              className="tooltip_balloon_login_error"
+            >
             </div>
           )}
-          <button type="submit" className='btn-visu'  >Entrar</button>
+          <div>
+            <button type="submit"
+              className={`btn_edit btn_login ${!isFormValid ? 'disabled' : ''}`}
+              disabled={!isFormValid}
+            >Entrar</button>
+          </div>
           <h4>
-            <br></br>
             Quero me cadastrar,{' '}
             <a href="http://localhost:3000/registro" className="login-color">
               Cadastrar
