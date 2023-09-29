@@ -44,7 +44,10 @@ export default class UserController {
   static async getUserEmail(req: Request, res: Response): Promise<void> {
     const usernameParam = req.params.searchParam;
     const getEmail = await UserService.findEmail(usernameParam);
-    res.status(200).json({ data: getEmail });
+    if (getEmail) {
+      const email = getEmail.email;
+      res.status(200).json({ email });
+    }
   };
 
   static async logout(req: Request, res: Response): Promise<Response | void> {

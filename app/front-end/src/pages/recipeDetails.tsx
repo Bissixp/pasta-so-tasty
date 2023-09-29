@@ -26,10 +26,15 @@ const RecipeDetails: React.FC = () => {
 
   useEffect(() => {
     try {
-      const getRecipe = async (id: string | null, nameRecipe: string) => {
-        const response = await fetchRecipe(id, nameRecipe);
+      const getRecipe = async (idParam: string | null, nameRecipe: string) => {
+        const response = await fetchRecipe(idParam, nameRecipe);
         if (!response) {
           navigate('/404');
+        }
+        if (response.status_recipe === 'pending') {
+          if (response.author_id !== id && role !== 'admin') {
+            navigate('/');
+          }
         }
         setRecipe(prev => prev = [response]);
       };
@@ -41,10 +46,11 @@ const RecipeDetails: React.FC = () => {
         setSavedId(formatedId);
         getRecipe(formatedId, formatedName);
       }
+
     } catch (error: any) {
       console.error("Erro:", error.message);
     };
-  }, [role, recipeIdName, navigate]);
+  }, [id, role, recipeIdName, navigate]);
 
 
   const redirectToRecipe = (id: number, name: string) => {

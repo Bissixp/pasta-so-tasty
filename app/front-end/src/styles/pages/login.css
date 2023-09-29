@@ -37,13 +37,54 @@
   justify-content: space-evenly;
 }
 
-.btn_login button {
+.btn_login {
   width: 50%;
-  margin: 0 auto;
+  margin-left: 10px;
+  margin-top: 10px;
+  height: 48px;
+  padding: 0 24px;
+  border-radius: 20px;
+  cursor: pointer;
+  background-color: #151922;
+  margin-right: 8px;
+  font-size: 18px;
+  color: white;
+  border: none;
+  outline: none;
+}
+
+.disabled {
+  background-color: #ccc;
+  color: #999;
+  cursor: not-allowed;
 }
 
 .input-container {
   display: flex;
   flex-direction: column;
   margin-bottom: 10px;
+}
+
+.tooltip_balloon_login_error {
+  --balloon-text-color: #f0eae2;
+  --balloon-color: #890f1f;
+  --balloon-font-size: 18px;
+  left: 1px;
+  top: -35px;
+}
+
+.tooltip_balloon_login_email {
+  --balloon-text-color: #f0eae2;
+  --balloon-color: #890f1f;
+  --balloon-font-size: 18px;
+  left: -60px;
+  top: -135px;
+}
+
+.tooltip_balloon_login_password {
+  --balloon-text-color: #f0eae2;
+  --balloon-color: #890f1f;
+  --balloon-font-size: 18px;
+  left: -60px;
+  top: -71px;
 }

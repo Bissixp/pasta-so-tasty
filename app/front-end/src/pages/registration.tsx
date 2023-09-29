@@ -10,11 +10,12 @@ const Registration: React.FC = () => {
   const [email, setEmail] = useState<string>('');
   const [password, setPassword] = useState<string>('');
   const [confirmationPassword, setConfirmationPassword] = useState<string>('');
-  const [errorMessage, setErrorMessage] = useState<string>('');
-  const [errorEmail, setErrorEmail] = useState<string>('');
-  const [errorFirstName, setErrorFirstName] = useState<string>('');
-  const [errorLastName, setErrorLastName] = useState<string>('');
   const [redirectToHome, setRedirectToHome] = useState<boolean>(false);
+  const [errorFirstName, setErrorFirstName] = useState<boolean>(false);
+  const [errorLastName, setErrorLastName] = useState<boolean>(false);
+  const [errorEmail, setErrorEmail] = useState<boolean>(false);
+  const [errorPassword, setErrorPassword] = useState<boolean>(false);
+  const [isIncorretPassword, setIsIncorretPassword] = useState<boolean>(false);
   const [isEmailAlreadyUsed, setIsEmailAlreadyUsed] = useState<boolean>(false);
 
   const { fullName } = useContext(pastaSoTastyContext);
@@ -28,45 +29,33 @@ const Registration: React.FC = () => {
   }, [navigate, fullName]);
 
 
-  const isFormValid = !(errorMessage || isEmailAlreadyUsed || errorFirstName || errorLastName);
+  const isFormValid = !(errorFirstName || errorLastName || errorEmail || isEmailAlreadyUsed || errorPassword || isIncorretPassword);
 
   const handleEmailChange = async (event: ChangeEvent<HTMLInputElement>): Promise<void> => {
     setEmail(event.target.value);
     setIsEmailAlreadyUsed(false);
-    setErrorEmail('');
+    setErrorEmail(false);
   };
 
   const handlePasswordChange = (event: ChangeEvent<HTMLInputElement>): void => {
     setPassword(event.target.value);
-    setErrorMessage('');
+    setErrorPassword(false);
+    setErrorPassword(false);
   };
 
   const handleConfirmationPasswordChange = (event: ChangeEvent<HTMLInputElement>): void => {
     setConfirmationPassword(event.target.value);
-    setErrorMessage('');
   };
 
   const handleSubmit = async (event: FormEvent<HTMLFormElement>): Promise<void> => {
     event.preventDefault();
-
-    const regex = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[!@#$%^&*])[0-9a-zA-Z!@#$%^&*]{8,}$/;
-    if (password === confirmationPassword) {
-      if (regex.test(password)) {
-        try {
-          await createAccount({ firstName, lastName, password, email });
-          setRedirectToHome(true);
-        } catch (error) {
-          console.error('Erro ao registrar:', error);
-        }
-      } else {
-        setErrorMessage(
-          'A senha deve conter pelo menos 8 caracteres, 1 dígito, 1 letra minúscula, 1 letra maiúscula e 1 caractere especial.'
-        );
-      }
-    } else {
-      setErrorMessage('As senhas não correspondem.');
+    try {
+      await createAccount({ firstName, lastName, password, email });
+      setRedirectToHome(true);
+    } catch (error) {
+      console.error('Erro ao registrar:', error);
     }
-  };
+  }
 
   const validateEmailFormat = (email: string): boolean => {
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
@@ -77,40 +66,55 @@ const Registration: React.FC = () => {
     if (email !== '') {
       const isValidEmail = validateEmailFormat(email);
       if (!isValidEmail) {
-        setErrorEmail('O email não está em um formato válido.');
+        setErrorEmail(true);
       } else {
         try {
           const response = await fetchEmail(email);
           if (response.data !== null) {
-            setErrorEmail('Email já cadastrado, tente outro');
             setIsEmailAlreadyUsed(true);
           } else {
-            setErrorEmail('');
+            setIsEmailAlreadyUsed(false);
           }
         } catch (error) {
           console.error('Erro ao verificar email:', error);
         }
       }
     } else {
-      setErrorEmail('');
+      setErrorEmail(false);
     }
   };
 
   const handleBlurFirstName = (): void => {
     const trimmedValue = firstName.trim();
     if (trimmedValue.length < 3) {
-      setErrorFirstName('O campo deve ter no mínimo 3 caracteres.');
+      setErrorFirstName(true);
     } else {
-      setErrorFirstName('');
+      setErrorFirstName(false);
     }
   };
 
   const handleBlurLastName = (): void => {
     const trimmedValue = lastName.trim();
     if (trimmedValue.length < 3) {
-      setErrorLastName('O campo deve ter no mínimo 3 caracteres.');
+      setErrorLastName(true);
     } else {
-      setErrorLastName('');
+      setErrorLastName(false);
+    }
+  };
+
+  const handleBlurPassword = async (): Promise<void> => {
+    const regex = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[!@#$%^&*])[0-9a-zA-Z!@#$%^&*]{8,}$/;
+    if (password === confirmationPassword) {
+      if (regex.test(password)) {
+        setErrorPassword(false);
+        setIsIncorretPassword(false);
+      } else {
+        setIsIncorretPassword(false);
+        setErrorPassword(true);
+      }
+    } else {
+      setErrorPassword(false);
+      setIsIncorretPassword(true);
     }
   };
 
@@ -135,8 +139,13 @@ const Registration: React.FC = () => {
             onBlur={handleBlurFirstName}
           />
           {errorFirstName && (
-            <div className="error-balloon">
-              <p className="error-message">{errorFirstName}</p>
+            <div
+              aria-label="O campo deve ter no mínimo 3 caracteres."
+              data-balloon="O campo deve ter no mínimo 3 caracteres."
+              data-balloon-pos="right"
+              data-balloon-visible={errorFirstName ? "true" : "false"}
+              className="tooltip_balloon_register"
+            >
             </div>
           )}
           <input
@@ -152,11 +161,11 @@ const Registration: React.FC = () => {
           />
           {errorLastName && (
             <div
-              aria-label="Preencha este campo."
-              data-balloon="Preencha este campo."
-              data-balloon-pos="down-left"
+              aria-label="O campo deve ter no mínimo 3 caracteres."
+              data-balloon="O campo deve ter no mínimo 3 caracteres."
+              data-balloon-pos="right"
               data-balloon-visible={errorLastName ? "true" : "false"}
-              className="tooltip-balloon"
+              className="tooltip_balloon_register"
             >
             </div>
           )}
@@ -170,8 +179,23 @@ const Registration: React.FC = () => {
             onBlur={handleBlurEmail}
           />
           {errorEmail && (
-            <div className="error-balloon">
-              <p className="error-message">{errorEmail}</p>
+            <div
+              aria-label="O email não está em um formato válido."
+              data-balloon="O email não está em um formato válido."
+              data-balloon-pos="right"
+              data-balloon-visible={errorEmail ? "true" : "false"}
+              className="tooltip_balloon_register"
+            >
+            </div>
+          )}
+          {isEmailAlreadyUsed && (
+            <div
+              aria-label="Email já cadastrado, tente outro"
+              data-balloon="Email já cadastrado, tente outro"
+              data-balloon-pos="right"
+              data-balloon-visible={isEmailAlreadyUsed ? "true" : "false"}
+              className="tooltip_balloon_register"
+            >
             </div>
           )}
           <input
@@ -198,13 +222,31 @@ const Registration: React.FC = () => {
             placeholder='Confirmação da senha'
             value={confirmationPassword}
             onChange={handleConfirmationPasswordChange}
+            onBlur={handleBlurPassword}
           />
-          {errorMessage && (
-            <div className="error-balloon">
-              <p className="error-message">{errorMessage}</p>
+          {errorPassword && (
+            <div
+              aria-label="A senha não atende os requisitos."
+              data-balloon="A senha não atende os requisitos."
+              data-balloon-pos="right"
+              data-balloon-visible={errorPassword ? "true" : "false"}
+              className="tooltip_balloon_register"
+            >
             </div>
           )}
-          <button type="submit" className='btn-visu btn_edit btn_register' disabled={!isFormValid}>
+          {isIncorretPassword && (
+            <div
+              aria-label="As senhas não correspondem"
+              data-balloon="As senhas não correspondem"
+              data-balloon-pos="right"
+              data-balloon-visible={isIncorretPassword ? "true" : "false"}
+              className="tooltip_balloon_register"
+            >
+            </div>
+          )}
+          <button type="submit"
+            className={`btn_edit btn_register ${!isFormValid ? 'disabled' : ''}`}
+            disabled={!isFormValid}>
             Cadastrar
           </button>
           <h4 className='login_a'>
