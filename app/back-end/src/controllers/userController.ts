@@ -1,8 +1,10 @@
-import UserService from '../services/userService';
 import { Request, Response } from 'express';
+import bcrypt from 'bcrypt';
+import UserService from '../services/userService';
 import tokenAuth from '../services/tokenService';
 
 const MAX_AGE = 24 * 60 * 60 * 1000; //24 horas;
+const saltRounds = 10;
 
 export default class UserController {
   static async login(req: Request, res: Response): Promise<void> {
@@ -22,7 +24,8 @@ export default class UserController {
 
   static async createAccount(req: Request, res: Response): Promise<void> {
     const accountValidation = await UserService.validateBodyRegistration(req.body);
-    await UserService.createAccount(accountValidation);
+    const hashedPassword = await bcrypt.hash(accountValidation.password, saltRounds);
+    await UserService.createAccount(accountValidation, hashedPassword);
     const { email, password } = accountValidation;
     const userLogin = await UserService.checkLogin(email, password);
     const token = await tokenAuth.makeToken(userLogin);

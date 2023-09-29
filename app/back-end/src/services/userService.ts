@@ -1,8 +1,10 @@
 import Joi from "joi";
+import bcrypt from 'bcrypt';
 import ErrorHttp from '../middlewares/utils';
 import Users from '../database/models/userModel';
 import IRegister from "../interface/IRegister";
 import UserFav from "../database/models/userFavModel";
+
 
 export default class UserService {
   static async validateBodyLogin(body: string): Promise<any> {
@@ -45,24 +47,25 @@ export default class UserService {
     if (!findUser?.email) {
       throw new ErrorHttp('Incorrect email', 401);
     }
-    if (findUser.password !== password) {
+
+    const passwordMatch = await bcrypt.compare(password, findUser.password);
+    if (!passwordMatch) {
       throw new ErrorHttp('Incorrect password', 401);
     }
     return findUser;
   }
 
-  static async createAccount(accountBody: IRegister) {
+  static async createAccount(accountBody: IRegister, hashPassword: string) {
     const {
       firstName,
       lastName,
-      password,
       email
     } = accountBody;
 
     const createrUser = await Users.create({
       first_name: firstName,
       last_name: lastName,
-      password: password,
+      password: hashPassword,
       email: email,
       role: 'member'
     });
