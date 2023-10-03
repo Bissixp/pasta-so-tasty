@@ -63,9 +63,9 @@ git clone git@github.com:Bissixp/pasta-so-tasty.git
 ```bash
 cd pasta-so-tasty
 ```
-  ### 3 - Instale as dependências do back-end
+  ### 3 - Instale as dependências do back-end e as popule
 ```bash
-cd app/back-end && npm install
+cd app/back-end && npm install && npm run build
 ```
  ### 4 - Instale as dependências do front-end
 ```bash
