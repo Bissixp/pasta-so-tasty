@@ -73,7 +73,7 @@ const RecipeDetails: React.FC = () => {
       <div className="details-container">
         {recipe.length > 0 ? (
           recipe.map((recipe: IRecipe) => (
-            <div key={recipe.recipe_name}>
+            <div key={recipe.id}>
               <div className='centered-container'>
                 <h3 className='detail_title'>{recipe.recipe_name.toUpperCase()}</h3>
                 {recipe.recipe_photo.toLowerCase().startsWith('http') ? (
