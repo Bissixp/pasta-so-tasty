@@ -1,8 +1,7 @@
 require('dotenv').config();
 const jwt = require('jsonwebtoken');
-import ErrorHttp from '../middlewares/utils';
 
-const secret = process.env.JWT_SECRET;
+const secret = process.env.JWT_SECRET || "jwt_secret";
 
 export default class token {
   static async makeToken(user: any): Promise<String> {

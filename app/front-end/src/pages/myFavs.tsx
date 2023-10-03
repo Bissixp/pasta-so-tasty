@@ -20,15 +20,17 @@ const MyFavs: React.FC = () => {
   }, [navigate, logged]);
 
   useEffect(() => {
-    try {
-      const getMyRecipes = async () => {
-        const response = await fetchMyFavs(id);
-        setRecipes(prev => prev = response);
+    if (id !== 0) {
+      try {
+        const getMyRecipes = async () => {
+          const response = await fetchMyFavs(id);
+          setRecipes(prev => prev = response);
+        };
+        getMyRecipes();
+      } catch (error: any) {
+        console.error("Erro:", error.message);
       };
-      getMyRecipes();
-    } catch (error: any) {
-      console.error("Erro:", error.message);
-    };
+    }
   }, [id, fullName]);
 
 
