@@ -23,6 +23,7 @@ const EditRecipe: React.FC = () => {
   const [idRecipe, setIdRecipe] = useState<number>(0);
   const [authorId, setAuthorId] = useState<number>(0);
   const [showButton, setShowButton] = useState<boolean>(false);
+  const [ingredientEditMode, setIngredientEditMode] = useState<boolean[]>([]);
   const { recipeIdName } = useParams<RecipeDetailsParams>();
 
   const { id, role, fullName, logged } = useContext(pastaSoTastyContext);
@@ -88,13 +89,17 @@ const EditRecipe: React.FC = () => {
   };
 
   const handleAddIngredient = () => {
-    if (ingredients.length < 15) {
-      setIngredients((prevIngredients) => [
-        ...prevIngredients,
-        { name: '', value: ingredientInput },
-      ]);
-      setIngredientInput('');
+    if (ingredientInput.trim() !== '') {
+      if (ingredients.length < 15) {
+        setIngredients((prevIngredients) => [
+          ...prevIngredients,
+          { name: '', value: ingredientInput },
+        ]);
+        setIngredientEditMode((prevEditMode) => [...prevEditMode, false]);
+        setIngredientInput('');
+      }
     }
+
   };
 
   const handleRemoveIngredient = (index: number) => {
@@ -238,21 +243,25 @@ const EditRecipe: React.FC = () => {
             <h4>Quantidade e Ingrediente</h4>
             {ingredients.map((ingredient, index) => (
               <div key={index}>
-                <input
-                  className="recipe_input"
-                  type="text"
-                  value={ingredient.value}
-                  maxLength={50}
-                  onChange={(event) => {
-                    const updatedIngredients = [...ingredients];
-                    updatedIngredients[index] = {
-                      ...ingredient,
-                      value: event.target.value,
-                    };
-                    setIngredients(updatedIngredients);
-                  }}
-                  readOnly={showButton}
-                />
+                {ingredientEditMode[index] ? (
+                  <input
+                    className="recipe_input"
+                    type="text"
+                    value={ingredient.value}
+                    maxLength={50}
+                    onChange={(event) => {
+                      const updatedIngredients = [...ingredients];
+                      updatedIngredients[index] = {
+                        ...ingredient,
+                        value: event.target.value,
+                      };
+                      setIngredients(updatedIngredients);
+                    }}
+                    readOnly={showButton}
+                  />
+                ) : (
+                  <span className="ingredient-text">{ingredient.value}</span>
+                )}
                 {!showButton && (
                   <button
                     type="button"
@@ -316,6 +325,16 @@ const EditRecipe: React.FC = () => {
           <button type="submit" className="btn-visu btn_edit" disabled={!isFormValid}>
             Editar
           </button>
+        )}
+        {!isFormValid && (
+          <div
+            aria-label="Preencha todos os campos."
+            data-balloon="Preencha todos os campos."
+            data-balloon-pos="right"
+            data-balloon-visible="true"
+            className="tooltip_balloon_recipe"
+          >
+          </div>
         )}
       </form>
     </div>
