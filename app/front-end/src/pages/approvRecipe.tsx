@@ -85,7 +85,7 @@ const AprovarReceitas: React.FC = () => {
             ))}
           </div>
         ) : (
-          <p>Nenhuma receita encontrada</p>
+          <p className='no_recipe'>Nenhuma receita encontrada</p>
         )}
       </div>
     </div >
