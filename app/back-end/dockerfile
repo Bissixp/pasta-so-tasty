@@ -4,5 +4,6 @@ COPY package* ./
 RUN npm install
 COPY . .
 EXPOSE 3001
-RUN npx -y tsc
-CMD [“npm”, “run”, “dev”]
+# RUN npx -y tsc
+# CMD [“npm”, “run”, “dev”]
+CMD ["sh", "-c", "npm run build && npm run dev"]
