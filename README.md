@@ -44,9 +44,17 @@ cd pasta-so-tasty
 ```bash
 docker-compose up -d
 ```
-### 4 - Rode o servidor
+  ### 4 - Instale as dependências do back-end e as popule
 ```bash
-cd app/front-end && npm start
+cd app/back-end && npm install && npm run build
+```
+ ### 5 - Instale as dependências do front-end
+```bash
+cd ../front-end && npm install
+```
+ ### 6 - Rode o servidor dentro da pasta do front-end
+```bash
+npm start
 ```
 # Acesse o site em http://localhost:3000 no seu navegador.
 
@@ -77,6 +85,17 @@ npm start
 ```
 # Acesse o site em http://localhost:3000 no seu navegador.
 </details>
+
+  ### :warning: Caso tenha algum problema com o Banco de dados :warning:
+Rode o comando dentro da pasta do back-end para resetar o Banco de dados:
+```bash
+npm run restart
+```
+E para popular novamente:
+```bash
+npm run build
+```
+---
 
 ## Instruções
 
