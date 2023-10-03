@@ -6,7 +6,7 @@ module.exports = {
         {
           first_name: 'Pasta',
           last_name: 'So Tasty',
-          password: '$2b$10$5QRp0OKj7YKd3XY5Q10LkeWNywGOXO9R7tHzMUYNFXKV7QHvBVixy',
+          password: '$2b$10$5QRp0OKj7YKd3XY5Q10LkeWNywGOXO9R7tHzMUYNFXKV7QHvBVixy', // Pasta@23
           email: 'pastasotasty@gmail.com',
           role: 'admin'
         }
