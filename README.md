@@ -130,7 +130,7 @@ Entrada:
  ```json
   {
     "email":"pastasotasty@gmail.com",
-    "password":"pasta@23"
+    "password":"Pasta@23"
   }
 ```
 
