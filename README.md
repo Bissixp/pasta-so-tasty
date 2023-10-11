@@ -1,6 +1,8 @@
 ## :spaghetti: Pasta so Tasty
 Pasta so Tasty é um site de receitas com uma API RESTful que permite aos usuários criar uma conta, criar suas próprias receitas, favoritar receitas, editar e excluir suas próprias receitas. Todas as receitas que são criadas precisam da autorização do administrador para serem aprovadas e postadas no site.
 
+![Pasta so Tasty](pasta-so-tasty.png)
+
 ## Menu
 - [Visão Geral](#visão-geral)
 - [Recursos](#recursos)
