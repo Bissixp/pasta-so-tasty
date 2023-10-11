@@ -62,7 +62,7 @@ const AprovarReceitas: React.FC = () => {
         {recipes.length > 0 ? (
           <div className="recipe-list">
             {recipes.map((recipe: IRecipe) => (
-              <div key={id} className='recipe-card'>
+              <div key={recipe.id} className='recipe-card'>
                 <div className='card_img_container'>
                   <Link to={`/receita/${recipe.id}-${recipe.recipe_name.split(' ').join('-')}`} className='link-class'>
                     {recipe.recipe_photo.toLowerCase().startsWith('http') ? (
@@ -85,7 +85,7 @@ const AprovarReceitas: React.FC = () => {
             ))}
           </div>
         ) : (
-          <p>Nenhuma receita encontrada</p>
+          <p className='no_recipe'>Nenhuma receita encontrada</p>
         )}
       </div>
     </div >

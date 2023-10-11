@@ -83,3 +83,11 @@ label {
   resize: none;
   padding: 5px;
 }
+
+.tooltip_balloon_recipe {
+  --balloon-text-color: #f0eae2;
+  --balloon-color: #890f1f;
+  --balloon-font-size: 18px;
+  left: 0px;
+  top: -45px;
+}
